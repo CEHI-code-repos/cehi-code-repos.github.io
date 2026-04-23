@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.35">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Coordinate Systems – GIS Training</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../../../assets/logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-46f66b053e56abd73bb6e954d61a315b.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-22b4aaf4c2978829df3684e8f2c068db.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-46f66b053e56abd73bb6e954d61a315b.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-ec58c65293d2aa5a6b97e1bfc35a50e6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-ec58c65293d2aa5a6b97e1bfc35a50e6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-ec58c65293d2aa5a6b97e1bfc35a50e6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../../assets/logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">GIS Training</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources/"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../tools/"> 
+<span class="menu-text">Tools</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../data_catalog/"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Coordinate Systems</h1>
+<p class="subtitle lead">Displaying a 3D world in 2D</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>You’re probably familiar with longitude and latitude coordinates. You probably think of them as two numbers that can identify any point on Earth, but did you know there’s a third component that is necessary to determine exactly where a point really is? This third component is called a <strong>geographic coordinate system</strong>.</p>
+<p>A geographic coordinate system is a model of the earth that specifies where on Earth we draw longitude and latitude lines. And thus, they determine where a given longitude and latitude is in the world!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="18" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 17;"><span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>worldCharts <span class="op">=</span> {</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> size <span class="op">=</span> <span class="dv">250</span><span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> padding <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> container <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;"&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> variations <span class="op">=</span> [</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">"Longitudes"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> [<span class="dv">15</span><span class="op">,</span> <span class="dv">90</span>] }<span class="op">,</span> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">"Latitudes"</span><span class="op">,</span> <span class="dt">step</span><span class="op">:</span> [<span class="dv">180</span><span class="op">,</span> <span class="dv">10</span>] } </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  variations<span class="op">.</span><span class="fu">forEach</span>(v <span class="kw">=&gt;</span> {</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">select</span>(container)<span class="op">.</span><span class="fu">append</span>(<span class="st">"svg"</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> size)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> size)<span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> topMargin <span class="op">=</span> <span class="dv">50</span><span class="op">;</span> </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> projection <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoOrthographic</span>()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">scale</span>((size <span class="op">-</span> padding <span class="op">*</span> <span class="dv">2</span>) <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">translate</span>([size <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> size <span class="op">/</span> <span class="dv">2</span>])</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">rotate</span>([<span class="dv">0</span><span class="op">,</span> <span class="op">-</span><span class="dv">30</span>])</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">clipAngle</span>(<span class="dv">90</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">fitExtent</span>([[padding<span class="op">,</span> topMargin]<span class="op">,</span> [size <span class="op">-</span> padding<span class="op">,</span> size <span class="op">-</span> padding]]<span class="op">,</span> {<span class="dt">type</span><span class="op">:</span> <span class="st">"Sphere"</span>})<span class="op">;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> path <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoPath</span>()<span class="op">.</span><span class="fu">projection</span>(projection)<span class="op">;</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"path"</span>)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">datum</span>({<span class="dt">type</span><span class="op">:</span> <span class="st">"Sphere"</span>})</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"d"</span><span class="op">,</span> path)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"#f8f9fa"</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> themeColor)<span class="op">;</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"path"</span>)</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">datum</span>(d3<span class="op">.</span><span class="fu">geoGraticule</span>()<span class="op">.</span><span class="fu">step</span>(v<span class="op">.</span><span class="at">step</span>))</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"d"</span><span class="op">,</span> path)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"none"</span>)</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> themeColor)<span class="op">;</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> size <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> <span class="dv">25</span>)</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"middle"</span>)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> themeColor) </span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">style</span>(<span class="st">"font-family"</span><span class="op">,</span> <span class="st">"sans-serif"</span>)</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">style</span>(<span class="st">"font-weight"</span><span class="op">,</span> <span class="st">"bold"</span>)</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">text</span>(v<span class="op">.</span><span class="at">name</span>)<span class="op">;</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> container<span class="op">;</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<p>This begs the question: why even are there multiple geographic coordinate systems? Shouldn’t we just choose one and all use that one? Well, we have multiple geographic coordinate systems because simply the Earth isn’t a perfect sphere. Different coordinate systems exist primarily for specific areas to accommodate local deviations from the sphere better. One such example of this is the <em>North American Datum of 1983 (NAD 83)</em>, which is the geographic coordinate system US Census boundary files are in. Most often, longitude and latitude coordinates are represented in the <em>World Geodetic System 1984 (WGS 1984)</em>, which is designed to work well for the entire world.</p>
+<p>Just knowing where things are isn’t the whole picture though. We often want to represent the Earth on a 2-dimensional surface like a piece of paper or a screen. This introduces a whole new set of problems.</p>
+<p>Take a look at this below example. These are three different ways of representing Earth. Focus on one specific area in the world and watch it change as we change how we represent Earth. Notice how the shape and area of that place change. As do the distances and angles between places.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="91" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 90;"><span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>projection <span class="op">=</span> {</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (<span class="kw">true</span>) {</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> p <span class="kw">of</span> projections) {</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>      <span class="kw">yield</span> p<span class="op">.</span><span class="at">value</span><span class="op">;</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>      <span class="cf">await</span> Promises<span class="op">.</span><span class="fu">delay</span>(<span class="dv">3000</span>)<span class="op">;</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="104" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 103;"><span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>viewof context <span class="op">=</span> {</span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> context <span class="op">=</span> DOM<span class="op">.</span><span class="fu">context2d</span>(width<span class="op">,</span> height)<span class="op">;</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="at">canvas</span><span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">display</span> <span class="op">=</span> <span class="st">"block"</span><span class="op">;</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="at">canvas</span><span class="op">.</span><span class="at">style</span><span class="op">.</span><span class="at">maxWidth</span> <span class="op">=</span> <span class="st">"100%"</span><span class="op">;</span></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="at">canvas</span><span class="op">.</span><span class="at">value</span> <span class="op">=</span> context<span class="op">;</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> context<span class="op">.</span><span class="at">canvas</span><span class="op">;</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="118" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 117;"><span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>themeColor <span class="op">=</span> {</span>
+<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"p"</span>) <span class="op">||</span> <span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">;</span></span>
+<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">getComputedStyle</span>(p)<span class="op">.</span><span class="at">color</span><span class="op">;</span></span>
+<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-123"><a href="#cb4-123" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">render</span>(projection) {</span>
+<span id="cb4-124"><a href="#cb4-124" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> path <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoPath</span>(projection<span class="op">,</span> context)<span class="op">;</span></span>
+<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="fu">clearRect</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> width<span class="op">,</span> height)<span class="op">;</span></span>
+<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="fu">save</span>()<span class="op">;</span></span>
+<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">,</span> <span class="fu">path</span>(outline)<span class="op">,</span> context<span class="op">.</span><span class="fu">clip</span>()<span class="op">,</span> context<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#fff"</span><span class="op">,</span> context<span class="op">.</span><span class="fu">fillRect</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> width<span class="op">,</span> height)<span class="op">;</span></span>
+<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">,</span> <span class="fu">path</span>(graticule)<span class="op">,</span> context<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#ccc"</span><span class="op">,</span> context<span class="op">.</span><span class="fu">stroke</span>()<span class="op">;</span></span>
+<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">,</span> <span class="fu">path</span>(land)<span class="op">,</span> context<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> themeColor<span class="op">,</span> context<span class="op">.</span><span class="fu">fill</span>()<span class="op">;</span></span>
+<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="fu">restore</span>()<span class="op">;</span></span>
+<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>  context<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">,</span> <span class="fu">path</span>(outline)<span class="op">,</span> context<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#000"</span><span class="op">,</span> context<span class="op">.</span><span class="fu">stroke</span>()<span class="op">;</span></span>
+<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-4-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-4-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="136" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 135;"><span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a>update <span class="op">=</span> {</span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r0 <span class="op">=</span> mutable previousProjection<span class="op">;</span></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> r1 <span class="op">=</span> projection<span class="op">;</span></span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (r0 <span class="op">===</span> r1) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>  mutable previousProjection <span class="op">=</span> r1<span class="op">;</span></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> interpolate <span class="op">=</span> <span class="fu">interpolateProjection</span>(r0<span class="op">,</span> r1)<span class="op">;</span></span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> j <span class="op">=</span> <span class="dv">1</span><span class="op">,</span> m <span class="op">=</span> <span class="dv">45</span><span class="op">;</span> <span class="kw">true</span><span class="op">;</span> <span class="op">++</span>j) {</span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> t <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="dv">1</span><span class="op">,</span> <span class="fu">ease</span>(j <span class="op">/</span> m))<span class="op">;</span></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a>    <span class="fu">render</span>(<span class="fu">interpolate</span>(t)<span class="op">.</span><span class="fu">rotate</span>([<span class="bu">performance</span><span class="op">.</span><span class="fu">now</span>() <span class="op">/</span> <span class="dv">100</span><span class="op">,</span> <span class="dv">0</span>]))<span class="op">;</span></span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>    <span class="kw">yield</span><span class="op">;</span></span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="153" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 152;"><span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>mutable previousProjection <span class="op">=</span> d3<span class="op">.</span><span class="at">geoEquirectangularRaw</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="159" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 158;"><span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">interpolateProjection</span>(raw0<span class="op">,</span> raw1) {</span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {<span class="dt">scale</span><span class="op">:</span> scale0<span class="op">,</span> <span class="dt">translate</span><span class="op">:</span> translate0} <span class="op">=</span> <span class="fu">fit</span>(raw0)<span class="op">;</span></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> {<span class="dt">scale</span><span class="op">:</span> scale1<span class="op">,</span> <span class="dt">translate</span><span class="op">:</span> translate1} <span class="op">=</span> <span class="fu">fit</span>(raw1)<span class="op">;</span></span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> t <span class="kw">=&gt;</span> d3<span class="op">.</span><span class="fu">geoProjection</span>((x<span class="op">,</span> y) <span class="kw">=&gt;</span> <span class="fu">lerp2</span>(<span class="fu">raw0</span>(x<span class="op">,</span> y)<span class="op">,</span> <span class="fu">raw1</span>(x<span class="op">,</span> y)<span class="op">,</span> t))</span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">scale</span>(<span class="fu">lerp1</span>(scale0<span class="op">,</span> scale1<span class="op">,</span> t))</span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">translate</span>(<span class="fu">lerp2</span>(translate0<span class="op">,</span> translate1<span class="op">,</span> t))</span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">precision</span>(<span class="fl">0.1</span>)<span class="op">;</span></span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="172" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 171;"><span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">lerp1</span>(x0<span class="op">,</span> x1<span class="op">,</span> t) {</span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> (<span class="dv">1</span> <span class="op">-</span> t) <span class="op">*</span> x0 <span class="op">+</span> t <span class="op">*</span> x1<span class="op">;</span></span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb9" data-startfrom="180" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 179;"><span id="cb9-180"><a href="#cb9-180" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">lerp2</span>([x0<span class="op">,</span> y0]<span class="op">,</span> [x1<span class="op">,</span> y1]<span class="op">,</span> t) {</span>
+<span id="cb9-181"><a href="#cb9-181" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [(<span class="dv">1</span> <span class="op">-</span> t) <span class="op">*</span> x0 <span class="op">+</span> t <span class="op">*</span> x1<span class="op">,</span> (<span class="dv">1</span> <span class="op">-</span> t) <span class="op">*</span> y0 <span class="op">+</span> t <span class="op">*</span> y1]<span class="op">;</span></span>
+<span id="cb9-182"><a href="#cb9-182" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb10" data-startfrom="188" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 187;"><span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">fit</span>(raw) {</span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoProjection</span>(raw)<span class="op">.</span><span class="fu">fitExtent</span>([[<span class="fl">0.5</span><span class="op">,</span> <span class="fl">0.5</span>]<span class="op">,</span> [width <span class="op">-</span> <span class="fl">0.5</span><span class="op">,</span> height <span class="op">-</span> <span class="fl">0.5</span>]]<span class="op">,</span> outline)<span class="op">;</span></span>
+<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {<span class="dt">scale</span><span class="op">:</span> p<span class="op">.</span><span class="fu">scale</span>()<span class="op">,</span> <span class="dt">translate</span><span class="op">:</span> p<span class="op">.</span><span class="fu">translate</span>()}<span class="op">;</span></span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb11" data-startfrom="199" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 198;"><span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a>ease <span class="op">=</span> d3<span class="op">.</span><span class="at">easeCubicInOut</span></span>
+<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a>width <span class="op">=</span> <span class="dv">954</span></span>
+<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a>height <span class="op">=</span> <span class="dv">400</span></span>
+<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a>outline <span class="op">=</span> ({<span class="dt">type</span><span class="op">:</span> <span class="st">"Sphere"</span>})</span>
+<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a>graticule <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoGraticule10</span>()</span>
+<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a>land <span class="op">=</span> topojson<span class="op">.</span><span class="fu">feature</span>(world<span class="op">,</span> world<span class="op">.</span><span class="at">objects</span><span class="op">.</span><span class="at">land</span>)</span>
+<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a>world <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"land-110m.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a>topojson <span class="op">=</span> <span class="pp">require</span>(<span class="st">"topojson-client@3"</span>)</span>
+<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a>d3 <span class="op">=</span> <span class="pp">require</span>(<span class="st">"d3@7"</span><span class="op">,</span> <span class="st">"d3-geo@3"</span><span class="op">,</span> <span class="st">"d3-geo-projection@4"</span><span class="op">,</span> <span class="st">"d3-ease@3"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-11-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-11-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-11-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-11-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-11-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-11-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-11-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-11-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-11-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb12" data-startfrom="211" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 210;"><span id="cb12-211"><a href="#cb12-211" aria-hidden="true" tabindex="-1"></a>projections <span class="op">=</span> [</span>
+<span id="cb12-212"><a href="#cb12-212" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">name</span><span class="op">:</span> <span class="st">"Patterson cylindrical"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> d3<span class="op">.</span><span class="at">geoPattersonRaw</span>}<span class="op">,</span></span>
+<span id="cb12-213"><a href="#cb12-213" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">name</span><span class="op">:</span> <span class="st">"Van der Grinten"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> d3<span class="op">.</span><span class="at">geoVanDerGrintenRaw</span>}<span class="op">,</span></span>
+<span id="cb12-214"><a href="#cb12-214" aria-hidden="true" tabindex="-1"></a>  {<span class="dt">name</span><span class="op">:</span> <span class="st">"conic equal-area"</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> d3<span class="op">.</span><span class="fu">geoConicEqualAreaRaw</span>(<span class="dv">0</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">/</span> <span class="dv">3</span>)}<span class="op">,</span></span>
+<span id="cb12-215"><a href="#cb12-215" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<p>Unfortunately, no matter how we try to unfurl the Earth’s surface on to a 2-dimensional plane, there is no way to flatten the Earth’s surface without tearing and stretching it. The process of tearing and stretching the surface introduces distortions, which can be consequential in many applications.</p>
+<p>Thus, choosing the right 2D representation of the Earth for your area of interest and/or application of interest is essential. We call these 2D representations <strong>projected coordinate systems</strong> for how they project geographic coordinate systems into 2D space.</p>
+<p>Projected coordinate systems can optimize for all kinds of properties like area, shape, distance, or direction. They also often only do so for specific areas. In the US, you will find that most states have several different projected coordinate systems, but typically there exists some one-size-fits-all coordinate system for which most operations can be done with moderate precision.</p>
+<p>Most spatial data formats will store information about the coordinate system your data is in. Additionally, coordinate systems are assigned a <strong>Well-Known ID (WKID)</strong> which uniquely identifies them and can serve as an easy way to search for them. For example, <em>WGS 1984</em>’s WKID is <code>4326</code>.</p>
+<p>Once data is in one coordinate system, it does not necessarily need to stay that way. Most GIS software will have built in features to transform data between projections and it is a best practice to always be conscious of the projection you are working within.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb13" data-startfrom="246" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 245;"><span id="cb13-246"><a href="#cb13-246" aria-hidden="true" tabindex="-1"></a>chicagoRaw <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"chi-boundaries.json"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb13-247"><a href="#cb13-247" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-248"><a href="#cb13-248" aria-hidden="true" tabindex="-1"></a>geoData <span class="op">=</span> {</span>
+<span id="cb13-249"><a href="#cb13-249" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb13-250"><a href="#cb13-250" aria-hidden="true" tabindex="-1"></a>    <span class="dt">type</span><span class="op">:</span> <span class="st">"FeatureCollection"</span><span class="op">,</span></span>
+<span id="cb13-251"><a href="#cb13-251" aria-hidden="true" tabindex="-1"></a>    <span class="dt">features</span><span class="op">:</span> chicagoRaw<span class="op">.</span><span class="fu">map</span>(d <span class="kw">=&gt;</span> ({</span>
+<span id="cb13-252"><a href="#cb13-252" aria-hidden="true" tabindex="-1"></a>      <span class="dt">type</span><span class="op">:</span> <span class="st">"Feature"</span><span class="op">,</span></span>
+<span id="cb13-253"><a href="#cb13-253" aria-hidden="true" tabindex="-1"></a>      <span class="dt">geometry</span><span class="op">:</span> d<span class="op">.</span><span class="at">the_geom</span><span class="op">,</span> </span>
+<span id="cb13-254"><a href="#cb13-254" aria-hidden="true" tabindex="-1"></a>      <span class="dt">properties</span><span class="op">:</span> d</span>
+<span id="cb13-255"><a href="#cb13-255" aria-hidden="true" tabindex="-1"></a>    }))</span>
+<span id="cb13-256"><a href="#cb13-256" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb13-257"><a href="#cb13-257" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-258"><a href="#cb13-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-259"><a href="#cb13-259" aria-hidden="true" tabindex="-1"></a>chicagoLatLong <span class="op">=</span> [<span class="op">-</span><span class="fl">87.6316</span><span class="op">,</span> <span class="fl">41.8839</span>]</span>
+<span id="cb13-260"><a href="#cb13-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-261"><a href="#cb13-261" aria-hidden="true" tabindex="-1"></a><span class="co">// 3. Define the Projection factories</span></span>
+<span id="cb13-262"><a href="#cb13-262" aria-hidden="true" tabindex="-1"></a>calculators <span class="op">=</span> [</span>
+<span id="cb13-263"><a href="#cb13-263" aria-hidden="true" tabindex="-1"></a>  { </span>
+<span id="cb13-264"><a href="#cb13-264" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">"WGS 1984"</span><span class="op">,</span> </span>
+<span id="cb13-265"><a href="#cb13-265" aria-hidden="true" tabindex="-1"></a>    <span class="dt">proj</span><span class="op">:</span> () <span class="kw">=&gt;</span> d3<span class="op">.</span><span class="fu">geoIdentity</span>()<span class="op">.</span><span class="fu">reflectY</span>(<span class="kw">true</span>)<span class="op">,</span> </span>
+<span id="cb13-266"><a href="#cb13-266" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unit</span><span class="op">:</span> <span class="st">"°"</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> <span class="st">"#e41a1c"</span> </span>
+<span id="cb13-267"><a href="#cb13-267" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb13-268"><a href="#cb13-268" aria-hidden="true" tabindex="-1"></a>  { </span>
+<span id="cb13-269"><a href="#cb13-269" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">"UTM 16N"</span><span class="op">,</span> </span>
+<span id="cb13-270"><a href="#cb13-270" aria-hidden="true" tabindex="-1"></a>    <span class="dt">proj</span><span class="op">:</span> () <span class="kw">=&gt;</span> d3<span class="op">.</span><span class="fu">geoTransverseMercator</span>()<span class="op">.</span><span class="fu">rotate</span>([<span class="dv">87</span><span class="op">,</span> <span class="dv">0</span>])<span class="op">.</span><span class="fu">center</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>])<span class="op">.</span><span class="fu">scale</span>(<span class="dv">6378137</span>)<span class="op">,</span> </span>
+<span id="cb13-271"><a href="#cb13-271" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unit</span><span class="op">:</span> <span class="st">"m"</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> <span class="st">"#377eb8"</span> </span>
+<span id="cb13-272"><a href="#cb13-272" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb13-273"><a href="#cb13-273" aria-hidden="true" tabindex="-1"></a>  { </span>
+<span id="cb13-274"><a href="#cb13-274" aria-hidden="true" tabindex="-1"></a>    <span class="dt">name</span><span class="op">:</span> <span class="st">"State Plane IL East"</span><span class="op">,</span> </span>
+<span id="cb13-275"><a href="#cb13-275" aria-hidden="true" tabindex="-1"></a>    <span class="dt">proj</span><span class="op">:</span> () <span class="kw">=&gt;</span> d3<span class="op">.</span><span class="fu">geoTransverseMercator</span>()<span class="op">.</span><span class="fu">rotate</span>([<span class="dv">88</span> <span class="op">+</span> <span class="dv">20</span><span class="op">/</span><span class="dv">60</span><span class="op">,</span> <span class="dv">0</span>])<span class="op">.</span><span class="fu">center</span>([<span class="dv">0</span><span class="op">,</span> <span class="dv">36</span> <span class="op">+</span> <span class="dv">40</span><span class="op">/</span><span class="dv">60</span>])<span class="op">.</span><span class="fu">scale</span>(<span class="dv">20925646</span>)<span class="op">,</span> </span>
+<span id="cb13-276"><a href="#cb13-276" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unit</span><span class="op">:</span> <span class="st">"ft"</span><span class="op">,</span> <span class="dt">color</span><span class="op">:</span> <span class="st">"#4daf4a"</span> </span>
+<span id="cb13-277"><a href="#cb13-277" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-278"><a href="#cb13-278" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb13-279"><a href="#cb13-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-280"><a href="#cb13-280" aria-hidden="true" tabindex="-1"></a>mapGrid <span class="op">=</span> {</span>
+<span id="cb13-281"><a href="#cb13-281" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> container <span class="op">=</span> <span class="fu">html</span><span class="vs">`&lt;div style="</span></span>
+<span id="cb13-282"><a href="#cb13-282" aria-hidden="true" tabindex="-1"></a><span class="vs">    display: flex; </span></span>
+<span id="cb13-283"><a href="#cb13-283" aria-hidden="true" tabindex="-1"></a><span class="vs">    gap: 15px; </span></span>
+<span id="cb13-284"><a href="#cb13-284" aria-hidden="true" tabindex="-1"></a><span class="vs">    flex-wrap: wrap; </span></span>
+<span id="cb13-285"><a href="#cb13-285" aria-hidden="true" tabindex="-1"></a><span class="vs">    justify-content: center;</span></span>
+<span id="cb13-286"><a href="#cb13-286" aria-hidden="true" tabindex="-1"></a><span class="vs">  "&gt;&lt;/div&gt;`</span><span class="op">;</span></span>
+<span id="cb13-287"><a href="#cb13-287" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> size <span class="op">=</span> <span class="dv">255</span><span class="op">;</span></span>
+<span id="cb13-288"><a href="#cb13-288" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> padding <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></span>
+<span id="cb13-289"><a href="#cb13-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-290"><a href="#cb13-290" aria-hidden="true" tabindex="-1"></a>  calculators<span class="op">.</span><span class="fu">forEach</span>(c <span class="kw">=&gt;</span> {</span>
+<span id="cb13-291"><a href="#cb13-291" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> rawProj <span class="op">=</span> c<span class="op">.</span><span class="at">name</span> <span class="op">===</span> <span class="st">"WGS 1984"</span> <span class="op">?</span> d3<span class="op">.</span><span class="fu">geoIdentity</span>() <span class="op">:</span> c<span class="op">.</span><span class="fu">proj</span>()<span class="op">;</span></span>
+<span id="cb13-292"><a href="#cb13-292" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [rawX<span class="op">,</span> rawY] <span class="op">=</span> <span class="fu">rawProj</span>(chicagoLatLong)<span class="op">;</span></span>
+<span id="cb13-293"><a href="#cb13-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-294"><a href="#cb13-294" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">select</span>(container)<span class="op">.</span><span class="fu">append</span>(<span class="st">"svg"</span>)</span>
+<span id="cb13-295"><a href="#cb13-295" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> size)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> size)</span>
+<span id="cb13-296"><a href="#cb13-296" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"border"</span><span class="op">,</span> <span class="st">"1px solid #ccc"</span>)</span>
+<span id="cb13-297"><a href="#cb13-297" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"background"</span><span class="op">,</span> <span class="st">"white"</span>)<span class="op">;</span></span>
+<span id="cb13-298"><a href="#cb13-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-299"><a href="#cb13-299" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> visualProj <span class="op">=</span> c<span class="op">.</span><span class="fu">proj</span>()<span class="op">.</span><span class="fu">fitSize</span>([size <span class="op">-</span> padding<span class="op">*</span><span class="dv">2</span><span class="op">,</span> size <span class="op">-</span> padding<span class="op">*</span><span class="dv">2</span>]<span class="op">,</span> geoData)<span class="op">;</span></span>
+<span id="cb13-300"><a href="#cb13-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-301"><a href="#cb13-301" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [tx<span class="op">,</span> ty] <span class="op">=</span> visualProj<span class="op">.</span><span class="fu">translate</span>()<span class="op">;</span></span>
+<span id="cb13-302"><a href="#cb13-302" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> yNudge <span class="op">=</span> <span class="dv">20</span><span class="op">;</span></span>
+<span id="cb13-303"><a href="#cb13-303" aria-hidden="true" tabindex="-1"></a>    visualProj<span class="op">.</span><span class="fu">translate</span>([tx <span class="op">+</span> padding<span class="op">,</span> ty <span class="op">+</span> padding <span class="op">+</span> yNudge])<span class="op">;</span></span>
+<span id="cb13-304"><a href="#cb13-304" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-305"><a href="#cb13-305" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> pathGenerator <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoPath</span>()<span class="op">.</span><span class="fu">projection</span>(visualProj)<span class="op">;</span></span>
+<span id="cb13-306"><a href="#cb13-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-307"><a href="#cb13-307" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"path"</span>)</span>
+<span id="cb13-308"><a href="#cb13-308" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">datum</span>(geoData)</span>
+<span id="cb13-309"><a href="#cb13-309" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"d"</span><span class="op">,</span> pathGenerator)</span>
+<span id="cb13-310"><a href="#cb13-310" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"#f8f9fa"</span>)</span>
+<span id="cb13-311"><a href="#cb13-311" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> themeColor)</span>
+<span id="cb13-312"><a href="#cb13-312" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb13-313"><a href="#cb13-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-314"><a href="#cb13-314" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [vx<span class="op">,</span> vy] <span class="op">=</span> <span class="fu">visualProj</span>(chicagoLatLong)<span class="op">;</span></span>
+<span id="cb13-315"><a href="#cb13-315" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"circle"</span>)</span>
+<span id="cb13-316"><a href="#cb13-316" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"cx"</span><span class="op">,</span> vx)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"cy"</span><span class="op">,</span> vy)</span>
+<span id="cb13-317"><a href="#cb13-317" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"r"</span><span class="op">,</span> <span class="dv">6</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> c<span class="op">.</span><span class="at">color</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> <span class="st">"white"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb13-318"><a href="#cb13-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-319"><a href="#cb13-319" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
+<span id="cb13-320"><a href="#cb13-320" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> <span class="dv">25</span>)</span>
+<span id="cb13-321"><a href="#cb13-321" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> themeColor) </span>
+<span id="cb13-322"><a href="#cb13-322" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"font-family"</span><span class="op">,</span> <span class="st">"sans-serif"</span>)<span class="op">.</span><span class="fu">style</span>(<span class="st">"font-weight"</span><span class="op">,</span> <span class="st">"bold"</span>)</span>
+<span id="cb13-323"><a href="#cb13-323" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">text</span>(c<span class="op">.</span><span class="at">name</span>)<span class="op">;</span></span>
+<span id="cb13-324"><a href="#cb13-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-325"><a href="#cb13-325" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> footer <span class="op">=</span> svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"g"</span>)</span>
+<span id="cb13-326"><a href="#cb13-326" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-family"</span><span class="op">,</span> <span class="st">"monospace"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="st">"10px"</span>)</span>
+<span id="cb13-327"><a href="#cb13-327" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> themeColor)<span class="op">;</span></span>
+<span id="cb13-328"><a href="#cb13-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-329"><a href="#cb13-329" aria-hidden="true" tabindex="-1"></a>    footer<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> size <span class="op">-</span> <span class="dv">35</span>)</span>
+<span id="cb13-330"><a href="#cb13-330" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">text</span>(<span class="vs">`X: </span><span class="sc">${</span>rawX<span class="op">.</span><span class="fu">toLocaleString</span>()<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>c<span class="op">.</span><span class="at">unit</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb13-331"><a href="#cb13-331" aria-hidden="true" tabindex="-1"></a>    footer<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> <span class="dv">15</span>)<span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> size <span class="op">-</span> <span class="dv">20</span>)</span>
+<span id="cb13-332"><a href="#cb13-332" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">text</span>(<span class="vs">`Y: </span><span class="sc">${</span>rawY<span class="op">.</span><span class="fu">toLocaleString</span>()<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>c<span class="op">.</span><span class="at">unit</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">;</span></span>
+<span id="cb13-333"><a href="#cb13-333" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb13-334"><a href="#cb13-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-335"><a href="#cb13-335" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> container<span class="op">;</span></span>
+<span id="cb13-336"><a href="#cb13-336" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-13-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-13-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-13-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-13-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-13-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<hr>
+<p>For more information, check out these resources:</p>
+<ul>
+<li><a href="https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs">Geographic vs Projected Coordinate Systems - ArcGIS Blog</a></li>
+<li><a href="https://www.esri.com/arcgis-blog/products/arcgis-pro/education/earth-peel">Earth Peel - ArcGIS Blog</a></li>
+<li><a href="https://www.axismaps.com/guide/map-projections">Map Projections - Axis Maps</a></li>
+</ul>
+
+
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ilxud29ybGRDaGFydHMgPSB7XG4gIGNvbnN0IHNpemUgPSAyNTA7XG4gIGNvbnN0IHBhZGRpbmcgPSAxMDtcbiAgY29uc3QgY29udGFpbmVyID0gaHRtbGA8ZGl2IHN0eWxlPVwiZGlzcGxheTogZmxleDsgZ2FwOiAyMHB4OyBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjsgZmxleC13cmFwOiB3cmFwO1wiPjwvZGl2PmA7XG5cbiAgY29uc3QgdmFyaWF0aW9ucyA9IFtcbiAgICB7IG5hbWU6IFwiTG9uZ2l0dWRlc1wiLCBzdGVwOiBbMTUsIDkwXSB9LCBcbiAgICB7IG5hbWU6IFwiTGF0aXR1ZGVzXCIsIHN0ZXA6IFsxODAsIDEwXSB9IFxuICBdO1xuXG4gIHZhcmlhdGlvbnMuZm9yRWFjaCh2ID0+IHtcbiAgICBjb25zdCBzdmcgPSBkMy5zZWxlY3QoY29udGFpbmVyKS5hcHBlbmQoXCJzdmdcIilcbiAgICAgIC5hdHRyKFwid2lkdGhcIiwgc2l6ZSlcbiAgICAgIC5hdHRyKFwiaGVpZ2h0XCIsIHNpemUpO1xuXG4gICAgY29uc3QgdG9wTWFyZ2luID0gNTA7IFxuXG4gICAgY29uc3QgcHJvamVjdGlvbiA9IGQzLmdlb09ydGhvZ3JhcGhpYygpXG4gICAgICAuc2NhbGUoKHNpemUgLSBwYWRkaW5nICogMikgLyAyKVxuICAgICAgLnRyYW5zbGF0ZShbc2l6ZSAvIDIsIHNpemUgLyAyXSlcbiAgICAgIC5yb3RhdGUoWzAsIC0zMF0pXG4gICAgICAuY2xpcEFuZ2xlKDkwKVxuICAgICAgLmZpdEV4dGVudChbW3BhZGRpbmcsIHRvcE1hcmdpbl0sIFtzaXplIC0gcGFkZGluZywgc2l6ZSAtIHBhZGRpbmddXSwge3R5cGU6IFwiU3BoZXJlXCJ9KTtcblxuICAgIGNvbnN0IHBhdGggPSBkMy5nZW9QYXRoKCkucHJvamVjdGlvbihwcm9qZWN0aW9uKTtcblxuICAgIHN2Zy5hcHBlbmQoXCJwYXRoXCIpXG4gICAgICAuZGF0dW0oe3R5cGU6IFwiU3BoZXJlXCJ9KVxuICAgICAgLmF0dHIoXCJkXCIsIHBhdGgpXG4gICAgICAuYXR0cihcImZpbGxcIiwgXCIjZjhmOWZhXCIpXG4gICAgICAuYXR0cihcInN0cm9rZVwiLCB0aGVtZUNvbG9yKTtcblxuICAgIHN2Zy5hcHBlbmQoXCJwYXRoXCIpXG4gICAgICAuZGF0dW0oZDMuZ2VvR3JhdGljdWxlKCkuc3RlcCh2LnN0ZXApKVxuICAgICAgLmF0dHIoXCJkXCIsIHBhdGgpXG4gICAgICAuYXR0cihcImZpbGxcIiwgXCJub25lXCIpXG4gICAgICAuYXR0cihcInN0cm9rZVwiLCB0aGVtZUNvbG9yKTtcblxuICAgIHN2Zy5hcHBlbmQoXCJ0ZXh0XCIpXG4gICAgICAuYXR0cihcInhcIiwgc2l6ZSAvIDIpXG4gICAgICAuYXR0cihcInlcIiwgMjUpXG4gICAgICAuYXR0cihcInRleHQtYW5jaG9yXCIsIFwibWlkZGxlXCIpXG4gICAgICAuYXR0cihcImZpbGxcIiwgdGhlbWVDb2xvcikgXG4gICAgICAuc3R5bGUoXCJmb250LWZhbWlseVwiLCBcInNhbnMtc2VyaWZcIilcbiAgICAgIC5zdHlsZShcImZvbnQtd2VpZ2h0XCIsIFwiYm9sZFwiKVxuICAgICAgLnRleHQodi5uYW1lKTtcbiAgfSk7XG5cbiAgcmV0dXJuIGNvbnRhaW5lcjtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxucHJvamVjdGlvbiA9IHtcbiAgd2hpbGUgKHRydWUpIHtcbiAgICBmb3IgKGNvbnN0IHAgb2YgcHJvamVjdGlvbnMpIHtcbiAgICAgIHlpZWxkIHAudmFsdWU7XG4gICAgICBhd2FpdCBQcm9taXNlcy5kZWxheSgzMDAwKTtcbiAgICB9XG4gIH1cbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ilxudmlld29mIGNvbnRleHQgPSB7XG4gIGNvbnN0IGNvbnRleHQgPSBET00uY29udGV4dDJkKHdpZHRoLCBoZWlnaHQpO1xuICBjb250ZXh0LmNhbnZhcy5zdHlsZS5kaXNwbGF5ID0gXCJibG9ja1wiO1xuICBjb250ZXh0LmNhbnZhcy5zdHlsZS5tYXhXaWR0aCA9IFwiMTAwJVwiO1xuICBjb250ZXh0LmNhbnZhcy52YWx1ZSA9IGNvbnRleHQ7XG4gIHJldHVybiBjb250ZXh0LmNhbnZhcztcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxudGhlbWVDb2xvciA9IHtcbiAgY29uc3QgcCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCJwXCIpIHx8IGRvY3VtZW50LmJvZHk7XG4gIHJldHVybiBnZXRDb21wdXRlZFN0eWxlKHApLmNvbG9yO1xufVxuXG5mdW5jdGlvbiByZW5kZXIocHJvamVjdGlvbikge1xuICBjb25zdCBwYXRoID0gZDMuZ2VvUGF0aChwcm9qZWN0aW9uLCBjb250ZXh0KTtcbiAgY29udGV4dC5jbGVhclJlY3QoMCwgMCwgd2lkdGgsIGhlaWdodCk7XG4gIGNvbnRleHQuc2F2ZSgpO1xuICBjb250ZXh0LmJlZ2luUGF0aCgpLCBwYXRoKG91dGxpbmUpLCBjb250ZXh0LmNsaXAoKSwgY29udGV4dC5maWxsU3R5bGUgPSBcIiNmZmZcIiwgY29udGV4dC5maWxsUmVjdCgwLCAwLCB3aWR0aCwgaGVpZ2h0KTtcbiAgY29udGV4dC5iZWdpblBhdGgoKSwgcGF0aChncmF0aWN1bGUpLCBjb250ZXh0LnN0cm9rZVN0eWxlID0gXCIjY2NjXCIsIGNvbnRleHQuc3Ryb2tlKCk7XG4gIGNvbnRleHQuYmVnaW5QYXRoKCksIHBhdGgobGFuZCksIGNvbnRleHQuZmlsbFN0eWxlID0gdGhlbWVDb2xvciwgY29udGV4dC5maWxsKCk7XG4gIGNvbnRleHQucmVzdG9yZSgpO1xuICBjb250ZXh0LmJlZ2luUGF0aCgpLCBwYXRoKG91dGxpbmUpLCBjb250ZXh0LnN0cm9rZVN0eWxlID0gXCIjMDAwXCIsIGNvbnRleHQuc3Ryb2tlKCk7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbnVwZGF0ZSA9IHtcbiAgY29uc3QgcjAgPSBtdXRhYmxlIHByZXZpb3VzUHJvamVjdGlvbjtcbiAgY29uc3QgcjEgPSBwcm9qZWN0aW9uO1xuICBpZiAocjAgPT09IHIxKSByZXR1cm47XG4gIG11dGFibGUgcHJldmlvdXNQcm9qZWN0aW9uID0gcjE7XG4gIGNvbnN0IGludGVycG9sYXRlID0gaW50ZXJwb2xhdGVQcm9qZWN0aW9uKHIwLCByMSk7XG4gIGZvciAobGV0IGogPSAxLCBtID0gNDU7IHRydWU7ICsraikge1xuICAgIGNvbnN0IHQgPSBNYXRoLm1pbigxLCBlYXNlKGogLyBtKSk7XG4gICAgcmVuZGVyKGludGVycG9sYXRlKHQpLnJvdGF0ZShbcGVyZm9ybWFuY2Uubm93KCkgLyAxMDAsIDBdKSk7XG4gICAgeWllbGQ7XG4gIH1cbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxubXV0YWJsZSBwcmV2aW91c1Byb2plY3Rpb24gPSBkMy5nZW9FcXVpcmVjdGFuZ3VsYXJSYXdcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxuZnVuY3Rpb24gaW50ZXJwb2xhdGVQcm9qZWN0aW9uKHJhdzAsIHJhdzEpIHtcbiAgY29uc3Qge3NjYWxlOiBzY2FsZTAsIHRyYW5zbGF0ZTogdHJhbnNsYXRlMH0gPSBmaXQocmF3MCk7XG4gIGNvbnN0IHtzY2FsZTogc2NhbGUxLCB0cmFuc2xhdGU6IHRyYW5zbGF0ZTF9ID0gZml0KHJhdzEpO1xuICByZXR1cm4gdCA9PiBkMy5nZW9Qcm9qZWN0aW9uKCh4LCB5KSA9PiBsZXJwMihyYXcwKHgsIHkpLCByYXcxKHgsIHkpLCB0KSlcbiAgICAuc2NhbGUobGVycDEoc2NhbGUwLCBzY2FsZTEsIHQpKVxuICAgIC50cmFuc2xhdGUobGVycDIodHJhbnNsYXRlMCwgdHJhbnNsYXRlMSwgdCkpXG4gICAgLnByZWNpc2lvbigwLjEpO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC04IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG5mdW5jdGlvbiBsZXJwMSh4MCwgeDEsIHQpIHtcbiAgcmV0dXJuICgxIC0gdCkgKiB4MCArIHQgKiB4MTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtOSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxuZnVuY3Rpb24gbGVycDIoW3gwLCB5MF0sIFt4MSwgeTFdLCB0KSB7XG4gIHJldHVybiBbKDEgLSB0KSAqIHgwICsgdCAqIHgxLCAoMSAtIHQpICogeTAgKyB0ICogeTFdO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0xMCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxuZnVuY3Rpb24gZml0KHJhdykge1xuICBjb25zdCBwID0gZDMuZ2VvUHJvamVjdGlvbihyYXcpLmZpdEV4dGVudChbWzAuNSwgMC41XSwgW3dpZHRoIC0gMC41LCBoZWlnaHQgLSAwLjVdXSwgb3V0bGluZSk7XG4gIHJldHVybiB7c2NhbGU6IHAuc2NhbGUoKSwgdHJhbnNsYXRlOiBwLnRyYW5zbGF0ZSgpfTtcbn1cbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTEiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmVhc2UgPSBkMy5lYXNlQ3ViaWNJbk91dFxud2lkdGggPSA5NTRcbmhlaWdodCA9IDQwMFxub3V0bGluZSA9ICh7dHlwZTogXCJTcGhlcmVcIn0pXG5ncmF0aWN1bGUgPSBkMy5nZW9HcmF0aWN1bGUxMCgpXG5sYW5kID0gdG9wb2pzb24uZmVhdHVyZSh3b3JsZCwgd29ybGQub2JqZWN0cy5sYW5kKVxud29ybGQgPSBGaWxlQXR0YWNobWVudChcImxhbmQtMTEwbS5qc29uXCIpLmpzb24oKVxudG9wb2pzb24gPSByZXF1aXJlKFwidG9wb2pzb24tY2xpZW50QDNcIilcbmQzID0gcmVxdWlyZShcImQzQDdcIiwgXCJkMy1nZW9AM1wiLCBcImQzLWdlby1wcm9qZWN0aW9uQDRcIiwgXCJkMy1lYXNlQDNcIilcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbnByb2plY3Rpb25zID0gW1xuICB7bmFtZTogXCJQYXR0ZXJzb24gY3lsaW5kcmljYWxcIiwgdmFsdWU6IGQzLmdlb1BhdHRlcnNvblJhd30sXG4gIHtuYW1lOiBcIlZhbiBkZXIgR3JpbnRlblwiLCB2YWx1ZTogZDMuZ2VvVmFuRGVyR3JpbnRlblJhd30sXG4gIHtuYW1lOiBcImNvbmljIGVxdWFsLWFyZWFcIiwgdmFsdWU6IGQzLmdlb0NvbmljRXF1YWxBcmVhUmF3KDAsIE1hdGguUEkgLyAzKX0sXG5dXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTEzIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiXG5jaGljYWdvUmF3ID0gRmlsZUF0dGFjaG1lbnQoXCJjaGktYm91bmRhcmllcy5qc29uXCIpLmpzb24oKVxuXG5nZW9EYXRhID0ge1xuICByZXR1cm4ge1xuICAgIHR5cGU6IFwiRmVhdHVyZUNvbGxlY3Rpb25cIixcbiAgICBmZWF0dXJlczogY2hpY2Fnb1Jhdy5tYXAoZCA9PiAoe1xuICAgICAgdHlwZTogXCJGZWF0dXJlXCIsXG4gICAgICBnZW9tZXRyeTogZC50aGVfZ2VvbSwgXG4gICAgICBwcm9wZXJ0aWVzOiBkXG4gICAgfSkpXG4gIH07XG59XG5cbmNoaWNhZ29MYXRMb25nID0gWy04Ny42MzE2LCA0MS44ODM5XVxuXG4vLyAzLiBEZWZpbmUgdGhlIFByb2plY3Rpb24gZmFjdG9yaWVzXG5jYWxjdWxhdG9ycyA9IFtcbiAgeyBcbiAgICBuYW1lOiBcIldHUyAxOTg0XCIsIFxuICAgIHByb2o6ICgpID0+IGQzLmdlb0lkZW50aXR5KCkucmVmbGVjdFkodHJ1ZSksIFxuICAgIHVuaXQ6IFwiwrBcIiwgY29sb3I6IFwiI2U0MWExY1wiIFxuICB9LFxuICB7IFxuICAgIG5hbWU6IFwiVVRNIDE2TlwiLCBcbiAgICBwcm9qOiAoKSA9PiBkMy5nZW9UcmFuc3ZlcnNlTWVyY2F0b3IoKS5yb3RhdGUoWzg3LCAwXSkuY2VudGVyKFswLCAwXSkuc2NhbGUoNjM3ODEzNyksIFxuICAgIHVuaXQ6IFwibVwiLCBjb2xvcjogXCIjMzc3ZWI4XCIgXG4gIH0sXG4gIHsgXG4gICAgbmFtZTogXCJTdGF0ZSBQbGFuZSBJTCBFYXN0XCIsIFxuICAgIHByb2o6ICgpID0+IGQzLmdlb1RyYW5zdmVyc2VNZXJjYXRvcigpLnJvdGF0ZShbODggKyAyMC82MCwgMF0pLmNlbnRlcihbMCwgMzYgKyA0MC82MF0pLnNjYWxlKDIwOTI1NjQ2KSwgXG4gICAgdW5pdDogXCJmdFwiLCBjb2xvcjogXCIjNGRhZjRhXCIgXG4gIH1cbl1cblxubWFwR3JpZCA9IHtcbiAgY29uc3QgY29udGFpbmVyID0gaHRtbGA8ZGl2IHN0eWxlPVwiXG4gICAgZGlzcGxheTogZmxleDsgXG4gICAgZ2FwOiAxNXB4OyBcbiAgICBmbGV4LXdyYXA6IHdyYXA7IFxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICBcIj48L2Rpdj5gO1xuICBjb25zdCBzaXplID0gMjU1O1xuICBjb25zdCBwYWRkaW5nID0gMzA7XG5cbiAgY2FsY3VsYXRvcnMuZm9yRWFjaChjID0+IHtcbiAgICBjb25zdCByYXdQcm9qID0gYy5uYW1lID09PSBcIldHUyAxOTg0XCIgPyBkMy5nZW9JZGVudGl0eSgpIDogYy5wcm9qKCk7XG4gICAgY29uc3QgW3Jhd1gsIHJhd1ldID0gcmF3UHJvaihjaGljYWdvTGF0TG9uZyk7XG5cbiAgICBjb25zdCBzdmcgPSBkMy5zZWxlY3QoY29udGFpbmVyKS5hcHBlbmQoXCJzdmdcIilcbiAgICAgICAgLmF0dHIoXCJ3aWR0aFwiLCBzaXplKS5hdHRyKFwiaGVpZ2h0XCIsIHNpemUpXG4gICAgICAgIC5zdHlsZShcImJvcmRlclwiLCBcIjFweCBzb2xpZCAjY2NjXCIpXG4gICAgICAgIC5zdHlsZShcImJhY2tncm91bmRcIiwgXCJ3aGl0ZVwiKTtcblxuICAgIGNvbnN0IHZpc3VhbFByb2ogPSBjLnByb2ooKS5maXRTaXplKFtzaXplIC0gcGFkZGluZyoyLCBzaXplIC0gcGFkZGluZyoyXSwgZ2VvRGF0YSk7XG5cbiAgICBjb25zdCBbdHgsIHR5XSA9IHZpc3VhbFByb2oudHJhbnNsYXRlKCk7XG4gICAgY29uc3QgeU51ZGdlID0gMjA7XG4gICAgdmlzdWFsUHJvai50cmFuc2xhdGUoW3R4ICsgcGFkZGluZywgdHkgKyBwYWRkaW5nICsgeU51ZGdlXSk7XG5cbiAgICBjb25zdCBwYXRoR2VuZXJhdG9yID0gZDMuZ2VvUGF0aCgpLnByb2plY3Rpb24odmlzdWFsUHJvaik7XG5cbiAgICBzdmcuYXBwZW5kKFwicGF0aFwiKVxuICAgICAgICAuZGF0dW0oZ2VvRGF0YSlcbiAgICAgICAgLmF0dHIoXCJkXCIsIHBhdGhHZW5lcmF0b3IpXG4gICAgICAgIC5hdHRyKFwiZmlsbFwiLCBcIiNmOGY5ZmFcIilcbiAgICAgICAgLmF0dHIoXCJzdHJva2VcIiwgdGhlbWVDb2xvcilcbiAgICAgICAgLmF0dHIoXCJzdHJva2Utd2lkdGhcIiwgMSk7XG5cbiAgICBjb25zdCBbdngsIHZ5XSA9IHZpc3VhbFByb2ooY2hpY2Fnb0xhdExvbmcpO1xuICAgIHN2Zy5hcHBlbmQoXCJjaXJjbGVcIilcbiAgICAgICAgLmF0dHIoXCJjeFwiLCB2eCkuYXR0cihcImN5XCIsIHZ5KVxuICAgICAgICAuYXR0cihcInJcIiwgNikuYXR0cihcImZpbGxcIiwgYy5jb2xvcikuYXR0cihcInN0cm9rZVwiLCBcIndoaXRlXCIpLmF0dHIoXCJzdHJva2Utd2lkdGhcIiwgMik7XG5cbiAgICBzdmcuYXBwZW5kKFwidGV4dFwiKVxuICAgICAgICAuYXR0cihcInhcIiwgMTUpLmF0dHIoXCJ5XCIsIDI1KVxuICAgICAgICAuYXR0cihcImZpbGxcIiwgdGhlbWVDb2xvcikgXG4gICAgICAgIC5zdHlsZShcImZvbnQtZmFtaWx5XCIsIFwic2Fucy1zZXJpZlwiKS5zdHlsZShcImZvbnQtd2VpZ2h0XCIsIFwiYm9sZFwiKVxuICAgICAgICAudGV4dChjLm5hbWUpO1xuXG4gICAgY29uc3QgZm9vdGVyID0gc3ZnLmFwcGVuZChcImdcIilcbiAgICAgICAgLmF0dHIoXCJmb250LWZhbWlseVwiLCBcIm1vbm9zcGFjZVwiKS5hdHRyKFwiZm9udC1zaXplXCIsIFwiMTBweFwiKVxuICAgICAgICAuYXR0cihcImZpbGxcIiwgdGhlbWVDb2xvcik7XG5cbiAgICBmb290ZXIuYXBwZW5kKFwidGV4dFwiKS5hdHRyKFwieFwiLCAxNSkuYXR0cihcInlcIiwgc2l6ZSAtIDM1KVxuICAgICAgICAudGV4dChgWDogJHtyYXdYLnRvTG9jYWxlU3RyaW5nKCl9ICR7Yy51bml0fWApO1xuICAgIGZvb3Rlci5hcHBlbmQoXCJ0ZXh0XCIpLmF0dHIoXCJ4XCIsIDE1KS5hdHRyKFwieVwiLCBzaXplIC0gMjApXG4gICAgICAgIC50ZXh0KGBZOiAke3Jhd1kudG9Mb2NhbGVTdHJpbmcoKX0gJHtjLnVuaXR9YCk7XG4gIH0pO1xuXG4gIHJldHVybiBjb250YWluZXI7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2NvbnRleHQnKSJ9XX0=
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../resources/topics/projections";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../LICENCE">Copyright © 2026 Children’s Environmental Health Initiative</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CEHI-code-repos/GISDataCatalog">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/company/children-s-environmental-health-initiative">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

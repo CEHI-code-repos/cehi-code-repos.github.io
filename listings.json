@@ -1,0 +1,64 @@
+[
+  {
+    "listing": "/resources/index.html",
+    "items": [
+      "/resources/topics/map-design/index.html",
+      "/resources/topics/spatial_data.html",
+      "/resources/topics/projections/index.html"
+    ]
+  },
+  {
+    "listing": "/data_catalog/updates/index.html",
+    "items": [
+      "/data_catalog/updates/2603_update/index.html",
+      "/data_catalog/updates/2602_update/index.html",
+      "/data_catalog/updates/2505_update/index.html",
+      "/data_catalog/updates/2503_update/index.html",
+      "/data_catalog/updates/2502_update/index.html",
+      "/data_catalog/updates/2407_update/index.html",
+      "/data_catalog/updates/welcome/index.html"
+    ]
+  },
+  {
+    "listing": "/data_catalog/index.html",
+    "items": [
+      "/data_catalog/us/cdc-500-cities.html",
+      "/data_catalog/us/census-acs5.html",
+      "/data_catalog/us/cms-facilities.html",
+      "/data_catalog/us/cdc-uscs.html",
+      "/data_catalog/us/ceq-cejst.html",
+      "/data_catalog/us/uw-chr.html",
+      "/data_catalog/us/usda-ers-ctc.html",
+      "/data_catalog/us/cdc-hdsm.html",
+      "/data_catalog/us/cdc-eji.html",
+      "/data_catalog/us/hrsa-forhp.html",
+      "/data_catalog/us/hrsa-fqhc.html",
+      "/data_catalog/us/rafi_gga.html",
+      "/data_catalog/us/ihs-facilities.html",
+      "/data_catalog/us/cms-mmd.html",
+      "/data_catalog/us/census-mdi.html",
+      "/data_catalog/us/cdc-places.html",
+      "/data_catalog/us/aers-ruca.html",
+      "/data_catalog/us/usda-rucc.html",
+      "/data_catalog/us/hrsa-sa.html",
+      "/data_catalog/us/census-sahie.html",
+      "/data_catalog/us/census-saipe.html",
+      "/data_catalog/us/cdc-svi.html",
+      "/data_catalog/us/census-tribtract.html",
+      "/data_catalog/us/usda-uic.html",
+      "/data_catalog/us/nchs-urcs.html"
+    ]
+  },
+  {
+    "listing": "/tools/index.html",
+    "items": []
+  },
+  {
+    "listing": "/resources/topics/index.html",
+    "items": [
+      "/resources/topics/map-design/index.html",
+      "/resources/topics/spatial_data.html",
+      "/resources/topics/projections/index.html"
+    ]
+  }
+]
