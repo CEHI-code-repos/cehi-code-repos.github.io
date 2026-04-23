@@ -1,0 +1,79 @@
+/*-- scss:defaults --*/
+
+$cehi-blue: #1a3652;
+$uic-red: #D50032;
+$light-gray: #c1d1e1;
+
+$primary: $cehi-blue;
+$link-color: $cehi-blue;
+$body-bg: #ffffff;
+$body-color: $cehi-blue;
+$headings-color: $cehi-blue;
+
+$navbar-bg: $light-gray;
+$navbar-fg: $cehi-blue;
+$navbar-hl: $uic-red;
+
+$footer-bg: $light-gray;
+$footer-fg: $cehi-blue;
+$footer-hl: $uic-red;
+
+
+/*-- scss:rules --*/
+
+.quarto-grid-item.card {
+  border: 2px solid $cehi-blue !important;
+  background: #ffffff;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
+  
+  box-shadow: 0 0 0 transparent; 
+
+  &:hover {
+    transform: translate(6px, -6px); 
+    box-shadow: -6px 6px 0 0 $cehi-blue !important; 
+    z-index: 10;
+  }
+
+  .card-img-top {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+
+// Custom Button Styling to match Cards
+.btn-primary, .btn {
+  background-color: #ffffff !important;
+  color: $cehi-blue !important;
+  border: 2px solid $cehi-blue !important;
+  border-radius: 0; // Square edges match the 'blocky' card look
+  font-weight: bold;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
+  box-shadow: 0 0 0 transparent;
+  padding: 0.5rem 1.2rem;
+  display: inline-block;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #ffffff !important;
+    color: $cehi-blue !important;
+    transform: translate(4px, -4px); 
+    box-shadow: -4px 4px 0 0 $cehi-blue !important; 
+    z-index: 10;
+  }
+  
+  &:active {
+    transform: translate(0, 0);
+    box-shadow: 0 0 0 transparent !important;
+  }
+}
+
+// Special version for the "UIC Red" if you want a secondary button style
+.btn-secondary {
+  border-color: $uic-red !important;
+  color: $uic-red !important;
+  
+  &:hover {
+    box-shadow: -4px 4px 0 0 $uic-red !important;
+  }
+}

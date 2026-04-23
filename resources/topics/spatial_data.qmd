@@ -1,0 +1,432 @@
+---
+title: "Spatial Data"
+subtitle: "How data is organized in a GIS"
+toc: true
+order: 2
+---
+
+Geographic data is represented by two major data models: vector and raster.
+
+The **vector data model** represents the geographic space using points, lines,
+and polygons. On the other hand, the **raster data model** represents 
+geographic space as a surface made up cells, like a pixels in an image. In
+public health, we typically utilize the vector data model because we are
+interested in how health phenomenon are distributed within political boundaries.
+The raster data model is more commmon for satelite based data within the 
+environmental sciences.
+
+```{ojs}
+//| echo: false
+
+size = 200
+res = 15
+cellSize = size / res
+
+themeColor = {
+  const p = document.querySelector("p") || document.body;
+  return getComputedStyle(p).color;
+}
+
+html`
+<div style="display: flex; gap: 40px; justify-content: center; font-family: sans-serif; margin-bottom: 20px">
+  <div style="text-align: center;">
+    <strong style="display: block; margin-bottom: 20px">Raster</strong>
+    <div id="raster-poly-container"></div>
+  </div>
+  <div style="text-align: center;">
+    <strong style="display: block; margin-bottom: 20px">Vector</strong>
+    <div id="vector-poly-container"></div>
+  </div>
+</div>
+`
+
+renderVectorPoly = {
+  const svg = d3.select("#vector-poly-container").append("svg")
+    .attr("width", size).attr("height", size).style("border", "1px solid #eee");
+
+  const center = size / 2;
+  const radius = 72;
+  const sides = 6; // Hexagon
+  
+  const vertices = d3.range(sides).map(i => {
+    const angle = (i / sides) * Math.PI * 2 - Math.PI / 2;
+    return [center + radius * Math.cos(angle), center + radius * Math.sin(angle)];
+  });
+
+  const lineGenerator = d3.line().curve(d3.curveLinearClosed);
+  
+  svg.append("path")
+    .attr("d", lineGenerator(vertices))
+    .attr("fill", themeColor);
+
+  svg.selectAll("circle")
+    .data(vertices).enter().append("circle")
+    .attr("cx", d => d[0]).attr("cy", d => d[1]).attr("r", 5)
+    .attr("fill", "white").attr("stroke", "#333");
+}
+
+renderRasterPoly = {
+  const svg = d3.select("#raster-poly-container").append("svg")
+    .attr("width", size).attr("height", size).style("border", "1px solid #eee");
+
+  for (let i = 0; i < res; i++) {
+    for (let j = 0; j < res; j++) {
+      const x = (i - res/2) / (res/2.5);
+      const y = (j - res/2) / (res/2.5);
+      
+      const inHex = (Math.abs(x) < 0.8 && Math.abs(x*0.5 + y*0.8) < 0.8 && Math.abs(x*0.5 - y*0.8) < 0.8);
+      
+      svg.append("rect")
+        .attr("x", i * cellSize).attr("y", j * cellSize)
+        .attr("width", cellSize).attr("height", cellSize)
+        .attr("fill", inHex ? themeColor : "#f2f2f2")
+        .attr("stroke", "#fff").attr("stroke-width", 2);
+    }
+  }
+}
+```
+
+## Vector data model
+
+Three basic vector types exist: **points**, **lines**, and **polygons**. Points
+are the fundamental unit of the vector data model. They make up everything! In
+the health context, points often map to the location of facilities, points of interest,
+or homes. Lines are simply multiple points stitched together with straight line segments.
+This allows us to represent things like roads, rivers, or even the movement of people.
+Polygons extend the concept of lines by stitching together points with line segments to
+form an enclosed area.
+
+```{ojs}
+//| echo: false
+{
+  const width = 800;
+  const height = 210;
+  
+  // Adjusted Y coordinates to shift geometry up (original ~100-250 range reduced)
+  const basePoints = [
+    [60, 100], [130, 70], [210, 110], [170, 180], [80, 170]
+  ];
+  
+  const svg = d3.create("svg")
+      .attr("viewBox", [0, 0, width, height])
+      .style("width", "100%")
+      .style("height", "auto")
+      .style("font-family", "sans-serif");
+
+  const categories = [
+    { label: "Points", xOff: 0, type: "point" },
+    { label: "Line", xOff: 260, type: "line" },
+    { label: "Polygon", xOff: 520, type: "polygon" }
+  ];
+
+  const g = svg.selectAll("g")
+    .data(categories)
+    .join("g")
+    .attr("transform", d => `translate(${d.xOff}, 0)`);
+
+  g.append("text")
+    .attr("x", 130)
+    .attr("y", 30)
+    .attr("text-anchor", "middle")
+    .attr("font-weight", "bold")
+    .attr("fill", "#333")
+    .text(d => d.label);
+
+  g.filter(d => d.type === "polygon")
+    .append("polygon")
+    .attr("points", basePoints.map(p => p.join(",")).join(" "))
+    .attr("fill", themeColor)
+    .attr("fill-opacity", 0.2)
+    .attr("stroke", "#333")
+    .attr("stroke-width", 2);
+
+  g.filter(d => d.type !== "point")
+    .append("path")
+    .attr("d", d => {
+      const lineGen = d3.line();
+      return d.type === "polygon" 
+        ? lineGen([...basePoints, basePoints[0]]) 
+        : lineGen(basePoints);
+    })
+    .attr("fill", "none")
+    .attr("stroke", "#333")
+    .attr("stroke-width", 2);
+
+  g.selectAll("circle")
+    .data(basePoints)
+    .join("circle")
+    .attr("cx", d => d[0])
+    .attr("cy", d => d[1])
+    .attr("r", 6)
+    .attr("fill", themeColor)
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1.5);
+
+  return svg.node();
+}
+```
+
+All vector data links geometry to descriptive attributes. This data is typically structured
+in a table where each row represents a unique record tied to a specific spatial geometry. We
+can use this attribute to conduct queries of our data that leverage both the what and the where
+of our data. For example, given a dataset of hospitals and county boundaries we can ask the
+question, "How many Acute Care Hosptials lie within 5 miles of each county's boundaries?".
+
+```{ojs}
+//| echo: false
+data = [
+  { label: "A", type: "Park", x: 50,  y: 45, r: 20, color: "#27ae60" },
+  { label: "B", type: "Lake", x: 120, y: 75, r: 15, color: "#3498db" }
+]
+
+
+vectorBoxStyle = `
+  width: 200px; 
+  height: 200px; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: space-around; 
+  border: 1px solid #ccc; 
+  padding: 15px; 
+  border-radius: 8px;
+  background: white;
+`
+
+drawGeometry = {
+  const svg = d3.create("svg").attr("width", 150).attr("height", 100);
+  svg.selectAll("circle").data(data).join("circle")
+    .attr("cx", d => d.x).attr("cy", d => d.y).attr("r", d => d.r)
+    .attr("fill", "none").attr("stroke", "#bdc3c7").attr("stroke-dasharray", "3,3");
+  return svg.node();
+}
+
+drawSpatial = {
+  const svg = d3.create("svg").attr("width", 150).attr("height", 100);
+  const g = svg.selectAll("g").data(data).join("g");
+  
+  g.append("circle")
+    .attr("cx", d => d.x).attr("cy", d => d.y).attr("r", d => d.r)
+    .attr("fill", d => d.color).attr("fill-opacity", 0.7).attr("stroke", "#2c3e50");
+    
+  g.append("text")
+    .attr("x", d => d.x).attr("y", d => d.y + 5).attr("text-anchor", "middle")
+    .style("fill", "white").style("font-size", "12px").style("font-weight", "bold").style("pointer-events", "none")
+    .text(d => d.label);
+    
+  return svg.node();
+}
+
+html`
+<div style="display: flex; align-items: center; justify-content: center; gap: 10px; font-family: sans-serif; padding: 20px; border-radius: 12px;">
+  
+  <div style="${vectorBoxStyle}">
+    <div style="font-weight: bold;">Geometry</div>
+    <div style="flex-grow: 1; display: flex; align-items: center;">
+      ${drawGeometry}
+    </div>
+  </div>
+
+  <div style="font-size: 24px; font-weight: bold; color: #ccc;">+</div>
+
+  <div style="${vectorBoxStyle}">
+    <div style="font-weight: bold;">Attributes</div>
+    <div style="width: 100%; flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+      <table style="width: 100%; font-size: 0.9rem; border-collapse: collapse; text-align: left;">
+        <thead style="border-bottom: 2px solid #eee;">
+          <tr><th style="padding: 4px;">ID</th><th style="padding: 4px;">Type</th></tr>
+        </thead>
+        <tbody>
+          ${data.map(d => html`<tr>
+            <td style="padding: 8px 4px;">${d.label}</td>
+            <td style="padding: 8px 4px;">${d.type}</td>
+          </tr>`)}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="font-size: 24px; font-weight: bold; color: #ccc;">=</div>
+
+  <div style="${vectorBoxStyle} border: 2px solid #27ae60; background: #f0fff4;">
+    <div style="font-weight: bold; color: #27ae60;">Vector Data</div>
+    <div style="flex-grow: 1; display: flex; align-items: center;">
+      ${drawSpatial}
+    </div>
+  </div>
+</div>
+`
+```
+
+### Data formats
+
+Within GIS you will encounter many different vector data formats. There is no true
+single geospatial data format standard, which means understanding your data entails
+also understanding the differences between various different data formats. When analyzing,
+storing, and sharing your own data the choice of data format can be source of happiness
+or misery.
+
+The **Shapefile** is the most ubiquitous vector data format. It was developed by ESRI, the
+market leader in GIS software and now has a mostly open specification. It has a few legacy
+limitations including limits for file size (2GB maximum) and column names (10 character maximum)
+that can make it annoying to work with at times. Despite its name, a Shapefile is also made up of
+at least 3 files (.shp, .shx, and .dbf). These 3 files are manditory. Any .shp file without
+the other mandatory files cannot be read. This can make it more tedious to share with others.
+
+A more recent standard is the **GeoJSON**, which is the defacto standard GIS format for the
+web due to its use of JSON (JavaScript Object Notation). It is a plain text data format, meaning
+it is very easy to look at its contents and manipulate them. This plain text nature has downsides
+in the form of larger file sizes and worse performance.
+
+The **GeoParquet** format is a cloud-native extension of the Apache Parquet storage format, specifically
+designed for big data and analytical workflows. This architecture, combined with powerful built-in compression,
+results in file sizes that are significantly smaller—often 60% or more—and query speeds that are
+much faster than Shapefiles or GeoJSON when handling millions of records.
+
+The above file formats are typically used to only store one dataset at a time. However, often in
+GIS we work with a whole host of datasets and would like to organize them in one place. That's 
+where spatial database formats come in. The **File Geodatabase** is one of these such formats. It was
+developed by ESRI and can store vector, raster, and tabular data. The maximum size of a File 
+Geodatabase is 256 TB and you can also set 128 character column names (not to mention, human 
+readable labels). File Geodatabases are not fully compatible with some open-source GIS software.
+Like shapefiles, File Geodatabases are also composed on many files.
+
+The **GeoPackage** is the modern, open-standard alternative designed to address the weaknesses
+of the formats mentioned above. Developed by the Open Geospatial Consortium (OGC), it is built on
+an SQLite database container, meaning an entire project’s worth of data is contained within a
+single file. This makes it much easier to share and manage than a Shapefile. Like the File
+Geodatabase, a GeoPackage is a spatial database format that can store vector, raster, and
+tabular data together. It overcomes legacy limitations by supporting file sizes up to 140
+TB and allowing for long, descriptive column names. Since it is an open format, compatibility
+within open-source tools is often better for GeoPackages.
+
+
+| Format | Developer / Standard | Type | Storage Structure | Key Features / Limits | Best Use Case |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Shapefile** | ESRI | Vector | Multi-file (min. 3) | 2GB limit; 10 char column names; ubiquitous but legacy. | General desktop GIS; legacy compatibility. |
+| **GeoJSON** | Open Standard | Vector | Single file (Plain text) | Human-readable; large file sizes; slower performance. | Web mapping and web applications. |
+| **GeoParquet** | Apache (Cloud-native) | Vector | Single file (Compressed) | High compression; very fast queries; built for big data. | Big data analytics and cloud workflows. |
+| **File Geodatabase** | ESRI | Spatial Database | Multi-file (Folder) | Supports vector, raster, and tables; 256TB limit; proprietary. | Large-scale projects within ESRI ecosystem. |
+| **GeoPackage** | OGC (Open Standard) | Spatial Database | Single file (SQLite) | Supports vector, raster, and tables; 140TB limit; cross-platform. | Modern data exchange and open-source workflows. |
+
+These data formats are by no means the only ones that exist, but ones that we think you might be 
+likely to encounter. See [xkcd 927](https://xkcd.com/927/) for how this happened.
+
+
+## Raster data model
+
+The raster data is generally composed of two components: a **header** and
+a **matrix**. The header defines the coordinate reference system (CRS), the
+origin (a reference coordinate that defines a corner of the image), 
+the pixel size, and the number of rows and columns of pixels. The **resolution**,
+the level of spatial detail captured, of a raster id determined by the pixel
+size specified within this header. A smaller pixel size results in higher
+resolution, allowing for a clearer representation of the landscape, while 
+larger pixels lead to lower resolution and a more "blocky" appearance.
+
+The matrix defines the value at each pixel. This means that unlike vector data,
+raster data does not store a large table of many attributes for each pixel.
+Some raster data will contain multiple **"bands"** so that multiple values
+can be stored for the same pixel. Additionally, raster matricies only store data as numeric values. This means
+for categorical data like land use type, a raster will store integer values
+which represent different categories.
+
+```{ojs}
+//| echo: false
+gridValues = [
+  [1, 1, 1, 0, 0],
+  [1, 1, 2, 2, 0],
+  [1, 2, 2, 2, 2],
+  [0, 2, 2, 0, 0],
+  [0, 0, 0, 0, 0]
+]
+
+// Wrapping in parentheses fixes the OJS SyntaxError
+colors = ({ 1: "#27ae60", 2: "#3498db", 0: "#ecf0f1" })
+
+rasterBoxStyle = `
+  width: 200px; 
+  height: 220px; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: space-around; 
+  border: 1px solid #ccc; 
+  padding: 15px; 
+  border-radius: 8px;
+  background: white;
+`
+
+html`
+<div style="display: flex; align-items: center; justify-content: center; gap: 10px; font-family: sans-serif; padding: 20px; border-radius: 12px;">
+  
+  <div style="${rasterBoxStyle}">
+    <div style="font-weight: bold;">Header</div>
+    <div style="width: 100%; font-size: 0.75rem; color: #666; line-height: 1.4; padding: 10px;">
+      <div style="border-bottom: 1px solid #eee; margin-bottom: 5px;"><b>Origin:</b> 0, 50</div>
+      <div style="border-bottom: 1px solid #eee; margin-bottom: 5px;"><b>Pixel Size:</b> 10m x 10m</div>
+      <div style="border-bottom: 1px solid #eee; margin-bottom: 5px;"><b>Size:</b> 5 x 5</div>
+      <div><b>CRS:</b> EPSG:4326</div>
+    </div>
+  </div>
+
+  <div style="font-size: 24px; font-weight: bold; color: #ccc;">+</div>
+
+  <div style="${rasterBoxStyle}">
+    <div style="font-weight: bold;">Matrix</div>
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; background: #eee; padding: 2px; border-radius: 4px;">
+      ${gridValues.flat().map(v => html`
+        <div style="width: 22px; height: 22px; background: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: #95a5a6;">
+          ${v}
+        </div>
+      `)}
+    </div>
+  </div>
+
+  <div style="font-size: 24px; font-weight: bold; color: #ccc;">=</div>
+
+  <div style="${rasterBoxStyle} border: 2px solid #27ae60; background: #f0fff4;">
+    <div style="font-weight: bold; color: #27ae60;">Raster Data</div>
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: #bdc3c7; border: 1px solid #7f8c8d;">
+      ${gridValues.flat().map(v => html`
+        <div style="width: 25px; height: 25px; background: ${colors[v]};"></div>
+      `)}
+    </div>
+  </div>
+</div>
+`
+```
+
+### Data formats
+
+Like vector formats, you will encounter a variety of formats designed to store raster data.
+And just as with vector data, selecting the right raster format is essential for balancing
+performance, file size, and software compatibility.
+
+The **GeoTIFF** is the most ubiquitous raster data format. It is an extension of the standard
+TIFF image format that includes spatial metadata like coordinate reference systems and
+georeferencing information. It is widely supported by almost every GIS application and can
+store multiple bands of data.
+
+A more modern evolution is the **Cloud Optimized GeoTIFF (COG)**, which is the defacto
+standard for hosting imagery on the web. It is a regular GeoTIFF file with an internal
+organization that allows software to "stream" only the specific parts of the image
+needed for a view. This structure significantly improves performance by avoiding the
+need to download the entire file to see a small area. Its primary downside is that 
+creating a COG requires an extra processing step compared to a standard GeoTIFF.
+
+The **NetCDF (Network Common Data Form)** is a format specifically designed for multidimensional
+scientific data. It is widely used in climate science and meteorology because it can store
+"data cubes" that include dimensions for latitude, longitude, and time. This makes it much
+more powerful than a simple image file for tracking changes over time, though it is more complex
+to work with and may require specialized plugins or tools to view correctly in standard GIS software.
+
+| Format | Developer / Standard | Type | Storage Structure | Key Features / Limits | Best Use Case |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **GeoTIFF** | Open Standard | Raster | Single file | Ubiquitous; supports multiple bands; can be slow if unoptimized. | Standard desktop GIS and imagery storage. |
+| **COG** | OGC Community | Raster | Single file (Optimized) | HTTP Range Request support; streams data; fast web performance. | Web-based imagery services and cloud storage. |
+| **NetCDF** | UCAR / Unidata | Multidimensional | Single file | Supports time and depth; complex metadata; scientific focus. | Climate modeling and temporal data analysis. |
+
+Again, there are many more raster formats that are not covered here, but these are some of 
+the most prominent.
+

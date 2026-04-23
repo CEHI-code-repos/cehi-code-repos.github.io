@@ -1,0 +1,15 @@
+logo: 
+  medium: assets/logo.png
+
+typography:
+  fonts:
+    - family: Atkinson Hyperlegible
+      source: google
+  base: Atkinson Hyperlegible
+  headings:
+    family: Atkinson Hyperlegible
+    color: dark-grey
+
+  link:
+    color: info
+    decoration: underline

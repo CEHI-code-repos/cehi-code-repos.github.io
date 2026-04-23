@@ -1,0 +1,17 @@
+---
+title: "Topics in GIS"
+subtitle: "Learn the basic GIS concepts that go into making a map."
+description: "This series breaks down the essential building blocks of cartography, moving beyond just clicking buttons to understanding the why behind the map. We’ll dive into how to handle spatial data, master the art of map design for clear communication, and finally tackle projections so you can stop stretching your data in all the wrong ways. Whether you're a beginner or looking to sharpen your technical foundations, these modules provide the core concepts needed to build accurate, professional-grade maps."
+listing:
+  fields: [title, subtitle]
+  type: grid
+  grid-columns: 1
+  id: sections
+  sort: order
+---
+
+### Sections
+
+::: {#sections}
+:::
+

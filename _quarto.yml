@@ -1,0 +1,34 @@
+project:
+  type: website
+
+website:
+  title: "GIS Training"
+  favicon: assets/logo.png
+  search: false
+  navbar:
+    right:
+      - text: Resources
+        href: resources/
+      - text: Tools
+        href: tools/
+      - text: Data
+        href: data_catalog/
+      - text: About
+        href: about.qmd
+  page-footer:
+    left: "[Copyright &copy; 2026 Children's Environmental Health Initiative](/LICENCE)"
+    center:
+      - href: https://github.com/CEHI-code-repos/GISDataCatalog
+        icon: github
+        aria-label: GitHub
+      - href: https://www.linkedin.com/company/children-s-environmental-health-initiative
+        icon: linkedin
+        aria-label: LinkedIn
+
+format:
+  html:
+    theme:
+      - cosmo
+      - styles.scss
+    toc: false
+

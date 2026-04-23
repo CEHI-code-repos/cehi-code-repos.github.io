@@ -1,0 +1,20 @@
+- title: "RSTbx"
+  path: https://cehi-code-repos.github.io/RateStabilizingToolbox/
+  description: |
+    ArcGIS Pro-based toolbox that enables desktop GIS users to calculate and map statistically robust local-level estimates.
+
+    - Easy to use interface; No code required
+    - Works well with other ArcGIS Pro tools
+    - Retrieves population data via the Census API
+  image: "rstbx/logo.png"
+
+- title: "RSTr"
+  path: https://cehi-code-repos.github.io/RSTr
+  description: |
+    R package that offers maximum flexibility for R users to calculate and map statistically robust local-level estimates.
+
+    - Choose from 3 Bayesian spatial models
+    - Provides additional insight into model parameters
+    - Can be combined with other R packages
+  image: "rstr/logo.png"
+

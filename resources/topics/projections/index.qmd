@@ -1,0 +1,346 @@
+---
+title: "Coordinate Systems"
+subtitle: "Displaying a 3D world in 2D"
+toc: true
+order: 3
+---
+
+You're probably familiar with longitude and latitude coordinates. You probably think of them
+as two numbers that can identify any point on Earth, but did you know there's a third component
+that is necessary to determine exactly where a point really is? This third component is called
+a **geographic coordinate system**.
+
+A geographic coordinate system is a model of the earth that specifies where on Earth we draw
+longitude and latitude lines. And thus, they determine where a given longitude and latitude
+is in the world! 
+
+```{ojs}
+//| echo: false
+
+worldCharts = {
+  const size = 250;
+  const padding = 10;
+  const container = html`<div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;"></div>`;
+
+  const variations = [
+    { name: "Longitudes", step: [15, 90] }, 
+    { name: "Latitudes", step: [180, 10] } 
+  ];
+
+  variations.forEach(v => {
+    const svg = d3.select(container).append("svg")
+      .attr("width", size)
+      .attr("height", size);
+
+    const topMargin = 50; 
+
+    const projection = d3.geoOrthographic()
+      .scale((size - padding * 2) / 2)
+      .translate([size / 2, size / 2])
+      .rotate([0, -30])
+      .clipAngle(90)
+      .fitExtent([[padding, topMargin], [size - padding, size - padding]], {type: "Sphere"});
+
+    const path = d3.geoPath().projection(projection);
+
+    svg.append("path")
+      .datum({type: "Sphere"})
+      .attr("d", path)
+      .attr("fill", "#f8f9fa")
+      .attr("stroke", themeColor);
+
+    svg.append("path")
+      .datum(d3.geoGraticule().step(v.step))
+      .attr("d", path)
+      .attr("fill", "none")
+      .attr("stroke", themeColor);
+
+    svg.append("text")
+      .attr("x", size / 2)
+      .attr("y", 25)
+      .attr("text-anchor", "middle")
+      .attr("fill", themeColor) 
+      .style("font-family", "sans-serif")
+      .style("font-weight", "bold")
+      .text(v.name);
+  });
+
+  return container;
+}
+```
+
+This begs the question: why even are there multiple geographic coordinate systems? Shouldn't
+we just choose one and all use that one? Well, we have multiple geographic coordinate systems 
+because simply the Earth isn't a perfect sphere. Different coordinate systems exist primarily 
+for specific areas to accommodate local deviations from the sphere better. One such example of 
+this is the *North American Datum of 1983 (NAD 83)*, which is the geographic coordinate system 
+US Census boundary files are in. Most often, longitude and latitude coordinates are represented 
+in the *World Geodetic System 1984 (WGS 1984)*, which is designed to work well for the entire
+world.
+
+Just knowing where things are isn't the whole picture though. We often want to represent the
+Earth on a 2-dimensional surface like a piece of paper or a screen. This introduces a whole
+new set of problems.
+
+Take a look at this below example. These are three different ways of representing Earth.
+Focus on one specific area in the world and watch it change as we change how we represent
+Earth. Notice how the shape and area of that place change. As do the distances and angles 
+between places.
+
+```{ojs}
+//| echo: false
+
+projection = {
+  while (true) {
+    for (const p of projections) {
+      yield p.value;
+      await Promises.delay(3000);
+    }
+  }
+}
+```
+
+```{ojs}
+//| echo: false
+
+viewof context = {
+  const context = DOM.context2d(width, height);
+  context.canvas.style.display = "block";
+  context.canvas.style.maxWidth = "100%";
+  context.canvas.value = context;
+  return context.canvas;
+}
+```
+
+```{ojs}
+//| echo: false
+
+themeColor = {
+  const p = document.querySelector("p") || document.body;
+  return getComputedStyle(p).color;
+}
+
+function render(projection) {
+  const path = d3.geoPath(projection, context);
+  context.clearRect(0, 0, width, height);
+  context.save();
+  context.beginPath(), path(outline), context.clip(), context.fillStyle = "#fff", context.fillRect(0, 0, width, height);
+  context.beginPath(), path(graticule), context.strokeStyle = "#ccc", context.stroke();
+  context.beginPath(), path(land), context.fillStyle = themeColor, context.fill();
+  context.restore();
+  context.beginPath(), path(outline), context.strokeStyle = "#000", context.stroke();
+}
+```
+
+```{ojs}
+//| echo: false
+
+update = {
+  const r0 = mutable previousProjection;
+  const r1 = projection;
+  if (r0 === r1) return;
+  mutable previousProjection = r1;
+  const interpolate = interpolateProjection(r0, r1);
+  for (let j = 1, m = 45; true; ++j) {
+    const t = Math.min(1, ease(j / m));
+    render(interpolate(t).rotate([performance.now() / 100, 0]));
+    yield;
+  }
+}
+```
+
+```{ojs}
+//| echo: false
+
+mutable previousProjection = d3.geoEquirectangularRaw
+```
+
+```{ojs}
+//| echo: false
+
+function interpolateProjection(raw0, raw1) {
+  const {scale: scale0, translate: translate0} = fit(raw0);
+  const {scale: scale1, translate: translate1} = fit(raw1);
+  return t => d3.geoProjection((x, y) => lerp2(raw0(x, y), raw1(x, y), t))
+    .scale(lerp1(scale0, scale1, t))
+    .translate(lerp2(translate0, translate1, t))
+    .precision(0.1);
+}
+```
+
+```{ojs}
+//| echo: false
+
+function lerp1(x0, x1, t) {
+  return (1 - t) * x0 + t * x1;
+}
+```
+
+```{ojs}
+//| echo: false
+
+function lerp2([x0, y0], [x1, y1], t) {
+  return [(1 - t) * x0 + t * x1, (1 - t) * y0 + t * y1];
+}
+```
+
+```{ojs}
+//| echo: false
+
+function fit(raw) {
+  const p = d3.geoProjection(raw).fitExtent([[0.5, 0.5], [width - 0.5, height - 0.5]], outline);
+  return {scale: p.scale(), translate: p.translate()};
+}
+```
+
+```{ojs}
+//| echo: false
+
+ease = d3.easeCubicInOut
+width = 954
+height = 400
+outline = ({type: "Sphere"})
+graticule = d3.geoGraticule10()
+land = topojson.feature(world, world.objects.land)
+world = FileAttachment("land-110m.json").json()
+topojson = require("topojson-client@3")
+d3 = require("d3@7", "d3-geo@3", "d3-geo-projection@4", "d3-ease@3")
+```
+
+```{ojs}
+//| echo: false
+
+projections = [
+  {name: "Patterson cylindrical", value: d3.geoPattersonRaw},
+  {name: "Van der Grinten", value: d3.geoVanDerGrintenRaw},
+  {name: "conic equal-area", value: d3.geoConicEqualAreaRaw(0, Math.PI / 3)},
+]
+```
+
+Unfortunately, no matter how we try to unfurl the Earth's surface on to a 2-dimensional plane,
+there is no way to flatten the Earth's surface without tearing and stretching it. The process
+of tearing and stretching the surface introduces distortions, which can be consequential in many
+applications.
+
+Thus, choosing the right 2D representation of the Earth for your area of interest and/or 
+application of interest is essential. We call these 2D representations **projected coordinate
+systems** for how they project geographic coordinate systems into 2D space.
+
+Projected coordinate systems can optimize for all kinds of properties like area, shape, distance,
+or direction. They also often only do so for specific areas. In the US, you will find that most
+states have several different projected coordinate systems, but typically there exists some
+one-size-fits-all coordinate system for which most operations can be done with moderate precision.
+
+Most spatial data formats will store information about the coordinate system your data is in.
+Additionally, coordinate systems are assigned a **Well-Known ID (WKID)** which uniquely identifies
+them and can serve as an easy way to search for them. For example, *WGS 1984*'s WKID is `4326`.
+
+Once data is in one coordinate system, it does not necessarily need to stay that way. Most GIS
+software will have built in features to transform data between projections and it is a best
+practice to always be conscious of the projection you are working within.
+
+
+```{ojs}
+//| echo: false
+
+chicagoRaw = FileAttachment("chi-boundaries.json").json()
+
+geoData = {
+  return {
+    type: "FeatureCollection",
+    features: chicagoRaw.map(d => ({
+      type: "Feature",
+      geometry: d.the_geom, 
+      properties: d
+    }))
+  };
+}
+
+chicagoLatLong = [-87.6316, 41.8839]
+
+// 3. Define the Projection factories
+calculators = [
+  { 
+    name: "WGS 1984", 
+    proj: () => d3.geoIdentity().reflectY(true), 
+    unit: "°", color: "#e41a1c" 
+  },
+  { 
+    name: "UTM 16N", 
+    proj: () => d3.geoTransverseMercator().rotate([87, 0]).center([0, 0]).scale(6378137), 
+    unit: "m", color: "#377eb8" 
+  },
+  { 
+    name: "State Plane IL East", 
+    proj: () => d3.geoTransverseMercator().rotate([88 + 20/60, 0]).center([0, 36 + 40/60]).scale(20925646), 
+    unit: "ft", color: "#4daf4a" 
+  }
+]
+
+mapGrid = {
+  const container = html`<div style="
+    display: flex; 
+    gap: 15px; 
+    flex-wrap: wrap; 
+    justify-content: center;
+  "></div>`;
+  const size = 255;
+  const padding = 30;
+
+  calculators.forEach(c => {
+    const rawProj = c.name === "WGS 1984" ? d3.geoIdentity() : c.proj();
+    const [rawX, rawY] = rawProj(chicagoLatLong);
+
+    const svg = d3.select(container).append("svg")
+        .attr("width", size).attr("height", size)
+        .style("border", "1px solid #ccc")
+        .style("background", "white");
+
+    const visualProj = c.proj().fitSize([size - padding*2, size - padding*2], geoData);
+
+    const [tx, ty] = visualProj.translate();
+    const yNudge = 20;
+    visualProj.translate([tx + padding, ty + padding + yNudge]);
+
+    const pathGenerator = d3.geoPath().projection(visualProj);
+
+    svg.append("path")
+        .datum(geoData)
+        .attr("d", pathGenerator)
+        .attr("fill", "#f8f9fa")
+        .attr("stroke", themeColor)
+        .attr("stroke-width", 1);
+
+    const [vx, vy] = visualProj(chicagoLatLong);
+    svg.append("circle")
+        .attr("cx", vx).attr("cy", vy)
+        .attr("r", 6).attr("fill", c.color).attr("stroke", "white").attr("stroke-width", 2);
+
+    svg.append("text")
+        .attr("x", 15).attr("y", 25)
+        .attr("fill", themeColor) 
+        .style("font-family", "sans-serif").style("font-weight", "bold")
+        .text(c.name);
+
+    const footer = svg.append("g")
+        .attr("font-family", "monospace").attr("font-size", "10px")
+        .attr("fill", themeColor);
+
+    footer.append("text").attr("x", 15).attr("y", size - 35)
+        .text(`X: ${rawX.toLocaleString()} ${c.unit}`);
+    footer.append("text").attr("x", 15).attr("y", size - 20)
+        .text(`Y: ${rawY.toLocaleString()} ${c.unit}`);
+  });
+
+  return container;
+}
+```
+
+___
+
+For more information, check out these resources:
+
+- [Geographic vs Projected Coordinate Systems - ArcGIS Blog](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs)
+- [Earth Peel - ArcGIS Blog](https://www.esri.com/arcgis-blog/products/arcgis-pro/education/earth-peel)
+- [Map Projections - Axis Maps](https://www.axismaps.com/guide/map-projections)
+

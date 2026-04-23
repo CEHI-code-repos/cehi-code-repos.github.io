@@ -1,0 +1,41 @@
+---
+title: "Tools"
+subtitle: "GIS shouldn't be difficult. Our tools make public health GIS analyses easier."
+title-block-banner: true
+listing:
+  - id: rsts
+    contents: rsts.yml
+    max-description-length: 9999 
+    type: grid
+    grid-columns: 2
+    image-align: left
+    image-height: 250px
+    fields:
+    - title
+    - description
+    - image
+  - id: other_tools
+    contents: other_tools.yml
+    max-description-length: 9999 
+    type: grid
+    grid-columns: 2
+    image-align: left
+    image-height: 250px
+    fields:
+    - title
+    - description
+    - image
+---
+
+### Rate Stabilizing Tools
+
+Rate Stabilizing Tools make it much easier to calculate high-quality local-level data needed to inform public health programs and tailor health promotion activities to the needs of communities across the country.
+
+:::{#rsts}
+:::
+
+### Additional tools
+
+:::{#other_tools}
+:::
+

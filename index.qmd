@@ -1,0 +1,12 @@
+---
+title: "Transforming Data into Action"
+subtitle: |
+  Providing local, state, and tribal health departments with staff with training to integrate geospatial analysis into their operations
+
+  <br> <a href='/about.html' class='btn btn-primary'>Learn more</a>
+title-block-banner: true
+format: 
+  html:
+    toc: false
+---
+

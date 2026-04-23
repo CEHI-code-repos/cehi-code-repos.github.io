@@ -1,0 +1,23 @@
+---
+title: "National GIS Data"
+subtitle: "A collection of spatial datasets designed to support public health spatial analyses and visualizations."
+date-modified: last-modified
+title-block-banner: true
+listing:
+  categories: true
+  contents: us
+  fields: [title, categories, data_description, data_time_frame, data_spatial_scale, data_format, data_source, data_orig_repo, data_living_atlas]
+  filter-ui: true
+  id: sample-listings
+  sort: "title asc"
+  template: "../assets/data_catalog/data_listing.ejs.md"
+format:
+  html:
+    css: "../assets/data_catalog/data_listing.css"
+---
+
+Want to know more about recent changes? Check out the [recent updates](updates/).
+
+::: {#sample-listings}
+:::
+

@@ -1,0 +1,13 @@
+---
+title: "Updates"
+listing:
+  fields: [title, author, date, description]
+  contents: "**/index.qmd"
+  sort: "date desc"
+  type: default
+  sort-ui: false
+  filter-ui: false
+title-block-banner: true
+---
+
+

@@ -1,0 +1,728 @@
+---
+title: "Map Design"
+subtitle: "The process of creating effective maps"
+order: 1
+toc: true
+---
+
+Designing a map is rarely a linear process. We often like to imagine it as a tidy recipe
+where we check off steps: **ideation**, **discussion**, **drafting**, **sharing**,
+**refinement**, **production**, and finally, **usage**. In reality, the process is quite
+messy. You might have an initial idea, discuss it with others, create several drafts,
+share them, and then find yourself back at the drawing board starting all over again.
+That's because a map is often a living document. It's something that evolves with your
+motivations and needs over time.
+
+When we design a map, we typically have three overaching concerns: **objective**,
+**audience**, and **medium**. The following is an example of the map design process.
+
+<style>
+li {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.extra-info {
+  border-bottom: 1px dashed #ccc;
+  display: inline-block;
+}
+
+.extra-info span {
+  position: absolute;
+  left: 0;
+  top: 2.2em;
+  z-index: 100;
+  
+  background: #fdfdfd;
+  padding: 10px 15px;
+  border: 1px solid #eee;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 280px;
+  
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(-5px);
+  
+  color: #444;
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+
+.extra-info span::before {
+  content: "";
+  position: absolute;
+  top: -20px; 
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: transparent;
+}
+
+.extra-info:hover span {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+</style>
+
+### Objective
+
+Every map begins with an objective. This goal may spark some immediate ideas, but those
+ideas are likely to change over time. However, throughout the map design process design
+decisions should be guided by how it impacts a reader’s ability to grasp that central goal.
+
+Questions that come to mind when considering the objective include:
+
+- What is the core message?
+- [What problem are you solving? <span>How does your map contribute to answering a 
+  question?</span>]{.extra-info} 
+- [Is the map’s scope appropriate? <span>Is the map attempting to do too much? Is 
+  the map so busy that the central message is unclear?</span>]{.extra-info}
+- [Does our visualization method lend itself to our message? <span>For example,
+  it is often bad practice to present count data in choropleths because of how
+  they often end up reflecting population differences rather than the count of
+  interest.</span>]{.extra-info}
+
+Ultimately, every element on the page should serve to clarify the data rather. By maintaining
+this focus, you ensure that the final product remains a functional tool for communication
+rather than just a collection of geographic points.
+
+### Audience
+
+While your objective sets the goal, your audience will likely determine the way we choose
+to reach it. After all, a map is only as effective as its reader's ability to interpret it.
+This necessitates we consider who our intended audience really is.
+
+Considering our audience means thinking about things like:
+
+- [How familiar is the audience with the geographic area? <span>If your audience is unfamiliar
+  with the area, you may consider adding a [locator map](https://support.esri.com/en-us/gis-dictionary/search?q=locator+map), 
+  [basemap](https://support.esri.com/en-us/gis-dictionary/basemap), labels for areas of interest, or even text explaining why this area is of importance to them.</span>]{.extra-info}
+- [Is the visualization we use appropriate for the audience? <span>Consider whether your reader
+  may have seen a similar visualization in the past or if the visualization involves too many variables.
+  The most effective visualization method is often not the same when your audience consists of experts 
+  versus when it consists of the general public.</span>]{.extra-info}
+- [Do we use terminology that the audience will understand? <span>Consider whether any abbreviations
+  we use well defined and if the map relies on a method the audience is not familiar with, consider adding
+  additional information to contexualize those methods.</span>]{.extra-info}
+- [Does our map communicate to the reader our level of authority? <span>Everything from the font size you
+  choose to the amount of white space in your map layout will be judged by your audience as a reflection on
+  your authority on the subject. Consider whether your map inspires a sense of authority in your audience.
+  You can also add logos for your organization or data sources to further convey to the audience your 
+  authority on the subject.</span>]{.extra-info}
+
+In any case, the importance of considering your audience lies in ensuring the map's complexity,
+context, and visual language align with the viewer's needs and environment so that the
+information is actually accessible and useful.
+
+### Medium
+
+A map is never viewed in a vacuum; the physical or digital space it occupies dictates how
+we design our map. When considering the medium, we may think of things like:
+
+- [Where will your map be viewed? <span>Is your map going to be posted on Instagram or on a 
+  massive billboard? The typical conventions for a map on social media can be very different
+  than one in print media. Following these conventions reduces the cognitive load on 
+  your reader.</span>]{.extra-info}
+- [Does your medium allow for interaction? <span>Interactive maps expose a whole host of new 
+  options to you as a map maker. Consider if interaction would aid your map's objectives or
+  if it even suits the medium in which your map will be shown.</span>]{.extra-info}
+- [How much time will they spend on your map? <span>If your audience is going to be spending
+  only a few seconds on your map, it is important that your map's message is instantly clear.
+  The more time your audience spends with your map, the more complexity becomes acceptable.</span>]{.extra-info}
+- [**Is the map accessible?** (Especially important when a map is intended for mass consumption)
+  <span>Consider whether all members of your audience will be able to use and understand your 
+  map. Accessibility considerations may include things like whether a map is suitable for people 
+  with color vision deficiency, with visual impairment or who speak another language. Check out 
+  Minnesota IT Services's [great guidance on map accesssibility](https://mn.gov/mnit/about-mnit/accessibility/maps/).</span>]{.extra-info}
+
+## An example
+
+Consider the objective: “I want to show where people live within Chicago.” A reasonable
+first attempt might be a choropleth map showing population density.
+
+```{ojs}
+//| echo: false
+chicago_data = FileAttachment("raceethn_acs5_24.geojson").json()
+
+themeColor = {
+  const p = document.querySelector("p") || document.body;
+  return getComputedStyle(p).color;
+}
+
+{
+  const width = 400;
+  const height = 400;
+  const n = 5;
+
+  const svg = d3.create("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", [0, 0, width, height])
+      .style("display", "block")
+      .style("margin", "auto");
+
+  const features = chicago_data.features;
+  const values = features.map(d => d.properties.total / d.properties.land_area);
+
+  const color = d3.scaleQuantile()
+      .domain(values)
+      .range(d3.schemeBlues[n]);
+
+  const projection = d3.geoAlbers()
+    .rotate([87.6, 0])
+    .center([0, 41.8])
+    .parallels([41.8, 41.8])
+    .fitSize([width, height - 80], chicago_data);
+
+  const path = d3.geoPath().projection(projection);
+
+  svg.append("g")
+    .selectAll("path")
+    .data(features)
+    .join("path")
+      .attr("fill", d => color(d.properties.total / d.properties.land_area))
+      .attr("stroke", "white")
+      .attr("stroke-width", 0.3)
+      .attr("d", path);
+
+  const legendG = svg.append("g")
+      .attr("transform", `translate(20, ${height - 40})`);
+
+  const thresholds = [d3.min(values), ...color.quantiles(), d3.max(values)];
+
+  const x = d3.scaleLinear()
+      .domain([0, color.range().length])
+      .range([0, width - 40]);
+
+  legendG.selectAll("rect")
+    .data(color.range())
+    .join("rect")
+      .attr("height", 8)
+      .attr("x", (d, i) => x(i))
+      .attr("width", (d, i) => x(i + 1) - x(i))
+      .attr("fill", d => d);
+
+  legendG.append("text")
+      .attr("y", -6)
+      .attr("font-size", "10px")
+      .attr("font-family", "sans-serif")
+      .attr("fill", themeColor)
+      .text("population per km²");
+
+  legendG.append("g")
+      .attr("transform", "translate(0, 8)")
+      .style("color", themeColor)
+      .call(d3.axisBottom(x)
+          .tickValues(d3.range(thresholds.length))
+          .tickFormat((d, i) => d3.format(".0s")(thresholds[i])))
+      .call(g => g.select(".domain").remove())
+      .selectAll("text")
+        .style("fill", themeColor);
+
+  return svg.node();
+}
+```
+
+Upon reviewing this map, we might decide to shift our objective. Perhaps the new goal is
+to understand the racial and ethnic population distribution across Chicago's communities.
+One way to achieve this would be to create several different choropleths, each representing
+a different demographic group.
+
+```{ojs}
+//| echo: false
+{
+  const width = 145;
+  const height = 250;
+  const n = 5;
+  
+  const variables = [
+    { key: "nh_white_alone", label: "White (Non-Hispanic)" },
+    { key: "nh_black_alone", label: "Black (Non-Hispanic)" },
+    { key: "nh_asian_alone", label: "Asian (Non-Hispanic)" },
+    { key: "hispanic", label: "Hispanic" },
+    { key: "other", label: "Other" }
+  ];
+
+  const container = d3.create("div")
+      .style("display", "flex")
+      .style("flex-wrap", "nowrap")
+      .style("overflow-x", "auto")
+      .style("gap", "10px")
+      .style("padding", "10px");
+
+  const features = chicago_data.features;
+
+  variables.forEach(v => {
+    const values = features.map(d => d.properties[v.key] / d.properties.land_area);
+    
+    const color = d3.scaleQuantile()
+        .domain(values)
+        .range(d3.schemeBlues[n]);
+
+    const svg = container.append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("viewBox", [0, 0, width, height])
+        .style("flex", "0 0 auto");
+
+    const projection = d3.geoAlbers()
+      .rotate([87.6, 0])
+      .center([0, 41.83])
+      .parallels([41.8, 41.8])
+      .fitExtent([[0, 40], [width, height - 60]], chicago_data);
+
+    const path = d3.geoPath().projection(projection);
+
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", 15)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "11px")
+        .attr("font-weight", "bold")
+        .attr("font-family", "sans-serif")
+        .attr("fill", themeColor)
+        .text(v.label);
+
+    svg.append("g")
+      .selectAll("path")
+      .data(features)
+      .join("path")
+        .attr("fill", d => color(d.properties[v.key] / d.properties.land_area))
+        .attr("stroke", "white")
+        .attr("stroke-width", 0.2)
+        .attr("d", path);
+
+    const legendG = svg.append("g")
+        .attr("transform", `translate(10, ${height - 40})`);
+
+    const thresholds = [d3.min(values), ...color.quantiles(), d3.max(values)];
+    const x = d3.scaleLinear().domain([0, color.range().length]).range([0, width - 20]);
+
+    legendG.selectAll("rect")
+      .data(color.range())
+      .join("rect")
+        .attr("height", 6)
+        .attr("x", (d, i) => x(i))
+        .attr("width", (d, i) => x(i + 1) - x(i))
+        .attr("fill", d => d);
+
+    legendG.append("text")
+        .attr("y", -6)
+        .attr("font-size", "8px")
+        .attr("font-family", "sans-serif")
+        .attr("fill", themeColor)
+        .text("per km²");
+
+    legendG.append("g")
+        .attr("transform", "translate(0, 6)")
+        .style("color", themeColor)
+        .call(d3.axisBottom(x)
+            .tickValues(d3.range(thresholds.length))
+            .tickFormat((d, i) => d3.format(".0s")(thresholds[i])))
+        .call(g => g.select(".domain").remove())
+        .selectAll("text")
+          .attr("font-size", "7px")
+          .style("fill", themeColor);
+  });
+
+  return container.node();
+}
+```
+
+However, these maps are difficult to interpret. It is not easy to compare them because
+they sit on different scales; yet, if we were to force them onto the same scale, we might
+lose the ability to see internal differences within specific groups. Fundamentally, this
+approach fails to meet the objective effectively.
+
+Our change map objective necessitates a different kind of map: a dot-density map.
+
+A dot-density map takes the two variables of interest, population density and race/ethnicity,
+and maps them onto two visual variables: dot frequency and color. This allows us to consolidate
+several separate maps into one cohesive visual. 
+
+```{ojs}
+//| echo: false
+{
+  const width = 400;
+  const height = 400;
+  const dotValue = 100;
+  
+  const variables = [
+    { key: "nh_white_alone", label: "White", color: "#3498db" },
+    { key: "nh_black_alone", label: "Black", color: "#e74c3c" },
+    { key: "nh_asian_alone", label: "Asian", color: "#2ecc71" },
+    { key: "hispanic", label: "Hispanic", color: "#f1c40f" },
+    { key: "other", label: "Other", color: "#9b59b6" }
+  ];
+
+  const svg = d3.create("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", [0, 0, width, height])
+      .style("max-width", "100%")
+      .style("height", "auto");
+
+  const projection = d3.geoAlbers()
+    .rotate([87.6, 0])
+    .center([0, 41.83])
+    .parallels([41.8, 41.8])
+    .fitSize([width, height - 80], chicago_data);
+
+  const path = d3.geoPath().projection(projection);
+
+  // Background boundaries
+  svg.append("g")
+    .selectAll("path")
+    .data(chicago_data.features)
+    .join("path")
+      .attr("fill", "none")
+      .attr("stroke", "#ddd")
+      .attr("stroke-width", 0.5)
+      .attr("d", path);
+
+  const dotGroup = svg.append("g");
+
+  chicago_data.features.forEach(feature => {
+    const bounds = path.bounds(feature);
+    const [[x0, y0], [x1, y1]] = bounds;
+    const dx = x1 - x0, dy = y1 - y0;
+
+    variables.forEach(v => {
+      const count = feature.properties[v.key] || 0;
+      const numDots = Math.round(count / dotValue);
+
+      for (let i = 0; i < numDots; i++) {
+        let x, y, p, attempts = 0;
+        do {
+          x = x0 + Math.random() * dx;
+          y = y0 + Math.random() * dy;
+          p = projection.invert([x, y]);
+          attempts++;
+        } while (!d3.geoContains(feature, p) && attempts < 30);
+
+        if (attempts < 30) {
+          dotGroup.append("circle")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 0.6)
+            .attr("fill", v.color)
+            .attr("opacity", 0.8);
+        }
+      }
+    });
+  });
+
+  const legendG = svg.append("g")
+      .attr("transform", `translate(${width / 2}, ${height - 30})`)
+      .attr("text-anchor", "middle");
+
+  legendG.append("text")
+      .attr("y", -10)
+      .attr("font-size", "12px")
+      .attr("font-weight", "bold")
+      .attr("font-family", "sans-serif")
+      .attr("fill", themeColor)
+      .text(`Population Density (1 dot = ${dotValue} people)`);
+
+  const itemWidth = 75;
+  const totalLegendWidth = (variables.length - 1) * itemWidth;
+  
+  variables.forEach((v, i) => {
+    const xOffset = (i * itemWidth) - (totalLegendWidth / 2);
+    const item = legendG.append("g")
+        .attr("transform", `translate(${xOffset}, 10)`);
+    
+    item.append("circle").attr("r", 5).attr("fill", v.color);
+    item.append("text")
+        .attr("x", 12)
+        .attr("y", 4)
+        .attr("text-anchor", "start")
+        .attr("font-size", "11px")
+        .attr("font-family", "sans-serif")
+        .attr("fill", themeColor)
+        .text(v.label);
+  });
+
+  return html`<div style="display: flex; justify-content: center; align-items: center;">${svg.node()}</div>`;
+}
+```
+
+This version performs much better at showing the racial and ethnic distribution of Chicago 
+because it reduces the number of maps a reader needs to process. By simplifying the 
+delivery while maintaining the detail, the map finally aligns with our objective.
+
+It's important that our map adapts to our objective and we encourage you to consider whether
+each change in your map's design effectively contributes to the message you seek to communicate
+to your reader.
+
+Speaking of our reader, its about time we start thinking about them a little more! Let's say this
+map's audience is the US general public. I might immediately start considering whether people outside
+of Chicago would find this map effective even if they don't know the city. Adding elements like highways,
+green spaces, or airports would help contextualize why people don't live in certain places. Another consideration
+might be adding text to contextualize why there are such stark differences between various parts of the city.
+I might even want to consider adding data sources so that another person could refer back to original source of
+the data.
+
+I see this map as one that someone might spend no more than 10 seconds looking at. So I don't want to make it too
+complicated. I will choose to add some contextual text and some data sources like so:
+
+```{ojs}
+//| echo: false
+{
+  const width = 400;
+  const height = 400;
+  const dotValue = 100;
+  
+  const variables = [
+    { key: "nh_white_alone", label: "White", color: "#3498db" },
+    { key: "nh_black_alone", label: "Black", color: "#e74c3c" },
+    { key: "nh_asian_alone", label: "Asian", color: "#2ecc71" },
+    { key: "hispanic", label: "Hispanic", color: "#f1c40f" },
+    { key: "other", label: "Other", color: "#9b59b6" }
+  ];
+
+  const svg = d3.create("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", [0, 0, width, height])
+      .style("width", "100%")
+      .style("height", "auto");
+
+  const projection = d3.geoAlbers()
+    .rotate([87.6, 0])
+    .center([0, 41.83])
+    .parallels([41.8, 41.8])
+    .fitSize([width, height - 100], chicago_data);
+
+  const path = d3.geoPath().projection(projection);
+
+  // Background boundaries
+  svg.append("g")
+    .selectAll("path")
+    .data(chicago_data.features)
+    .join("path")
+      .attr("fill", "none")
+      .attr("stroke", "#ddd")
+      .attr("stroke-width", 0.5)
+      .attr("d", path);
+
+  const dotGroup = svg.append("g");
+
+  chicago_data.features.forEach(feature => {
+    const bounds = path.bounds(feature);
+    const [[x0, y0], [x1, y1]] = bounds;
+    const dx = x1 - x0, dy = y1 - y0;
+
+    variables.forEach(v => {
+      const count = feature.properties[v.key] || 0;
+      const numDots = Math.round(count / dotValue);
+
+      for (let i = 0; i < numDots; i++) {
+        let x, y, p, attempts = 0;
+        do {
+          x = x0 + Math.random() * dx;
+          y = y0 + Math.random() * dy;
+          p = projection.invert([x, y]);
+          attempts++;
+        } while (!d3.geoContains(feature, p) && attempts < 30);
+
+        if (attempts < 30) {
+          dotGroup.append("circle")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 0.6)
+            .attr("fill", v.color)
+            .attr("opacity", 0.8);
+        }
+      }
+    });
+  });
+
+  const legendG = svg.append("g")
+      .attr("transform", `translate(${width / 2}, ${height - 30})`)
+      .attr("text-anchor", "middle");
+
+  legendG.append("text")
+      .attr("y", -35)
+      .attr("font-size", "12px")
+      .attr("font-weight", "bold")
+      .attr("font-family", "sans-serif")
+      .attr("fill", "currentColor")
+      .text(`Population Density (1 dot = ${dotValue} people)`);
+
+  const itemWidth = 75;
+  const totalLegendWidth = (variables.length - 1) * itemWidth;
+  
+  variables.forEach((v, i) => {
+    const xOffset = (i * itemWidth) - (totalLegendWidth / 2);
+    const item = legendG.append("g")
+        .attr("transform", `translate(${xOffset}, -15)`);
+    
+    item.append("circle").attr("r", 5).attr("fill", v.color);
+    item.append("text")
+        .attr("x", 12)
+        .attr("y", 4)
+        .attr("text-anchor", "start")
+        .attr("font-size", "11px")
+        .attr("font-family", "sans-serif")
+        .attr("fill", "currentColor")
+        .text(v.label);
+  });
+
+  legendG.append("text")
+      .attr("y", 15)
+      .attr("font-size", "10px")
+      .attr("font-style", "italic")
+      .attr("font-family", "sans-serif")
+      .attr("fill", "#888")
+      .text("Source: U.S. Census Bureau, ACS 5-Year Estimates (2024)");
+
+  return html`
+    <div style="display: flex; flex-direction: row; align-items: center; gap: 30px; max-width: 900px; margin: 0 auto; font-family: sans-serif;">
+      <div style="flex: 2;">${svg.node()}</div>
+      <div style="flex: 1; font-size: 16px; line-height: 1.6; color: #444; border-left: 1px solid #eee; padding-left: 20px;">
+        The history of segregation in Chicago through policies like <b>racial covenants</b> and <b>redlining</b> is reflected in the racial and ethnic demographics of Chicago's neighborhoods today.
+      </div>
+    </div>`;
+}
+```
+
+Lastly, let's consider the medium for this map. We are seeing this map on a website. Websites are
+inherently interactive mediums. This means we could do things like add links to other websites,
+pop ups to show additional information, animations to show the movement of communties over times.
+It also means we should try to adhere to the standards set by the overall website. We should make
+sure the font we use is similar fonts already used and that the map visualy looks cohesive within
+its context.
+
+Let's add a link for interested readers to a website that gives a little bit more history about 
+the racial and ethnic distribution of communities within Chicago!
+
+
+```{ojs}
+//| echo: false
+{
+  const width = 400;
+  const height = 400;
+  const dotValue = 100;
+  
+  const variables = [
+    { key: "nh_white_alone", label: "White", color: "#3498db" },
+    { key: "nh_black_alone", label: "Black", color: "#e74c3c" },
+    { key: "nh_asian_alone", label: "Asian", color: "#2ecc71" },
+    { key: "hispanic", label: "Hispanic", color: "#f1c40f" },
+    { key: "other", label: "Other", color: "#9b59b6" }
+  ];
+
+  const svg = d3.create("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("viewBox", [0, 0, width, height])
+      .style("width", "100%")
+      .style("height", "auto");
+
+  const projection = d3.geoAlbers()
+    .rotate([87.6, 0])
+    .center([0, 41.83])
+    .parallels([41.8, 41.8])
+    .fitSize([width, height - 100], chicago_data);
+
+  const path = d3.geoPath().projection(projection);
+
+  // Background boundaries
+  svg.append("g")
+    .selectAll("path")
+    .data(chicago_data.features)
+    .join("path")
+      .attr("fill", "none")
+      .attr("stroke", "#ddd")
+      .attr("stroke-width", 0.5)
+      .attr("d", path);
+
+  const dotGroup = svg.append("g");
+
+  chicago_data.features.forEach(feature => {
+    const bounds = path.bounds(feature);
+    const [[x0, y0], [x1, y1]] = bounds;
+    const dx = x1 - x0, dy = y1 - y0;
+
+    variables.forEach(v => {
+      const count = feature.properties[v.key] || 0;
+      const numDots = Math.round(count / dotValue);
+
+      for (let i = 0; i < numDots; i++) {
+        let x, y, p, attempts = 0;
+        do {
+          x = x0 + Math.random() * dx;
+          y = y0 + Math.random() * dy;
+          p = projection.invert([x, y]);
+          attempts++;
+        } while (!d3.geoContains(feature, p) && attempts < 30);
+
+        if (attempts < 30) {
+          dotGroup.append("circle")
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 0.6)
+            .attr("fill", v.color)
+            .attr("opacity", 0.8);
+        }
+      }
+    });
+  });
+
+  const legendG = svg.append("g")
+      .attr("transform", `translate(${width / 2}, ${height - 30})`)
+      .attr("text-anchor", "middle");
+
+  legendG.append("text")
+      .attr("y", -35)
+      .attr("font-size", "12px")
+      .attr("font-weight", "bold")
+      .attr("font-family", "sans-serif")
+      .attr("fill", "currentColor")
+      .text(`Population Density (1 dot = ${dotValue} people)`);
+
+  const itemWidth = 75;
+  const totalLegendWidth = (variables.length - 1) * itemWidth;
+  
+  variables.forEach((v, i) => {
+    const xOffset = (i * itemWidth) - (totalLegendWidth / 2);
+    const item = legendG.append("g")
+        .attr("transform", `translate(${xOffset}, -15)`);
+    
+    item.append("circle").attr("r", 5).attr("fill", v.color);
+    item.append("text")
+        .attr("x", 12)
+        .attr("y", 4)
+        .attr("text-anchor", "start")
+        .attr("font-size", "11px")
+        .attr("font-family", "sans-serif")
+        .attr("fill", "currentColor")
+        .text(v.label);
+  });
+
+  legendG.append("text")
+      .attr("y", 15)
+      .attr("font-size", "10px")
+      .attr("font-style", "italic")
+      .attr("font-family", "sans-serif")
+      .attr("fill", "#888")
+      .text("Source: U.S. Census Bureau, ACS 5-Year Estimates (2024)");
+
+  return html`
+    <div style="display: flex; flex-direction: row; align-items: center; gap: 30px; max-width: 900px; margin: 0 auto; font-family: sans-serif;">
+      <div style="flex: 2;">${svg.node()}</div>
+      <div style="flex: 1; font-size: 16px; line-height: 1.6; color: #444; border-left: 1px solid #eee; padding-left: 20px;">
+        The <a href="https://www.chicagoreporter.com/chicagos-250-year-history-of-segregation/">history of segregation</a> in Chicago through policies like <b>racial covenants</b> and <b>redlining</b> is reflected in the racial and ethnic demographics of Chicago's neighborhoods today.
+      </div>
+    </div>`;
+}
+```
+
+We could always continue iterating on our map, but hopefully this gave you some ideas
+for things to think about when you create your next map!
+

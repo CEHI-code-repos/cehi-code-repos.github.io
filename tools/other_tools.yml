@@ -1,0 +1,11 @@
+- title: "centr"
+  path: https://ryanzomorrodi.github.io/centr/
+  description: "R package to generate mean and median weighted or unweighted spatial centers."
+  image: "centr/logo.png"
+
+- title: "arcpygris"
+  path: https://github.com/ryanzomorrodi/arcpygris
+  description: "ArcGIS Pro toolbox that facilitates the seamless loading of US Census boundaries within an ArcGIS Pro Project."
+  image: "arcpygris/logo.png"
+
+

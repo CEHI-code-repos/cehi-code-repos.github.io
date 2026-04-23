@@ -1,0 +1,18 @@
+---
+title: "Cancer Statistics - Data Visualizations"
+categories:
+  - "Health Outcomes"
+data_description: "The US Cancer Statistics Data Visualizations tool provides incidence, prevalence, and mortality estimates for all sites and specific cancer type."
+data_time_frame: "1 year or 5 years; 1999 to 2022"
+data_spatial_scale: "State, County, and Congressional Districts"
+data_format: "Current year data is available as a CSV from the Data Visualizations websites. Prior years data is available as ASCII files."
+data_source: "Centers for Disease Control and Prevention (CDC)"
+data_orig_repo: "[All Years](https://www.cdc.gov/united-states-cancer-statistics/dataviz/data-tables.html) [Most Current Year Visualizations](https://gis.cdc.gov/Cancer/USCS/#/)"
+data_living_atlas: "N/A"
+data_details: |
+  Cancer statistics are available by site, sex, race/ethnicity, and age. County-level data can be found in the *BYAREA_COUNTY.txt* files and state-level data can be found in the *BYAREA.txt* files.
+  
+  Note: Historical cancer statistics files are in ACSII delimited format. Although ASCII is not a common file type, you should be able to add these tables to ArcGIS Pro as you would with any other file. 
+  Additionally, the files are in long format, which is not ideal for most forms of GIS analysis. You will likely find it easier to rearrange the data in some other software before importing to ArcGIS Pro.
+---
+
