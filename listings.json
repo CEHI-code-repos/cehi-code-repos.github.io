@@ -1,6 +1,18 @@
 [
   {
+    "listing": "/tools/index.html",
+    "items": []
+  },
+  {
     "listing": "/resources/index.html",
+    "items": [
+      "/resources/topics/map-design/index.html",
+      "/resources/topics/spatial_data.html",
+      "/resources/topics/projections/index.html"
+    ]
+  },
+  {
+    "listing": "/resources/topics/index.html",
     "items": [
       "/resources/topics/map-design/index.html",
       "/resources/topics/spatial_data.html",
@@ -47,18 +59,6 @@
       "/data_catalog/us/census-tribtract.html",
       "/data_catalog/us/usda-uic.html",
       "/data_catalog/us/nchs-urcs.html"
-    ]
-  },
-  {
-    "listing": "/tools/index.html",
-    "items": []
-  },
-  {
-    "listing": "/resources/topics/index.html",
-    "items": [
-      "/resources/topics/map-design/index.html",
-      "/resources/topics/spatial_data.html",
-      "/resources/topics/projections/index.html"
     ]
   }
 ]
