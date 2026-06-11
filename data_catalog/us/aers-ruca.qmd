@@ -4,7 +4,7 @@ categories:
   - Rurality
 data_description: "The rural-urban commuting area (RUCA) codes classify US census tracts using measures of population density, urbanization, and daily commuting. Also approximated at ZIP code level."
 data_time_frame: "Year; 1990, 2000, 2010, and 2020"
-data_spatial_scale: "County level representation of counties that are defined as PRCDAs/CHSDA"
+data_spatial_scale: "Census Tract, Zip Codes (2010+)"
 data_format: "CSV with GEOIDs"
 data_source: "US Department of Agriculture (USDA) Economic Research Service"
 data_orig_repo: "[All Years](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/)"
