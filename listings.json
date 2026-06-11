@@ -1,37 +1,5 @@
 [
   {
-    "listing": "/tools/index.html",
-    "items": []
-  },
-  {
-    "listing": "/resources/index.html",
-    "items": [
-      "/resources/topics/map-design/index.html",
-      "/resources/topics/spatial_data.html",
-      "/resources/topics/projections/index.html"
-    ]
-  },
-  {
-    "listing": "/resources/topics/index.html",
-    "items": [
-      "/resources/topics/map-design/index.html",
-      "/resources/topics/spatial_data.html",
-      "/resources/topics/projections/index.html"
-    ]
-  },
-  {
-    "listing": "/data_catalog/updates/index.html",
-    "items": [
-      "/data_catalog/updates/2603_update/index.html",
-      "/data_catalog/updates/2602_update/index.html",
-      "/data_catalog/updates/2505_update/index.html",
-      "/data_catalog/updates/2503_update/index.html",
-      "/data_catalog/updates/2502_update/index.html",
-      "/data_catalog/updates/2407_update/index.html",
-      "/data_catalog/updates/welcome/index.html"
-    ]
-  },
-  {
     "listing": "/data_catalog/index.html",
     "items": [
       "/data_catalog/us/cdc-500-cities.html",
@@ -60,5 +28,37 @@
       "/data_catalog/us/usda-uic.html",
       "/data_catalog/us/nchs-urcs.html"
     ]
+  },
+  {
+    "listing": "/data_catalog/updates/index.html",
+    "items": [
+      "/data_catalog/updates/2603_update/index.html",
+      "/data_catalog/updates/2602_update/index.html",
+      "/data_catalog/updates/2505_update/index.html",
+      "/data_catalog/updates/2503_update/index.html",
+      "/data_catalog/updates/2502_update/index.html",
+      "/data_catalog/updates/2407_update/index.html",
+      "/data_catalog/updates/welcome/index.html"
+    ]
+  },
+  {
+    "listing": "/resources/index.html",
+    "items": [
+      "/resources/topics/map-design/index.html",
+      "/resources/topics/spatial_data.html",
+      "/resources/topics/projections/index.html"
+    ]
+  },
+  {
+    "listing": "/resources/topics/index.html",
+    "items": [
+      "/resources/topics/map-design/index.html",
+      "/resources/topics/spatial_data.html",
+      "/resources/topics/projections/index.html"
+    ]
+  },
+  {
+    "listing": "/tools/index.html",
+    "items": []
   }
 ]
