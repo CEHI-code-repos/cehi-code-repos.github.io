@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data Classification – GIS Capacity Building</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../../../assets/logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../../assets/logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">GIS Capacity Building</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources/"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../map_logs/"> 
+<span class="menu-text">MapLogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../tools/"> 
+<span class="menu-text">Tools</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../data_catalog/"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about/"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-not-unclassed-maps" id="toc-why-not-unclassed-maps" class="nav-link active" data-scroll-target="#why-not-unclassed-maps">Why not unclassed maps?</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a>
+  <ul class="collapse">
+  <li><a href="#quantiles" id="toc-quantiles" class="nav-link" data-scroll-target="#quantiles">Quantiles</a></li>
+  <li><a href="#natural-breaks-jenks" id="toc-natural-breaks-jenks" class="nav-link" data-scroll-target="#natural-breaks-jenks">Natural Breaks (Jenks)</a></li>
+  <li><a href="#equal-interval" id="toc-equal-interval" class="nav-link" data-scroll-target="#equal-interval">Equal Interval</a></li>
+  <li><a href="#standard-deviation" id="toc-standard-deviation" class="nav-link" data-scroll-target="#standard-deviation">Standard Deviation</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data Classification</h1>
+<p class="subtitle lead">How and why we classify</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(healthatlas)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ha_set</span>(<span class="st">"https://chicagohealthatlas.org/"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># All-cause mortality rate</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>mortality_data <span class="ot">&lt;-</span> <span class="fu">ha_data</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">topic_key =</span> <span class="st">"VRDTHR"</span>, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">population_key =</span> <span class="st">""</span>, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">period_key =</span> <span class="st">"2020-2024"</span>, </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">layer_key =</span> <span class="st">"neighborhood"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>sf<span class="sc">::</span><span class="fu">st_write</span>(mortality_data, <span class="st">"data/allmortality_20202024_ca.geojson"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="25" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 24;"><span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>colorConfig <span class="op">=</span> ({ </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="dt">type</span><span class="op">:</span> <span class="st">"sequential"</span><span class="op">,</span> <span class="dt">scheme</span><span class="op">:</span> <span class="st">"blues"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [minVal<span class="op">,</span> maxVal]<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">false</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="32" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 31;"><span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"data/allmortality_20202024_ca.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>columnData <span class="op">=</span> data<span class="op">.</span><span class="at">features</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span>(f <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">value</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">filter</span>(v <span class="kw">=&gt;</span> v <span class="op">!=</span> <span class="kw">null</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="pp">isNaN</span>(v))</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>numClasses <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>minVal <span class="op">=</span> d3<span class="op">.</span><span class="fu">min</span>(columnData)<span class="op">;</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>maxVal <span class="op">=</span> d3<span class="op">.</span><span class="fu">max</span>(columnData)<span class="op">;</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>meanVal <span class="op">=</span> d3<span class="op">.</span><span class="fu">mean</span>(columnData)<span class="op">;</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>stdDev <span class="op">=</span> d3<span class="op">.</span><span class="fu">deviation</span>(columnData)<span class="op">;</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>getClassIndex <span class="op">=</span> (breaks) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> (x) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> breaks<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (x <span class="op">&gt;=</span> breaks[i] <span class="op">&amp;&amp;</span> x <span class="op">&lt;=</span> breaks[i<span class="op">+</span><span class="dv">1</span>]) <span class="cf">return</span> <span class="vs">`Class </span><span class="sc">${</span>i <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">&lt;</span> breaks[<span class="dv">0</span>] <span class="op">?</span> <span class="vs">`Class 1`</span> <span class="op">:</span> <span class="vs">`Class </span><span class="sc">${</span>breaks<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="sc">}</span><span class="vs">`</span><span class="op">;</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>quantileBreaks <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> numClasses <span class="op">+</span> <span class="dv">1</span>}<span class="op">,</span> (_<span class="op">,</span> i) <span class="kw">=&gt;</span> d3<span class="op">.</span><span class="fu">quantile</span>(columnData<span class="op">,</span> i <span class="op">/</span> numClasses))</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>equalBreaks <span class="op">=</span> <span class="bu">Array</span><span class="op">.</span><span class="fu">from</span>({<span class="dt">length</span><span class="op">:</span> numClasses <span class="op">+</span> <span class="dv">1</span>}<span class="op">,</span> (_<span class="op">,</span> i) <span class="kw">=&gt;</span> minVal <span class="op">+</span> (i <span class="op">*</span> (maxVal <span class="op">-</span> minVal) <span class="op">/</span> numClasses))<span class="op">;</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>jenksBreaks <span class="op">=</span> {</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ss <span class="op">=</span> <span class="cf">await</span> <span class="pp">require</span>(<span class="st">"simple-statistics@7.8.3"</span>)<span class="op">;</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ss<span class="op">.</span><span class="fu">ckmeans</span>(columnData<span class="op">,</span> numClasses)<span class="op">.</span><span class="fu">map</span>(cluster <span class="kw">=&gt;</span> d3<span class="op">.</span><span class="fu">min</span>(cluster))<span class="op">.</span><span class="fu">concat</span>(maxVal)<span class="op">;</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>sdBreaks <span class="op">=</span> [</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  minVal<span class="op">,</span> </span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  meanVal <span class="op">-</span> <span class="fl">1.5</span> <span class="op">*</span> stdDev<span class="op">,</span> </span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  meanVal <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> stdDev<span class="op">,</span> </span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>  meanVal <span class="op">+</span> <span class="fl">0.5</span> <span class="op">*</span> stdDev<span class="op">,</span> </span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>  meanVal <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> stdDev<span class="op">,</span> </span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  maxVal</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>]<span class="op">.</span><span class="fu">sort</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">-</span> b)<span class="op">;</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>colorDomain <span class="op">=</span> [<span class="st">"Class 1"</span><span class="op">,</span> <span class="st">"Class 2"</span><span class="op">,</span> <span class="st">"Class 3"</span><span class="op">,</span> <span class="st">"Class 4"</span><span class="op">,</span> <span class="st">"Class 5"</span>]<span class="op">;</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>colorRange <span class="op">=</span> [<span class="st">"#eff3ff"</span><span class="op">,</span> <span class="st">"#bdd7e7"</span><span class="op">,</span> <span class="st">"#6baed6"</span><span class="op">,</span> <span class="st">"#3182bd"</span><span class="op">,</span> <span class="st">"#08519c"</span>]<span class="op">;</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>renderStackedRow <span class="op">=</span> (breaks) <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="width: 100%;"&gt;</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div style="display: flex; gap: 24px; align-items: center; width: 100%; flex-wrap: wrap;"&gt;</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div style="flex: 1; min-width: 200px; display: flex; justify-content: center;"&gt;</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="vs">        </span><span class="sc">${</span>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>          <span class="dt">height</span><span class="op">:</span> <span class="dv">180</span><span class="op">,</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>          <span class="dt">width</span><span class="op">:</span> <span class="dv">200</span><span class="op">,</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>          <span class="dt">projection</span><span class="op">:</span> {</span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>            <span class="dt">type</span><span class="op">:</span> <span class="st">"mercator"</span><span class="op">,</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>            <span class="dt">domain</span><span class="op">:</span> data</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>          }<span class="op">,</span> </span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>          <span class="dt">color</span><span class="op">:</span> { <span class="dt">domain</span><span class="op">:</span> colorDomain<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> colorRange<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">false</span> }<span class="op">,</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>          <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>            Plot<span class="op">.</span><span class="fu">geo</span>(data<span class="op">,</span> {</span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>              <span class="dt">fill</span><span class="op">:</span> f <span class="kw">=&gt;</span> <span class="fu">getClassIndex</span>(breaks)(f<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">value</span>)<span class="op">,</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>              <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#ffffff"</span><span class="op">,</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>              <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">0.3</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>            })</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>          ]</span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>        })<span class="sc">}</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/div&gt;</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div style="flex: 2; min-width: 300px;"&gt;</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="vs">        </span><span class="sc">${</span>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>          <span class="dt">height</span><span class="op">:</span> <span class="dv">180</span><span class="op">,</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>          <span class="dt">width</span><span class="op">:</span> <span class="dv">500</span><span class="op">,</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>          <span class="dt">y</span><span class="op">:</span> { <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>          <span class="dt">color</span><span class="op">:</span> { <span class="dt">domain</span><span class="op">:</span> colorDomain<span class="op">,</span> <span class="dt">range</span><span class="op">:</span> colorRange<span class="op">,</span> <span class="dt">legend</span><span class="op">:</span> <span class="kw">false</span> }<span class="op">,</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>          <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>            Plot<span class="op">.</span><span class="fu">rectY</span>(columnData<span class="op">,</span> Plot<span class="op">.</span><span class="fu">binX</span>(</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>              { <span class="dt">y</span><span class="op">:</span> <span class="st">"count"</span> }<span class="op">,</span> </span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>              { </span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>                <span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> </span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>                <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> <span class="fu">getClassIndex</span>(breaks)(d)<span class="op">,</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>                <span class="dt">inset</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>                <span class="dt">thresholds</span><span class="op">:</span> <span class="dv">70</span> </span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>              }</span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>            ))<span class="op">,</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>            Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>          ]</span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a>        })<span class="sc">}</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/div&gt;</span></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/div&gt;</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-4" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-5" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-6" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-7" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-8" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-9" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-10" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-11" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-12" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-13" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-14" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-15" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<p><strong>Data classification</strong> is the process of grouping large amounts of data into smaller, manageable categories to create clear and readable maps. Applying data classification allows a mapmaker to organize these raw numbers into distinct groups. Each group is then assigned a specific color, shape, size, etc. on the map. This transformation turns a messy jumble of individual data points into a meaningful visual story, allowing anyone to instantly spot broad geographic trends and patterns.</p>
+<section id="why-not-unclassed-maps" class="level3">
+<h3 class="anchored" data-anchor-id="why-not-unclassed-maps">Why not unclassed maps?</h3>
+<p>While data classification groups data into distinct bins, <strong>unclassed maps</strong> preserve every individual value using a smooth, unbroken color gradient. Choosing classified maps over continuous distributions is often necessary due to data structure and human perception.</p>
+<p>Unclassed maps fail when data contains extreme outliers. A single massive value stretches the color scale, forcing all other data points to look identical and hiding internal variation. Classification groups outliers into an open-ended category, revealing patterns among the remaining data.</p>
+<p>Additionally, classified maps excel at emphasizing critical thresholds like flood zones or pollution limits by creating sharp visual boundaries. Continuous maps blend these boundaries, obscuring significant thresholds.</p>
+<p>Classified maps accommodate human visual limits and simplify data querying. The human eye can only distinguish five to seven shades of one color, meaning continuous gradients often overwhelm viewers. Classified legends allow users to match a color block to a precise data range, whereas decoding exact values from a continuous gradient is nearly impossible.</p>
+<p>Despite these limitations, unclassed maps remain highly valuable when used under the right conditions. Recognizing these trade-offs should guide your decision on whether a classed or unclassed approach best suits your needs.</p>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<p>Mapmakers can tell entirely different stories using the exact same underlying data simply by changing how they group it. To avoid misleading patterns, cartographers often look at a histogram first to see the data’s true distribution and hidden outliers. Selecting the right classification method is vital to presenting data truthfully and delivering a clear, effective message.</p>
+<p>As an example, take the distribution of the 2020-2024 all-cause mortality within Chicago community areas. Shown continuously it looks like this:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="139" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 138;"><span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a>renderContinuousRow <span class="op">=</span> () <span class="kw">=&gt;</span> <span class="fu">html</span><span class="vs">`</span></span>
+<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div style="width: 100%;"&gt;</span></span>
+<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;div style="display: flex; gap: 24px; align-items: center; width: 100%; flex-wrap: wrap;"&gt;</span></span>
+<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a><span class="vs">      </span></span>
+<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;!-- Continuous Map --&gt;</span></span>
+<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div style="flex: 1; min-width: 200px; display: flex; justify-content: center;"&gt;</span></span>
+<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a><span class="vs">        </span><span class="sc">${</span>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a>          <span class="dt">height</span><span class="op">:</span> <span class="dv">180</span><span class="op">,</span></span>
+<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a>          <span class="dt">width</span><span class="op">:</span> <span class="dv">200</span><span class="op">,</span></span>
+<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a>          <span class="dt">projection</span><span class="op">:</span> {</span>
+<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a>            <span class="dt">type</span><span class="op">:</span> <span class="st">"mercator"</span><span class="op">,</span></span>
+<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a>            <span class="dt">domain</span><span class="op">:</span> data</span>
+<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a>          }<span class="op">,</span> </span>
+<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a>          <span class="dt">color</span><span class="op">:</span> colorConfig<span class="op">,</span></span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a>          <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a>            Plot<span class="op">.</span><span class="fu">geo</span>(data<span class="op">,</span> {</span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a>              <span class="dt">fill</span><span class="op">:</span> f <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">value</span><span class="op">,</span></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a>              <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#ffffff"</span><span class="op">,</span></span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>              <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">0.3</span></span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>            })</span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a>          ]</span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>        })<span class="sc">}</span></span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/div&gt;</span></span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;!-- Continuous Histogram --&gt;</span></span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;div style="flex: 2; min-width: 300px;"&gt;</span></span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a><span class="vs">        </span><span class="sc">${</span>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>          <span class="dt">height</span><span class="op">:</span> <span class="dv">180</span><span class="op">,</span></span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>          <span class="dt">width</span><span class="op">:</span> <span class="dv">500</span><span class="op">,</span></span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a>          <span class="dt">y</span><span class="op">:</span> { <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="kw">null</span> }<span class="op">,</span></span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>          <span class="dt">color</span><span class="op">:</span> colorConfig<span class="op">,</span></span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>          <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>            Plot<span class="op">.</span><span class="fu">rectY</span>(columnData<span class="op">,</span> Plot<span class="op">.</span><span class="fu">binX</span>(</span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a>              { <span class="dt">y</span><span class="op">:</span> <span class="st">"count"</span> }<span class="op">,</span> </span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a>              { </span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a>                <span class="dt">x</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span> </span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a>                <span class="dt">fill</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">,</span></span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a>                <span class="dt">inset</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span></span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>                <span class="dt">thresholds</span><span class="op">:</span> <span class="dv">70</span> </span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a>              }</span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a>            ))<span class="op">,</span></span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a>            Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>])</span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>          ]</span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>        })<span class="sc">}</span></span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a><span class="vs">      &lt;/div&gt;</span></span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a><span class="vs">    &lt;/div&gt;</span></span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a><span class="vs">`</span></span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span><span class="sc">${</span><span class="fu">renderContinuousRow</span>()<span class="sc">}</span><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-3-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+<p>In our discussion of different classification methods, try to identify the changes in this map introduced by the classification method.</p>
+<section id="quantiles" class="level3">
+<h3 class="anchored" data-anchor-id="quantiles">Quantiles</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb5" data-startfrom="196" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 195;"><span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span><span class="sc">${</span><span class="fu">renderStackedRow</span>(quantileBreaks)<span class="sc">}</span><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>The <strong>quantile classification</strong> method distributes data so that every category contains an equal number of geographic features. This forced equality maximizes visual contrast and ensures every color in the legend is used evenly, making it well suited for highlighting relative rankings, identifying top or bottom performers, or comparing rankings across multiple maps. However, this method completely ignores the actual numerical distances between data points, meaning it can group widely different values together or split nearly identical values into separate classes.</p>
+</section>
+<section id="natural-breaks-jenks" class="level3">
+<h3 class="anchored" data-anchor-id="natural-breaks-jenks">Natural Breaks (Jenks)</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb6" data-startfrom="204" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 203;"><span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span><span class="sc">${</span><span class="fu">renderStackedRow</span>(jenksBreaks)<span class="sc">}</span><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-5" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>The <strong>natural breaks</strong> method identifies inherent clusters and gaps within a dataset by establishing groups with minimal variance within them and maximal variance between them. Unlike quantiles, it adapts to the distribution of the data, ensuring boundaries are placed where sudden jumps in values occur. This makes it ideal for showing true data structures and preserving natural patterns without artificially compressing or expanding the categories. However, because the class boundaries are custom-fit to one specific dataset, comparing these maps across different time periods or regions is highly ineffective. The categories are uneven and mathematically irregular, which can make the legend more complex for general audiences to interpret.</p>
+</section>
+<section id="equal-interval" class="level3">
+<h3 class="anchored" data-anchor-id="equal-interval">Equal Interval</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb7" data-startfrom="212" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 211;"><span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span><span class="sc">${</span><span class="fu">renderStackedRow</span>(equalBreaks)<span class="sc">}</span><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-6" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>The <strong>equal interval</strong> method divides the entire range of data values into categories of equal size, such as groups spanning exactly 10 units each. It is best suited for familiar, continuous ranges like percentages or temperatures, as the consistent step-size makes the legend highly intuitive and easy for general audiences to interpret. This consistency also makes it an excellent choice for comparing multiple maps over time, as the class boundaries remain fixed regardless of how the data shifts. However, because it focuses strictly on value ranges rather than data density, it performs poorly when data is heavily skewed or contains extreme outliers.</p>
+</section>
+<section id="standard-deviation" class="level3">
+<h3 class="anchored" data-anchor-id="standard-deviation">Standard Deviation</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb8" data-startfrom="220" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 219;"><span id="cb8-220"><a href="#cb8-220" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`</span><span class="sc">${</span><span class="fu">renderStackedRow</span>(sdBreaks)<span class="sc">}</span><span class="vs">`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-7" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>The <strong>standard deviation</strong> method forms categories based on how far data points deviate from the statistical mean of the dataset. The legend typically uses a two-toned color scale to highlight areas that are above average in one hue and areas below average in another. This method is highly effective for identifying spatial anomalies and seeing exactly which neighborhoods deviate significantly from the citywide norm. Despite its statistical basis, this method is difficult for non-technical audiences to understand, as the legend displays mathematical variances rather than actual data values. It also requires the underlying data to follow a normal distribution to be truly meaningful.</p>
+<hr>
+<p>For more information, check out these resources:</p>
+<ul>
+<li><a href="https://www.axismaps.com/guide/data-classification">The Basics of Data Classification - Axis Maps</a></li>
+<li><a href="https://doc.esri.com/en/arcgis-pro/latest/help/mapping/layer-properties/data-classification-methods.html">Data classification methods - ArcGIS Pro Docs</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImNvbG9yQ29uZmlnID0gKHsgXG4gIHR5cGU6IFwic2VxdWVudGlhbFwiLCBzY2hlbWU6IFwiYmx1ZXNcIiwgZG9tYWluOiBbbWluVmFsLCBtYXhWYWxdLCBsZWdlbmQ6IGZhbHNlXG59KTtcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMiIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImRhdGEgPSBGaWxlQXR0YWNobWVudChcImRhdGEvYWxsbW9ydGFsaXR5XzIwMjAyMDI0X2NhLmdlb2pzb25cIikuanNvbigpXG5cbmNvbHVtbkRhdGEgPSBkYXRhLmZlYXR1cmVzXG4gIC5tYXAoZiA9PiBmLnByb3BlcnRpZXMudmFsdWUpXG4gIC5maWx0ZXIodiA9PiB2ICE9IG51bGwgJiYgIWlzTmFOKHYpKVxuXG5udW1DbGFzc2VzID0gNTtcbm1pblZhbCA9IGQzLm1pbihjb2x1bW5EYXRhKTtcbm1heFZhbCA9IGQzLm1heChjb2x1bW5EYXRhKTtcbm1lYW5WYWwgPSBkMy5tZWFuKGNvbHVtbkRhdGEpO1xuc3RkRGV2ID0gZDMuZGV2aWF0aW9uKGNvbHVtbkRhdGEpO1xuXG5nZXRDbGFzc0luZGV4ID0gKGJyZWFrcykgPT4ge1xuICByZXR1cm4gKHgpID0+IHtcbiAgICBmb3IgKGxldCBpID0gMDsgaSA8IGJyZWFrcy5sZW5ndGggLSAxOyBpKyspIHtcbiAgICAgIGlmICh4ID49IGJyZWFrc1tpXSAmJiB4IDw9IGJyZWFrc1tpKzFdKSByZXR1cm4gYENsYXNzICR7aSArIDF9YDtcbiAgICB9XG4gICAgcmV0dXJuIHggPCBicmVha3NbMF0gPyBgQ2xhc3MgMWAgOiBgQ2xhc3MgJHticmVha3MubGVuZ3RoIC0gMX1gO1xuICB9O1xufVxuXG5xdWFudGlsZUJyZWFrcyA9IEFycmF5LmZyb20oe2xlbmd0aDogbnVtQ2xhc3NlcyArIDF9LCAoXywgaSkgPT4gZDMucXVhbnRpbGUoY29sdW1uRGF0YSwgaSAvIG51bUNsYXNzZXMpKVxuZXF1YWxCcmVha3MgPSBBcnJheS5mcm9tKHtsZW5ndGg6IG51bUNsYXNzZXMgKyAxfSwgKF8sIGkpID0+IG1pblZhbCArIChpICogKG1heFZhbCAtIG1pblZhbCkgLyBudW1DbGFzc2VzKSk7XG5qZW5rc0JyZWFrcyA9IHtcbiAgY29uc3Qgc3MgPSBhd2FpdCByZXF1aXJlKFwic2ltcGxlLXN0YXRpc3RpY3NANy44LjNcIik7XG4gIHJldHVybiBzcy5ja21lYW5zKGNvbHVtbkRhdGEsIG51bUNsYXNzZXMpLm1hcChjbHVzdGVyID0+IGQzLm1pbihjbHVzdGVyKSkuY29uY2F0KG1heFZhbCk7XG59XG5zZEJyZWFrcyA9IFtcbiAgbWluVmFsLCBcbiAgbWVhblZhbCAtIDEuNSAqIHN0ZERldiwgXG4gIG1lYW5WYWwgLSAwLjUgKiBzdGREZXYsIFxuICBtZWFuVmFsICsgMC41ICogc3RkRGV2LCBcbiAgbWVhblZhbCArIDEuNSAqIHN0ZERldiwgXG4gIG1heFZhbFxuXS5zb3J0KChhLCBiKSA9PiBhIC0gYik7XG5cbmNvbG9yRG9tYWluID0gW1wiQ2xhc3MgMVwiLCBcIkNsYXNzIDJcIiwgXCJDbGFzcyAzXCIsIFwiQ2xhc3MgNFwiLCBcIkNsYXNzIDVcIl07XG5jb2xvclJhbmdlID0gW1wiI2VmZjNmZlwiLCBcIiNiZGQ3ZTdcIiwgXCIjNmJhZWQ2XCIsIFwiIzMxODJiZFwiLCBcIiMwODUxOWNcIl07XG5cbnJlbmRlclN0YWNrZWRSb3cgPSAoYnJlYWtzKSA9PiBodG1sYFxuICA8ZGl2IHN0eWxlPVwid2lkdGg6IDEwMCU7XCI+XG4gICAgPGRpdiBzdHlsZT1cImRpc3BsYXk6IGZsZXg7IGdhcDogMjRweDsgYWxpZ24taXRlbXM6IGNlbnRlcjsgd2lkdGg6IDEwMCU7IGZsZXgtd3JhcDogd3JhcDtcIj5cbiAgICAgIDxkaXYgc3R5bGU9XCJmbGV4OiAxOyBtaW4td2lkdGg6IDIwMHB4OyBkaXNwbGF5OiBmbGV4OyBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcIj5cbiAgICAgICAgJHtQbG90LnBsb3Qoe1xuICAgICAgICAgIGhlaWdodDogMTgwLFxuICAgICAgICAgIHdpZHRoOiAyMDAsXG4gICAgICAgICAgcHJvamVjdGlvbjoge1xuICAgICAgICAgICAgdHlwZTogXCJtZXJjYXRvclwiLFxuICAgICAgICAgICAgZG9tYWluOiBkYXRhXG4gICAgICAgICAgfSwgXG4gICAgICAgICAgY29sb3I6IHsgZG9tYWluOiBjb2xvckRvbWFpbiwgcmFuZ2U6IGNvbG9yUmFuZ2UsIGxlZ2VuZDogZmFsc2UgfSxcbiAgICAgICAgICBtYXJrczogW1xuICAgICAgICAgICAgUGxvdC5nZW8oZGF0YSwge1xuICAgICAgICAgICAgICBmaWxsOiBmID0+IGdldENsYXNzSW5kZXgoYnJlYWtzKShmLnByb3BlcnRpZXMudmFsdWUpLFxuICAgICAgICAgICAgICBzdHJva2U6IFwiI2ZmZmZmZlwiLFxuICAgICAgICAgICAgICBzdHJva2VXaWR0aDogMC4zXG4gICAgICAgICAgICB9KVxuICAgICAgICAgIF1cbiAgICAgICAgfSl9XG4gICAgICA8L2Rpdj5cblxuICAgICAgPGRpdiBzdHlsZT1cImZsZXg6IDI7IG1pbi13aWR0aDogMzAwcHg7XCI+XG4gICAgICAgICR7UGxvdC5wbG90KHtcbiAgICAgICAgICBoZWlnaHQ6IDE4MCxcbiAgICAgICAgICB3aWR0aDogNTAwLFxuICAgICAgICAgIHk6IHsgZ3JpZDogdHJ1ZSwgbGFiZWw6IG51bGwgfSxcbiAgICAgICAgICBjb2xvcjogeyBkb21haW46IGNvbG9yRG9tYWluLCByYW5nZTogY29sb3JSYW5nZSwgbGVnZW5kOiBmYWxzZSB9LFxuICAgICAgICAgIG1hcmtzOiBbXG4gICAgICAgICAgICBQbG90LnJlY3RZKGNvbHVtbkRhdGEsIFBsb3QuYmluWChcbiAgICAgICAgICAgICAgeyB5OiBcImNvdW50XCIgfSwgXG4gICAgICAgICAgICAgIHsgXG4gICAgICAgICAgICAgICAgeDogZCA9PiBkLCBcbiAgICAgICAgICAgICAgICBmaWxsOiBkID0+IGdldENsYXNzSW5kZXgoYnJlYWtzKShkKSxcbiAgICAgICAgICAgICAgICBpbnNldDogMC41LFxuICAgICAgICAgICAgICAgIHRocmVzaG9sZHM6IDcwIFxuICAgICAgICAgICAgICB9XG4gICAgICAgICAgICApKSxcbiAgICAgICAgICAgIFBsb3QucnVsZVkoWzBdKVxuICAgICAgICAgIF1cbiAgICAgICAgfSl9XG4gICAgICA8L2Rpdj5cbiAgICA8L2Rpdj5cbiAgPC9kaXY+XG5gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJyZW5kZXJDb250aW51b3VzUm93ID0gKCkgPT4gaHRtbGBcbiAgPGRpdiBzdHlsZT1cIndpZHRoOiAxMDAlO1wiPlxuICAgIDxkaXYgc3R5bGU9XCJkaXNwbGF5OiBmbGV4OyBnYXA6IDI0cHg7IGFsaWduLWl0ZW1zOiBjZW50ZXI7IHdpZHRoOiAxMDAlOyBmbGV4LXdyYXA6IHdyYXA7XCI+XG4gICAgICBcbiAgICAgIDwhLS0gQ29udGludW91cyBNYXAgLS0+XG4gICAgICA8ZGl2IHN0eWxlPVwiZmxleDogMTsgbWluLXdpZHRoOiAyMDBweDsgZGlzcGxheTogZmxleDsganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XCI+XG4gICAgICAgICR7UGxvdC5wbG90KHtcbiAgICAgICAgICBoZWlnaHQ6IDE4MCxcbiAgICAgICAgICB3aWR0aDogMjAwLFxuICAgICAgICAgIHByb2plY3Rpb246IHtcbiAgICAgICAgICAgIHR5cGU6IFwibWVyY2F0b3JcIixcbiAgICAgICAgICAgIGRvbWFpbjogZGF0YVxuICAgICAgICAgIH0sIFxuICAgICAgICAgIGNvbG9yOiBjb2xvckNvbmZpZyxcbiAgICAgICAgICBtYXJrczogW1xuICAgICAgICAgICAgUGxvdC5nZW8oZGF0YSwge1xuICAgICAgICAgICAgICBmaWxsOiBmID0+IGYucHJvcGVydGllcy52YWx1ZSxcbiAgICAgICAgICAgICAgc3Ryb2tlOiBcIiNmZmZmZmZcIixcbiAgICAgICAgICAgICAgc3Ryb2tlV2lkdGg6IDAuM1xuICAgICAgICAgICAgfSlcbiAgICAgICAgICBdXG4gICAgICAgIH0pfVxuICAgICAgPC9kaXY+XG5cbiAgICAgIDwhLS0gQ29udGludW91cyBIaXN0b2dyYW0gLS0+XG4gICAgICA8ZGl2IHN0eWxlPVwiZmxleDogMjsgbWluLXdpZHRoOiAzMDBweDtcIj5cbiAgICAgICAgJHtQbG90LnBsb3Qoe1xuICAgICAgICAgIGhlaWdodDogMTgwLFxuICAgICAgICAgIHdpZHRoOiA1MDAsXG4gICAgICAgICAgeTogeyBncmlkOiB0cnVlLCBsYWJlbDogbnVsbCB9LFxuICAgICAgICAgIGNvbG9yOiBjb2xvckNvbmZpZyxcbiAgICAgICAgICBtYXJrczogW1xuICAgICAgICAgICAgUGxvdC5yZWN0WShjb2x1bW5EYXRhLCBQbG90LmJpblgoXG4gICAgICAgICAgICAgIHsgeTogXCJjb3VudFwiIH0sIFxuICAgICAgICAgICAgICB7IFxuICAgICAgICAgICAgICAgIHg6IGQgPT4gZCwgXG4gICAgICAgICAgICAgICAgZmlsbDogZCA9PiBkLFxuICAgICAgICAgICAgICAgIGluc2V0OiAwLjUsXG4gICAgICAgICAgICAgICAgdGhyZXNob2xkczogNzAgXG4gICAgICAgICAgICAgIH1cbiAgICAgICAgICAgICkpLFxuICAgICAgICAgICAgUGxvdC5ydWxlWShbMF0pXG4gICAgICAgICAgXVxuICAgICAgICB9KX1cbiAgICAgIDwvZGl2PlxuXG4gICAgPC9kaXY+XG4gIDwvZGl2PlxuYFxuXG5odG1sYCR7cmVuZGVyQ29udGludW91c1JvdygpfWBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNCIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgJHtyZW5kZXJTdGFja2VkUm93KHF1YW50aWxlQnJlYWtzKX1gXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTUiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYCR7cmVuZGVyU3RhY2tlZFJvdyhqZW5rc0JyZWFrcyl9YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC02IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiaHRtbGAke3JlbmRlclN0YWNrZWRSb3coZXF1YWxCcmVha3MpfWBcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtNyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Imh0bWxgJHtyZW5kZXJTdGFja2VkUm93KHNkQnJlYWtzKX1gXG4ifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../resources/topics/data_classification";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/CEHI-code-repos\.github\.io\/cehi-code-repos\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../LICENCE">Copyright © 2026 Children’s Environmental Health Initiative</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CEHI-code-repos/GISDataCatalog">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/company/children-s-environmental-health-initiative">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

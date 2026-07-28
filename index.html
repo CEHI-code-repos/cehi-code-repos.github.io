@@ -2,20 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Transforming Data into Action – GIS Training</title>
+<title>Transforming Data into Action – GIS Capacity Building</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -23,12 +26,49 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <link href="./assets/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -36,14 +76,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-5c0bf5bb6df8a892a8540381967c1085.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-5c0bf5bb6df8a892a8540381967c1085.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-5c0bf5bb6df8a892a8540381967c1085.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -59,11 +99,71 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-map_logs .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-image','listing-title','listing-description','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-map_logs'] = new List('listing-map_logs', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -75,7 +175,7 @@ ul.task-list li input[type="checkbox"] {
     <img src="./assets/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">GIS Training</span>
+    <span class="navbar-title">GIS Capacity Building</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -88,6 +188,10 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Resources</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./map_logs/"> 
+<span class="menu-text">MapLogs</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./tools/"> 
 <span class="menu-text">Tools</span></a>
   </li>  
@@ -96,7 +200,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Data</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="./about/"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -109,15 +213,15 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page">
       <h1 class="title">Transforming Data into Action</h1>
-            <p class="subtitle lead">Providing local, state, and tribal health departments with staff with training to integrate geospatial analysis into their operations<br>
+            <p class="subtitle lead">Providing local, state, and tribal health departments staff with the skills to integrate geospatial analysis into their operations<br>
 <br> <a href="./about.html" class="btn btn-primary">Learn more</a></p>
                       </div>
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page">
 
       
     
@@ -125,21 +229,358 @@ ul.task-list li input[type="checkbox"] {
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
 
 
 
 
 
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="23" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 22;"><span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>d3 <span class="op">=</span> <span class="pp">require</span>(<span class="st">"d3@7"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">createCardCanvas</span>(width<span class="op">,</span> height<span class="op">,</span> drawFunction) {</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> canvas <span class="op">=</span> d3<span class="op">.</span><span class="fu">create</span>(<span class="st">"canvas"</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> width)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> height)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"width"</span><span class="op">,</span> <span class="st">"100%"</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"height"</span><span class="op">,</span> <span class="st">"auto"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"border"</span><span class="op">,</span> <span class="st">"1px solid #dee2e6"</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"border-radius"</span><span class="op">,</span> <span class="st">"4px"</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"background"</span><span class="op">,</span> <span class="st">"#f8f9fa"</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">node</span>()<span class="op">;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> ctx <span class="op">=</span> canvas<span class="op">.</span><span class="fu">getContext</span>(<span class="st">"2d"</span>)<span class="op">;</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drawFunction</span>(ctx<span class="op">,</span> width<span class="op">,</span> height)<span class="op">;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> canvas<span class="op">;</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="grid">
+<style scoped=""> h2 { margin-top: 0 !important; } </style>
+<section id="resources" class="level2 g-col-12 g-col-md-4" style="position: relative; padding-bottom: 60px;">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="49" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 48;"><span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="fu">createCardCanvas</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">220</span><span class="op">,</span> (ctx<span class="op">,</span> w<span class="op">,</span> h) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Sidebar navbar representation</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#e9ecef"</span><span class="op">;</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fillRect</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">80</span><span class="op">,</span> h)<span class="op">;</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#ced4da"</span><span class="op">;</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fillRect</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">60</span><span class="op">,</span> <span class="dv">10</span>)<span class="op">;</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fillRect</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">40</span><span class="op">,</span> <span class="dv">60</span><span class="op">,</span> <span class="dv">10</span>)<span class="op">;</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fillRect</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">60</span><span class="op">,</span> <span class="dv">60</span><span class="op">,</span> <span class="dv">10</span>)<span class="op">;</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Main video/content block</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#ffffff"</span><span class="op">;</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fillRect</span>(<span class="dv">95</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">290</span><span class="op">,</span> <span class="dv">130</span>)<span class="op">;</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#adb5bd"</span><span class="op">;</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">strokeRect</span>(<span class="dv">95</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">290</span><span class="op">,</span> <span class="dv">130</span>)<span class="op">;</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Play button indicator</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#0d6efd"</span><span class="op">;</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">moveTo</span>(<span class="dv">230</span><span class="op">,</span> <span class="dv">75</span>)<span class="op">;</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">lineTo</span>(<span class="dv">230</span><span class="op">,</span> <span class="dv">95</span>)<span class="op">;</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">lineTo</span>(<span class="dv">250</span><span class="op">,</span> <span class="dv">85</span>)<span class="op">;</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fill</span>()<span class="op">;</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Text line simulations</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#6c757d"</span><span class="op">;</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fillRect</span>(<span class="dv">95</span><span class="op">,</span> <span class="dv">165</span><span class="op">,</span> <span class="dv">200</span><span class="op">,</span> <span class="dv">8</span>)<span class="op">;</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fillRect</span>(<span class="dv">95</span><span class="op">,</span> <span class="dv">180</span><span class="op">,</span> <span class="dv">250</span><span class="op">,</span> <span class="dv">8</span>)<span class="op">;</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>Self-paced tutorials covering foundational public health GIS concepts.</p>
+<p><a href="resources/" class="btn btn-secondary btn-sm" style="position: absolute; bottom: 15px;">Review our Resources</a></p>
+</section>
+<section id="tools" class="level2 g-col-12 g-col-md-4" style="position: relative; padding-bottom: 60px;">
+<h2 class="anchored" data-anchor-id="tools">Tools</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="87" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 86;"><span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="co">// Figure 2: Analysis Tools Visual (Abstract spatial processing / buffer analysis schema)</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="fu">createCardCanvas</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">220</span><span class="op">,</span> (ctx<span class="op">,</span> w<span class="op">,</span> h) <span class="kw">=&gt;</span> {</span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> centerX <span class="op">=</span> w <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> centerY <span class="op">=</span> h <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Draw grid background to represent coordinate tracking</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#e9ecef"</span><span class="op">;</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">lineWidth</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> x <span class="op">=</span> <span class="dv">20</span><span class="op">;</span> x <span class="op">&lt;</span> w<span class="op">;</span> x <span class="op">+=</span> <span class="dv">20</span>) {</span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span> ctx<span class="op">.</span><span class="fu">moveTo</span>(x<span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span> ctx<span class="op">.</span><span class="fu">lineTo</span>(x<span class="op">,</span> h)<span class="op">;</span> ctx<span class="op">.</span><span class="fu">stroke</span>()<span class="op">;</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> y <span class="op">=</span> <span class="dv">20</span><span class="op">;</span> y <span class="op">&lt;</span> h<span class="op">;</span> y <span class="op">+=</span> <span class="dv">20</span>) {</span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span> ctx<span class="op">.</span><span class="fu">moveTo</span>(<span class="dv">0</span><span class="op">,</span> y)<span class="op">;</span> ctx<span class="op">.</span><span class="fu">lineTo</span>(w<span class="op">,</span> y)<span class="op">;</span> ctx<span class="op">.</span><span class="fu">stroke</span>()<span class="op">;</span></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Draw background survey vectors/lines</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#dee2e6"</span><span class="op">;</span></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">lineWidth</span> <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">setLineDash</span>([<span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>])<span class="op">;</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">moveTo</span>(centerX <span class="op">-</span> <span class="dv">120</span><span class="op">,</span> centerY <span class="op">-</span> <span class="dv">60</span>)<span class="op">;</span> ctx<span class="op">.</span><span class="fu">lineTo</span>(centerX <span class="op">+</span> <span class="dv">120</span><span class="op">,</span> centerY <span class="op">+</span> <span class="dv">60</span>)<span class="op">;</span></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">moveTo</span>(centerX <span class="op">-</span> <span class="dv">120</span><span class="op">,</span> centerY <span class="op">+</span> <span class="dv">60</span>)<span class="op">;</span> ctx<span class="op">.</span><span class="fu">lineTo</span>(centerX <span class="op">+</span> <span class="dv">120</span><span class="op">,</span> centerY <span class="op">-</span> <span class="dv">60</span>)<span class="op">;</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">stroke</span>()<span class="op">;</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">setLineDash</span>([])<span class="op">;</span> <span class="co">// Reset dash line</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Draw proximity buffer zone</span></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"rgba(13, 110, 253, 0.08)"</span><span class="op">;</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#0d6efd"</span><span class="op">;</span></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">lineWidth</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">arc</span>(centerX<span class="op">,</span> centerY<span class="op">,</span> <span class="dv">65</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span>)<span class="op">;</span></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fill</span>()<span class="op">;</span></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">stroke</span>()<span class="op">;</span></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Draw outer intersection points (representing intersected data records)</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> points <span class="op">=</span> [</span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">x</span><span class="op">:</span> centerX <span class="op">-</span> <span class="dv">40</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> centerY <span class="op">-</span> <span class="dv">30</span>}<span class="op">,</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">x</span><span class="op">:</span> centerX <span class="op">+</span> <span class="dv">50</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> centerY <span class="op">-</span> <span class="dv">15</span>}<span class="op">,</span></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">x</span><span class="op">:</span> centerX <span class="op">-</span> <span class="dv">20</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> centerY <span class="op">+</span> <span class="dv">45</span>}<span class="op">,</span></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a>    {<span class="dt">x</span><span class="op">:</span> centerX <span class="op">+</span> <span class="dv">35</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> centerY <span class="op">+</span> <span class="dv">35</span>}</span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#dc3545"</span><span class="op">;</span></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>  points<span class="op">.</span><span class="fu">forEach</span>(p <span class="kw">=&gt;</span> {</span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">arc</span>(p<span class="op">.</span><span class="at">x</span><span class="op">,</span> p<span class="op">.</span><span class="at">y</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span>)<span class="op">;</span></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">fill</span>()<span class="op">;</span></span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Draw focal point (representing the facility or exposure source)</span></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#212529"</span><span class="op">;</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">arc</span>(centerX<span class="op">,</span> centerY<span class="op">,</span> <span class="dv">6</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">2</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span>)<span class="op">;</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fill</span>()<span class="op">;</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>Packages and toolboxes to assist with spatial epidemiology workflows.</p>
+<p><a href="tools/" class="btn btn-secondary btn-sm" style="position: absolute; bottom: 15px;">Use our Tools</a></p>
+</section>
+<section id="data-catalog" class="level2 g-col-12 g-col-md-4" style="position: relative; padding-bottom: 60px;">
+<h2 class="anchored" data-anchor-id="data-catalog">Data Catalog</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb4" data-startfrom="152" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 151;"><span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a><span class="co">// Figure 3: Data Catalog Visual (Attribute Table &amp; Geographic Boundary Schema)</span></span>
+<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a><span class="fu">createCardCanvas</span>(<span class="dv">400</span><span class="op">,</span> <span class="dv">220</span><span class="op">,</span> (ctx<span class="op">,</span> w<span class="op">,</span> h) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Define boundary line styling</span></span>
+<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#adb5bd"</span><span class="op">;</span></span>
+<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">lineWidth</span> <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span></span>
+<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> tracts <span class="op">=</span> [</span>
+<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a>  [[<span class="dv">20</span><span class="op">,</span> <span class="dv">60</span>]<span class="op">,</span> [<span class="dv">80</span><span class="op">,</span> <span class="dv">45</span>]<span class="op">,</span> [<span class="dv">110</span><span class="op">,</span> <span class="dv">80</span>]<span class="op">,</span> [<span class="dv">60</span><span class="op">,</span> <span class="dv">110</span>]]<span class="op">,</span></span>
+<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>  [[<span class="dv">80</span><span class="op">,</span> <span class="dv">45</span>]<span class="op">,</span> [<span class="dv">150</span><span class="op">,</span> <span class="dv">50</span>]<span class="op">,</span> [<span class="dv">140</span><span class="op">,</span> <span class="dv">95</span>]<span class="op">,</span> [<span class="dv">110</span><span class="op">,</span> <span class="dv">80</span>]]<span class="op">,</span></span>
+<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a>  [[<span class="dv">20</span><span class="op">,</span> <span class="dv">60</span>]<span class="op">,</span> [<span class="dv">60</span><span class="op">,</span> <span class="dv">110</span>]<span class="op">,</span> [<span class="dv">70</span><span class="op">,</span> <span class="dv">170</span>]<span class="op">,</span> [<span class="dv">15</span><span class="op">,</span> <span class="dv">130</span>]]<span class="op">,</span></span>
+<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a>  [[<span class="dv">60</span><span class="op">,</span> <span class="dv">110</span>]<span class="op">,</span> [<span class="dv">110</span><span class="op">,</span> <span class="dv">80</span>]<span class="op">,</span> [<span class="dv">140</span><span class="op">,</span> <span class="dv">95</span>]<span class="op">,</span> [<span class="dv">160</span><span class="op">,</span> <span class="dv">150</span>]<span class="op">,</span> [<span class="dv">110</span><span class="op">,</span> <span class="dv">180</span>]<span class="op">,</span> [<span class="dv">70</span><span class="op">,</span> <span class="dv">170</span>]]</span>
+<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span>
+<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a>  tracts<span class="op">.</span><span class="fu">forEach</span>((tract<span class="op">,</span> i) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="op">===</span> <span class="dv">3</span>) {</span>
+<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"rgba(13, 110, 253, 0.15)"</span><span class="op">;</span></span>
+<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#0d6efd"</span><span class="op">;</span></span>
+<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">lineWidth</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#ffffff"</span><span class="op">;</span></span>
+<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#adb5bd"</span><span class="op">;</span></span>
+<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">lineWidth</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-175"><a href="#cb4-175" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-176"><a href="#cb4-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-177"><a href="#cb4-177" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span></span>
+<span id="cb4-178"><a href="#cb4-178" aria-hidden="true" tabindex="-1"></a>    tract<span class="op">.</span><span class="fu">forEach</span>((pt<span class="op">,</span> idx) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-179"><a href="#cb4-179" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (idx <span class="op">===</span> <span class="dv">0</span>) ctx<span class="op">.</span><span class="fu">moveTo</span>(pt[<span class="dv">0</span>]<span class="op">,</span> pt[<span class="dv">1</span>])<span class="op">;</span></span>
+<span id="cb4-180"><a href="#cb4-180" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span> ctx<span class="op">.</span><span class="fu">lineTo</span>(pt[<span class="dv">0</span>]<span class="op">,</span> pt[<span class="dv">1</span>])<span class="op">;</span></span>
+<span id="cb4-181"><a href="#cb4-181" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb4-182"><a href="#cb4-182" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">closePath</span>()<span class="op">;</span></span>
+<span id="cb4-183"><a href="#cb4-183" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">fill</span>()<span class="op">;</span></span>
+<span id="cb4-184"><a href="#cb4-184" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">stroke</span>()<span class="op">;</span></span>
+<span id="cb4-185"><a href="#cb4-185" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb4-186"><a href="#cb4-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-187"><a href="#cb4-187" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> tableX <span class="op">=</span> <span class="dv">210</span><span class="op">;</span></span>
+<span id="cb4-188"><a href="#cb4-188" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> tableY <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></span>
+<span id="cb4-189"><a href="#cb4-189" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> colWidths <span class="op">=</span> [<span class="dv">45</span><span class="op">,</span> <span class="dv">45</span><span class="op">,</span> <span class="dv">45</span><span class="op">,</span> <span class="dv">45</span>]<span class="op">;</span></span>
+<span id="cb4-190"><a href="#cb4-190" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> rowHeight <span class="op">=</span> <span class="dv">22</span><span class="op">;</span></span>
+<span id="cb4-191"><a href="#cb4-191" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> totalWidth <span class="op">=</span> colWidths<span class="op">.</span><span class="fu">reduce</span>((a<span class="op">,</span> b) <span class="kw">=&gt;</span> a <span class="op">+</span> b<span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb4-192"><a href="#cb4-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-193"><a href="#cb4-193" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#e9ecef"</span><span class="op">;</span></span>
+<span id="cb4-194"><a href="#cb4-194" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">fillRect</span>(tableX<span class="op">,</span> tableY<span class="op">,</span> totalWidth<span class="op">,</span> rowHeight)<span class="op">;</span></span>
+<span id="cb4-195"><a href="#cb4-195" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#ced4da"</span><span class="op">;</span></span>
+<span id="cb4-196"><a href="#cb4-196" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">lineWidth</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb4-197"><a href="#cb4-197" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">strokeRect</span>(tableX<span class="op">,</span> tableY<span class="op">,</span> totalWidth<span class="op">,</span> rowHeight)<span class="op">;</span></span>
+<span id="cb4-198"><a href="#cb4-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-199"><a href="#cb4-199" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> headers <span class="op">=</span> [<span class="st">"GEOID"</span><span class="op">,</span> <span class="st">"NAME"</span><span class="op">,</span> <span class="st">"VALUE"</span><span class="op">,</span> <span class="st">"MOE"</span>]<span class="op">;</span></span>
+<span id="cb4-200"><a href="#cb4-200" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> curX <span class="op">=</span> tableX<span class="op">;</span></span>
+<span id="cb4-201"><a href="#cb4-201" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"#495057"</span><span class="op">;</span></span>
+<span id="cb4-202"><a href="#cb4-202" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">font</span> <span class="op">=</span> <span class="st">"bold 9px sans-serif"</span><span class="op">;</span></span>
+<span id="cb4-203"><a href="#cb4-203" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">textAlign</span> <span class="op">=</span> <span class="st">"center"</span><span class="op">;</span></span>
+<span id="cb4-204"><a href="#cb4-204" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">textBaseline</span> <span class="op">=</span> <span class="st">"middle"</span><span class="op">;</span></span>
+<span id="cb4-205"><a href="#cb4-205" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-206"><a href="#cb4-206" aria-hidden="true" tabindex="-1"></a>  headers<span class="op">.</span><span class="fu">forEach</span>((h<span class="op">,</span> idx) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-207"><a href="#cb4-207" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">fillText</span>(h<span class="op">,</span> curX <span class="op">+</span> colWidths[idx] <span class="op">/</span> <span class="dv">2</span><span class="op">,</span> tableY <span class="op">+</span> rowHeight <span class="op">/</span> <span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb4-208"><a href="#cb4-208" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (idx <span class="op">&lt;</span> headers<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span>) {</span>
+<span id="cb4-209"><a href="#cb4-209" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span></span>
+<span id="cb4-210"><a href="#cb4-210" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="fu">moveTo</span>(curX <span class="op">+</span> colWidths[idx]<span class="op">,</span> tableY)<span class="op">;</span></span>
+<span id="cb4-211"><a href="#cb4-211" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="fu">lineTo</span>(curX <span class="op">+</span> colWidths[idx]<span class="op">,</span> tableY <span class="op">+</span> rowHeight <span class="op">*</span> <span class="dv">7</span>)<span class="op">;</span></span>
+<span id="cb4-212"><a href="#cb4-212" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="fu">stroke</span>()<span class="op">;</span></span>
+<span id="cb4-213"><a href="#cb4-213" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-214"><a href="#cb4-214" aria-hidden="true" tabindex="-1"></a>    curX <span class="op">+=</span> colWidths[idx]<span class="op">;</span></span>
+<span id="cb4-215"><a href="#cb4-215" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb4-216"><a href="#cb4-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-217"><a href="#cb4-217" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> r <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> r <span class="op">&lt;=</span> <span class="dv">6</span><span class="op">;</span> r<span class="op">++</span>) {</span>
+<span id="cb4-218"><a href="#cb4-218" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> curY <span class="op">=</span> tableY <span class="op">+</span> (r <span class="op">*</span> rowHeight)<span class="op">;</span></span>
+<span id="cb4-219"><a href="#cb4-219" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-220"><a href="#cb4-220" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (r <span class="op">===</span> <span class="dv">4</span>) {</span>
+<span id="cb4-221"><a href="#cb4-221" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> <span class="st">"rgba(13, 110, 253, 0.08)"</span><span class="op">;</span></span>
+<span id="cb4-222"><a href="#cb4-222" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="fu">fillRect</span>(tableX<span class="op">,</span> curY<span class="op">,</span> totalWidth<span class="op">,</span> rowHeight)<span class="op">;</span></span>
+<span id="cb4-223"><a href="#cb4-223" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#0d6efd"</span><span class="op">;</span></span>
+<span id="cb4-224"><a href="#cb4-224" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb4-225"><a href="#cb4-225" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"#dee2e6"</span><span class="op">;</span></span>
+<span id="cb4-226"><a href="#cb4-226" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-227"><a href="#cb4-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-228"><a href="#cb4-228" aria-hidden="true" tabindex="-1"></a>    ctx<span class="op">.</span><span class="fu">strokeRect</span>(tableX<span class="op">,</span> curY<span class="op">,</span> totalWidth<span class="op">,</span> rowHeight)<span class="op">;</span></span>
+<span id="cb4-229"><a href="#cb4-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-230"><a href="#cb4-230" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Mock text lines inside data table cells</span></span>
+<span id="cb4-231"><a href="#cb4-231" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> cellX <span class="op">=</span> tableX<span class="op">;</span></span>
+<span id="cb4-232"><a href="#cb4-232" aria-hidden="true" tabindex="-1"></a>    colWidths<span class="op">.</span><span class="fu">forEach</span>((w) <span class="kw">=&gt;</span> {</span>
+<span id="cb4-233"><a href="#cb4-233" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="at">fillStyle</span> <span class="op">=</span> (r <span class="op">===</span> <span class="dv">4</span>) <span class="op">?</span> <span class="st">"#0d6efd"</span> <span class="op">:</span> <span class="st">"#6c757d"</span><span class="op">;</span></span>
+<span id="cb4-234"><a href="#cb4-234" aria-hidden="true" tabindex="-1"></a>      ctx<span class="op">.</span><span class="fu">fillRect</span>(cellX <span class="op">+</span> <span class="dv">6</span><span class="op">,</span> curY <span class="op">+</span> <span class="dv">9</span><span class="op">,</span> w <span class="op">-</span> <span class="dv">12</span><span class="op">,</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb4-235"><a href="#cb4-235" aria-hidden="true" tabindex="-1"></a>      cellX <span class="op">+=</span> w<span class="op">;</span></span>
+<span id="cb4-236"><a href="#cb4-236" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb4-237"><a href="#cb4-237" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-238"><a href="#cb4-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-239"><a href="#cb4-239" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">strokeStyle</span> <span class="op">=</span> <span class="st">"rgba(13, 110, 253, 0.4)"</span><span class="op">;</span></span>
+<span id="cb4-240"><a href="#cb4-240" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="at">lineWidth</span> <span class="op">=</span> <span class="fl">1.5</span><span class="op">;</span></span>
+<span id="cb4-241"><a href="#cb4-241" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">setLineDash</span>([<span class="dv">4</span><span class="op">,</span> <span class="dv">4</span>])<span class="op">;</span></span>
+<span id="cb4-242"><a href="#cb4-242" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">beginPath</span>()<span class="op">;</span></span>
+<span id="cb4-243"><a href="#cb4-243" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">moveTo</span>(<span class="dv">140</span><span class="op">,</span> <span class="dv">95</span>)<span class="op">;</span> </span>
+<span id="cb4-244"><a href="#cb4-244" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">lineTo</span>(tableX<span class="op">,</span> tableY <span class="op">+</span> (<span class="dv">4</span> <span class="op">*</span> rowHeight))<span class="op">;</span></span>
+<span id="cb4-245"><a href="#cb4-245" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">moveTo</span>(<span class="dv">110</span><span class="op">,</span> <span class="dv">180</span>)<span class="op">;</span></span>
+<span id="cb4-246"><a href="#cb4-246" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">lineTo</span>(tableX<span class="op">,</span> tableY <span class="op">+</span> (<span class="dv">5</span> <span class="op">*</span> rowHeight))<span class="op">;</span></span>
+<span id="cb4-247"><a href="#cb4-247" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">stroke</span>()<span class="op">;</span></span>
+<span id="cb4-248"><a href="#cb4-248" aria-hidden="true" tabindex="-1"></a>  ctx<span class="op">.</span><span class="fu">setLineDash</span>([])<span class="op">;</span></span>
+<span id="cb4-249"><a href="#cb4-249" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<p>A directory of geospatial layers, environmental variables, and demographic boundaries relevant to health departments.</p>
+<p><a href="data_catalog/" class="btn btn-secondary btn-sm" style="position: absolute; bottom: 15px;">View our Data Catalog</a></p>
+</section>
+</div>
+<hr>
+<section id="maplogs" class="level2" style="padding-top:20px;">
+<h2 style="padding-top:20px;" class="anchored" data-anchor-id="maplogs">MapLogs</h2>
+<p>Discover how health department personnel apply their training to real-world challenges. These case studies highlight the work of real public health professionals who leverage their new-found skills to transform complex health data into visual, actionable evidence for local decision-makers.</p>
+<div id="listing-map_logs" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-listing-date-sort="1784073600000" data-listing-file-modified-sort="1785251111354" data-listing-date-modified-sort="1785251111000" data-listing-reading-time-sort="4" data-listing-word-count-sort="706">
+<a href="./map_logs/tanaka_ono_for_hi/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top"><img loading='lazy' src="map_logs/tanaka_ono_for_hi/photos/ono_for_hi.png" style="height: 200px;"  class="thumbnail-image card-img"/></p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+The Ono for Hawai‘i Farm-to-Early Childhood Education Map: Connecting Farmer and Keiki
+</h5>
+<div class="card-text listing-description delink">
+Ono is a Hawaiian word often used to describe something delicious — food that is tasty, satisfying, and makes you crave more. The name Ono for Hawai‘i reflects the goal of…
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jul 15, 2026
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="1" data-listing-date-sort="1775260800000" data-listing-file-modified-sort="1785251111350" data-listing-date-modified-sort="1785251111000" data-listing-reading-time-sort="3" data-listing-word-count-sort="550">
+<a href="./map_logs/graff_livable_id/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./map_logs/graff_livable_id/photos/livable_id_2.png" class="thumbnail-image card-img" style="height: 200px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Livable Idaho: Mapping Where Rural Populations Live
+</h5>
+<div class="card-text listing-description delink">
+Despite rapid population growth in Idaho over the last few decades, the idea persists that Idaho is primarily a “rural state.” This perception has been sustained, in part…<em></em>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Apr 4, 2026
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="2" data-listing-date-sort="1766620800000" data-listing-file-modified-sort="1785251111351" data-listing-date-modified-sort="1785251111000" data-listing-reading-time-sort="3" data-listing-word-count-sort="427">
+<a href="./map_logs/joshi_storymap_vi/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top"><img loading='lazy' src="map_logs/joshi_storymap_vi/photos/storymap_va.jpg" style="height: 200px;"  class="thumbnail-image card-img"/></p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Virginia’s StoryMap: An Innovative Tool in the CVD Prevention Toolbox
+</h5>
+<div class="card-text listing-description delink">
+Cardiovascular disease is the leading cause of death in the United States and a significant public health challenge in communities across the country. In Virginia, the Health…
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Dec 25, 2025
+</div>
+</div>
+</div>
+</div></a>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+<div class="text-end mb-5">
+<p><a href="map_logs/" class="btn btn-outline-primary btn-sm">Browse All MapLogs</a></p>
+</div>
 
 
+
+</section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6ImQzID0gcmVxdWlyZShcImQzQDdcIilcblxuZnVuY3Rpb24gY3JlYXRlQ2FyZENhbnZhcyh3aWR0aCwgaGVpZ2h0LCBkcmF3RnVuY3Rpb24pIHtcbiAgY29uc3QgY2FudmFzID0gZDMuY3JlYXRlKFwiY2FudmFzXCIpXG4gICAgLmF0dHIoXCJ3aWR0aFwiLCB3aWR0aClcbiAgICAuYXR0cihcImhlaWdodFwiLCBoZWlnaHQpXG4gICAgLnN0eWxlKFwid2lkdGhcIiwgXCIxMDAlXCIpXG4gICAgLnN0eWxlKFwiaGVpZ2h0XCIsIFwiYXV0b1wiKVxuICAgIC5zdHlsZShcImJvcmRlclwiLCBcIjFweCBzb2xpZCAjZGVlMmU2XCIpXG4gICAgLnN0eWxlKFwiYm9yZGVyLXJhZGl1c1wiLCBcIjRweFwiKVxuICAgIC5zdHlsZShcImJhY2tncm91bmRcIiwgXCIjZjhmOWZhXCIpXG4gICAgLm5vZGUoKTtcbiAgXG4gIGNvbnN0IGN0eCA9IGNhbnZhcy5nZXRDb250ZXh0KFwiMmRcIik7XG4gIGRyYXdGdW5jdGlvbihjdHgsIHdpZHRoLCBoZWlnaHQpO1xuICByZXR1cm4gY2FudmFzO1xufVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC0yIiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiY3JlYXRlQ2FyZENhbnZhcyg0MDAsIDIyMCwgKGN0eCwgdywgaCkgPT4ge1xuICAvLyBTaWRlYmFyIG5hdmJhciByZXByZXNlbnRhdGlvblxuICBjdHguZmlsbFN0eWxlID0gXCIjZTllY2VmXCI7XG4gIGN0eC5maWxsUmVjdCgwLCAwLCA4MCwgaCk7XG4gIGN0eC5maWxsU3R5bGUgPSBcIiNjZWQ0ZGFcIjtcbiAgY3R4LmZpbGxSZWN0KDEwLCAyMCwgNjAsIDEwKTtcbiAgY3R4LmZpbGxSZWN0KDEwLCA0MCwgNjAsIDEwKTtcbiAgY3R4LmZpbGxSZWN0KDEwLCA2MCwgNjAsIDEwKTtcbiAgXG4gIC8vIE1haW4gdmlkZW8vY29udGVudCBibG9ja1xuICBjdHguZmlsbFN0eWxlID0gXCIjZmZmZmZmXCI7XG4gIGN0eC5maWxsUmVjdCg5NSwgMjAsIDI5MCwgMTMwKTtcbiAgY3R4LnN0cm9rZVN0eWxlID0gXCIjYWRiNWJkXCI7XG4gIGN0eC5zdHJva2VSZWN0KDk1LCAyMCwgMjkwLCAxMzApO1xuICBcbiAgLy8gUGxheSBidXR0b24gaW5kaWNhdG9yXG4gIGN0eC5maWxsU3R5bGUgPSBcIiMwZDZlZmRcIjtcbiAgY3R4LmJlZ2luUGF0aCgpO1xuICBjdHgubW92ZVRvKDIzMCwgNzUpO1xuICBjdHgubGluZVRvKDIzMCwgOTUpO1xuICBjdHgubGluZVRvKDI1MCwgODUpO1xuICBjdHguZmlsbCgpO1xuICBcbiAgLy8gVGV4dCBsaW5lIHNpbXVsYXRpb25zXG4gIGN0eC5maWxsU3R5bGUgPSBcIiM2Yzc1N2RcIjtcbiAgY3R4LmZpbGxSZWN0KDk1LCAxNjUsIDIwMCwgOCk7XG4gIGN0eC5maWxsUmVjdCg5NSwgMTgwLCAyNTAsIDgpO1xufSlcbiJ9LHsibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMyIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ii8vIEZpZ3VyZSAyOiBBbmFseXNpcyBUb29scyBWaXN1YWwgKEFic3RyYWN0IHNwYXRpYWwgcHJvY2Vzc2luZyAvIGJ1ZmZlciBhbmFseXNpcyBzY2hlbWEpXG5jcmVhdGVDYXJkQ2FudmFzKDQwMCwgMjIwLCAoY3R4LCB3LCBoKSA9PiB7XG4gIGNvbnN0IGNlbnRlclggPSB3IC8gMjtcbiAgY29uc3QgY2VudGVyWSA9IGggLyAyO1xuXG4gIC8vIERyYXcgZ3JpZCBiYWNrZ3JvdW5kIHRvIHJlcHJlc2VudCBjb29yZGluYXRlIHRyYWNraW5nXG4gIGN0eC5zdHJva2VTdHlsZSA9IFwiI2U5ZWNlZlwiO1xuICBjdHgubGluZVdpZHRoID0gMTtcbiAgZm9yIChsZXQgeCA9IDIwOyB4IDwgdzsgeCArPSAyMCkge1xuICAgIGN0eC5iZWdpblBhdGgoKTsgY3R4Lm1vdmVUbyh4LCAwKTsgY3R4LmxpbmVUbyh4LCBoKTsgY3R4LnN0cm9rZSgpO1xuICB9XG4gIGZvciAobGV0IHkgPSAyMDsgeSA8IGg7IHkgKz0gMjApIHtcbiAgICBjdHguYmVnaW5QYXRoKCk7IGN0eC5tb3ZlVG8oMCwgeSk7IGN0eC5saW5lVG8odywgeSk7IGN0eC5zdHJva2UoKTtcbiAgfVxuXG4gIC8vIERyYXcgYmFja2dyb3VuZCBzdXJ2ZXkgdmVjdG9ycy9saW5lc1xuICBjdHguc3Ryb2tlU3R5bGUgPSBcIiNkZWUyZTZcIjtcbiAgY3R4LmxpbmVXaWR0aCA9IDEuNTtcbiAgY3R4LnNldExpbmVEYXNoKFs0LCA0XSk7XG4gIGN0eC5iZWdpblBhdGgoKTtcbiAgY3R4Lm1vdmVUbyhjZW50ZXJYIC0gMTIwLCBjZW50ZXJZIC0gNjApOyBjdHgubGluZVRvKGNlbnRlclggKyAxMjAsIGNlbnRlclkgKyA2MCk7XG4gIGN0eC5tb3ZlVG8oY2VudGVyWCAtIDEyMCwgY2VudGVyWSArIDYwKTsgY3R4LmxpbmVUbyhjZW50ZXJYICsgMTIwLCBjZW50ZXJZIC0gNjApO1xuICBjdHguc3Ryb2tlKCk7XG4gIGN0eC5zZXRMaW5lRGFzaChbXSk7IC8vIFJlc2V0IGRhc2ggbGluZVxuXG4gIC8vIERyYXcgcHJveGltaXR5IGJ1ZmZlciB6b25lXG4gIGN0eC5maWxsU3R5bGUgPSBcInJnYmEoMTMsIDExMCwgMjUzLCAwLjA4KVwiO1xuICBjdHguc3Ryb2tlU3R5bGUgPSBcIiMwZDZlZmRcIjtcbiAgY3R4LmxpbmVXaWR0aCA9IDI7XG4gIGN0eC5iZWdpblBhdGgoKTtcbiAgY3R4LmFyYyhjZW50ZXJYLCBjZW50ZXJZLCA2NSwgMCwgMiAqIE1hdGguUEkpO1xuICBjdHguZmlsbCgpO1xuICBjdHguc3Ryb2tlKCk7XG5cbiAgLy8gRHJhdyBvdXRlciBpbnRlcnNlY3Rpb24gcG9pbnRzIChyZXByZXNlbnRpbmcgaW50ZXJzZWN0ZWQgZGF0YSByZWNvcmRzKVxuICBjb25zdCBwb2ludHMgPSBbXG4gICAge3g6IGNlbnRlclggLSA0MCwgeTogY2VudGVyWSAtIDMwfSxcbiAgICB7eDogY2VudGVyWCArIDUwLCB5OiBjZW50ZXJZIC0gMTV9LFxuICAgIHt4OiBjZW50ZXJYIC0gMjAsIHk6IGNlbnRlclkgKyA0NX0sXG4gICAge3g6IGNlbnRlclggKyAzNSwgeTogY2VudGVyWSArIDM1fVxuICBdO1xuICBcbiAgY3R4LmZpbGxTdHlsZSA9IFwiI2RjMzU0NVwiO1xuICBwb2ludHMuZm9yRWFjaChwID0+IHtcbiAgICBjdHguYmVnaW5QYXRoKCk7XG4gICAgY3R4LmFyYyhwLngsIHAueSwgNCwgMCwgMiAqIE1hdGguUEkpO1xuICAgIGN0eC5maWxsKCk7XG4gIH0pO1xuXG4gIC8vIERyYXcgZm9jYWwgcG9pbnQgKHJlcHJlc2VudGluZyB0aGUgZmFjaWxpdHkgb3IgZXhwb3N1cmUgc291cmNlKVxuICBjdHguZmlsbFN0eWxlID0gXCIjMjEyNTI5XCI7XG4gIGN0eC5iZWdpblBhdGgoKTtcbiAgY3R4LmFyYyhjZW50ZXJYLCBjZW50ZXJZLCA2LCAwLCAyICogTWF0aC5QSSk7XG4gIGN0eC5maWxsKCk7XG59KVxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0IiwiY2VsbE5hbWUiOiJvanMtY2VsbC00IiwiaW5saW5lIjpmYWxzZSwic291cmNlIjoiLy8gRmlndXJlIDM6IERhdGEgQ2F0YWxvZyBWaXN1YWwgKEF0dHJpYnV0ZSBUYWJsZSAmIEdlb2dyYXBoaWMgQm91bmRhcnkgU2NoZW1hKVxuY3JlYXRlQ2FyZENhbnZhcyg0MDAsIDIyMCwgKGN0eCwgdywgaCkgPT4ge1xuICAvLyBEZWZpbmUgYm91bmRhcnkgbGluZSBzdHlsaW5nXG4gIGN0eC5zdHJva2VTdHlsZSA9IFwiI2FkYjViZFwiO1xuICBjdHgubGluZVdpZHRoID0gMS41O1xuXG4gIGxldCB0cmFjdHMgPSBbXG4gIFtbMjAsIDYwXSwgWzgwLCA0NV0sIFsxMTAsIDgwXSwgWzYwLCAxMTBdXSxcbiAgW1s4MCwgNDVdLCBbMTUwLCA1MF0sIFsxNDAsIDk1XSwgWzExMCwgODBdXSxcbiAgW1syMCwgNjBdLCBbNjAsIDExMF0sIFs3MCwgMTcwXSwgWzE1LCAxMzBdXSxcbiAgW1s2MCwgMTEwXSwgWzExMCwgODBdLCBbMTQwLCA5NV0sIFsxNjAsIDE1MF0sIFsxMTAsIDE4MF0sIFs3MCwgMTcwXV1cbl07XG5cblxuICB0cmFjdHMuZm9yRWFjaCgodHJhY3QsIGkpID0+IHtcbiAgICBpZiAoaSA9PT0gMykge1xuICAgICAgY3R4LmZpbGxTdHlsZSA9IFwicmdiYSgxMywgMTEwLCAyNTMsIDAuMTUpXCI7XG4gICAgICBjdHguc3Ryb2tlU3R5bGUgPSBcIiMwZDZlZmRcIjtcbiAgICAgIGN0eC5saW5lV2lkdGggPSAyO1xuICAgIH0gZWxzZSB7XG4gICAgICBjdHguZmlsbFN0eWxlID0gXCIjZmZmZmZmXCI7XG4gICAgICBjdHguc3Ryb2tlU3R5bGUgPSBcIiNhZGI1YmRcIjtcbiAgICAgIGN0eC5saW5lV2lkdGggPSAxO1xuICAgIH1cblxuICAgIGN0eC5iZWdpblBhdGgoKTtcbiAgICB0cmFjdC5mb3JFYWNoKChwdCwgaWR4KSA9PiB7XG4gICAgICBpZiAoaWR4ID09PSAwKSBjdHgubW92ZVRvKHB0WzBdLCBwdFsxXSk7XG4gICAgICBlbHNlIGN0eC5saW5lVG8ocHRbMF0sIHB0WzFdKTtcbiAgICB9KTtcbiAgICBjdHguY2xvc2VQYXRoKCk7XG4gICAgY3R4LmZpbGwoKTtcbiAgICBjdHguc3Ryb2tlKCk7XG4gIH0pO1xuXG4gIGxldCB0YWJsZVggPSAyMTA7XG4gIGxldCB0YWJsZVkgPSAyNTtcbiAgbGV0IGNvbFdpZHRocyA9IFs0NSwgNDUsIDQ1LCA0NV07XG4gIGxldCByb3dIZWlnaHQgPSAyMjtcbiAgbGV0IHRvdGFsV2lkdGggPSBjb2xXaWR0aHMucmVkdWNlKChhLCBiKSA9PiBhICsgYiwgMCk7XG5cbiAgY3R4LmZpbGxTdHlsZSA9IFwiI2U5ZWNlZlwiO1xuICBjdHguZmlsbFJlY3QodGFibGVYLCB0YWJsZVksIHRvdGFsV2lkdGgsIHJvd0hlaWdodCk7XG4gIGN0eC5zdHJva2VTdHlsZSA9IFwiI2NlZDRkYVwiO1xuICBjdHgubGluZVdpZHRoID0gMTtcbiAgY3R4LnN0cm9rZVJlY3QodGFibGVYLCB0YWJsZVksIHRvdGFsV2lkdGgsIHJvd0hlaWdodCk7XG5cbiAgbGV0IGhlYWRlcnMgPSBbXCJHRU9JRFwiLCBcIk5BTUVcIiwgXCJWQUxVRVwiLCBcIk1PRVwiXTtcbiAgbGV0IGN1clggPSB0YWJsZVg7XG4gIGN0eC5maWxsU3R5bGUgPSBcIiM0OTUwNTdcIjtcbiAgY3R4LmZvbnQgPSBcImJvbGQgOXB4IHNhbnMtc2VyaWZcIjtcbiAgY3R4LnRleHRBbGlnbiA9IFwiY2VudGVyXCI7XG4gIGN0eC50ZXh0QmFzZWxpbmUgPSBcIm1pZGRsZVwiO1xuICBcbiAgaGVhZGVycy5mb3JFYWNoKChoLCBpZHgpID0+IHtcbiAgICBjdHguZmlsbFRleHQoaCwgY3VyWCArIGNvbFdpZHRoc1tpZHhdIC8gMiwgdGFibGVZICsgcm93SGVpZ2h0IC8gMik7XG4gICAgaWYgKGlkeCA8IGhlYWRlcnMubGVuZ3RoIC0gMSkge1xuICAgICAgY3R4LmJlZ2luUGF0aCgpO1xuICAgICAgY3R4Lm1vdmVUbyhjdXJYICsgY29sV2lkdGhzW2lkeF0sIHRhYmxlWSk7XG4gICAgICBjdHgubGluZVRvKGN1clggKyBjb2xXaWR0aHNbaWR4XSwgdGFibGVZICsgcm93SGVpZ2h0ICogNyk7XG4gICAgICBjdHguc3Ryb2tlKCk7XG4gICAgfVxuICAgIGN1clggKz0gY29sV2lkdGhzW2lkeF07XG4gIH0pO1xuXG4gIGZvciAobGV0IHIgPSAxOyByIDw9IDY7IHIrKykge1xuICAgIGxldCBjdXJZID0gdGFibGVZICsgKHIgKiByb3dIZWlnaHQpO1xuICAgIFxuICAgIGlmIChyID09PSA0KSB7XG4gICAgICBjdHguZmlsbFN0eWxlID0gXCJyZ2JhKDEzLCAxMTAsIDI1MywgMC4wOClcIjtcbiAgICAgIGN0eC5maWxsUmVjdCh0YWJsZVgsIGN1clksIHRvdGFsV2lkdGgsIHJvd0hlaWdodCk7XG4gICAgICBjdHguc3Ryb2tlU3R5bGUgPSBcIiMwZDZlZmRcIjtcbiAgICB9IGVsc2Uge1xuICAgICAgY3R4LnN0cm9rZVN0eWxlID0gXCIjZGVlMmU2XCI7XG4gICAgfVxuXG4gICAgY3R4LnN0cm9rZVJlY3QodGFibGVYLCBjdXJZLCB0b3RhbFdpZHRoLCByb3dIZWlnaHQpO1xuXG4gICAgLy8gTW9jayB0ZXh0IGxpbmVzIGluc2lkZSBkYXRhIHRhYmxlIGNlbGxzXG4gICAgbGV0IGNlbGxYID0gdGFibGVYO1xuICAgIGNvbFdpZHRocy5mb3JFYWNoKCh3KSA9PiB7XG4gICAgICBjdHguZmlsbFN0eWxlID0gKHIgPT09IDQpID8gXCIjMGQ2ZWZkXCIgOiBcIiM2Yzc1N2RcIjtcbiAgICAgIGN0eC5maWxsUmVjdChjZWxsWCArIDYsIGN1clkgKyA5LCB3IC0gMTIsIDQpO1xuICAgICAgY2VsbFggKz0gdztcbiAgICB9KTtcbiAgfVxuXG4gIGN0eC5zdHJva2VTdHlsZSA9IFwicmdiYSgxMywgMTEwLCAyNTMsIDAuNClcIjtcbiAgY3R4LmxpbmVXaWR0aCA9IDEuNTtcbiAgY3R4LnNldExpbmVEYXNoKFs0LCA0XSk7XG4gIGN0eC5iZWdpblBhdGgoKTtcbiAgY3R4Lm1vdmVUbygxNDAsIDk1KTsgXG4gIGN0eC5saW5lVG8odGFibGVYLCB0YWJsZVkgKyAoNCAqIHJvd0hlaWdodCkpO1xuICBjdHgubW92ZVRvKDExMCwgMTgwKTtcbiAgY3R4LmxpbmVUbyh0YWJsZVgsIHRhYmxlWSArICg1ICogcm93SGVpZ2h0KSk7XG4gIGN0eC5zdHJva2UoKTtcbiAgY3R4LnNldExpbmVEYXNoKFtdKTtcbn0pXG4ifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

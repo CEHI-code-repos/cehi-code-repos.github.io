@@ -2,20 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>National GIS Data – GIS Training</title>
+<title>National GIS Data – GIS Capacity Building</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -38,14 +41,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-5c0bf5bb6df8a892a8540381967c1085.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-5c0bf5bb6df8a892a8540381967c1085.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-5c0bf5bb6df8a892a8540381967c1085.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -92,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
   </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -136,7 +139,7 @@ window.Quarto = {
     <img src="../assets/logo.png" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">GIS Training</span>
+    <span class="navbar-title">GIS Capacity Building</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -149,6 +152,10 @@ window.Quarto = {
 <span class="menu-text">Resources</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../map_logs/"> 
+<span class="menu-text">MapLogs</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../tools/"> 
 <span class="menu-text">Tools</span></a>
   </li>  
@@ -157,7 +164,7 @@ window.Quarto = {
 <span class="menu-text">Data</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
+    <a class="nav-link" href="../about/"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
@@ -170,34 +177,34 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
+    <div class="quarto-title column-page-left">
       <h1 class="title">National GIS Data</h1>
             <p class="subtitle lead">A collection of spatial datasets designed to support public health spatial analyses and visualizations.</p>
                       </div>
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       
     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">June 11, 2026</p>
+        <p class="date-modified">July 28, 2026</p>
       </div>
     </div>
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
     <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(25)</span></div><div class="category" data-category="Q2Vuc3Vz">Census <span class="quarto-category-count">(5)</span></div><div class="category" data-category="RW52aXJvbm1lbnQ=">Environment <span class="quarto-category-count">(2)</span></div><div class="category" data-category="RmFjaWxpdGllcw==">Facilities <span class="quarto-category-count">(5)</span></div><div class="category" data-category="SGVhbHRoJTIwT3V0Y29tZXM=">Health Outcomes <span class="quarto-category-count">(6)</span></div><div class="category" data-category="UmlzayUyMEZhY3RvcnM=">Risk Factors <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UnVyYWxpdHk=">Rurality <span class="quarto-category-count">(6)</span></div><div class="category" data-category="VHJpYmFs">Tribal <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
@@ -212,7 +219,7 @@ window.Quarto = {
     </div>
 </div>
 <div class="list grid quarto-listing-cols-1">
-<div class="g-col-1" data-index="0" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="0" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/cdc-500-cities.html" class="quarto-grid-link">
 </a><div class="quarto-grid-item card h-100"><a href="../data_catalog/us/cdc-500-cities.html" class="quarto-grid-link">
 </a><div class="card-body post-contents"><a href="../data_catalog/us/cdc-500-cities.html" class="quarto-grid-link">
@@ -282,7 +289,7 @@ Centers for Disease Control and Prevention (CDC)
 </div>
 </div>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Q2Vuc3Vz" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="1" data-categories="Q2Vuc3Vz" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/census-acs5.html" class="quarto-grid-link">
 </a><div class="quarto-grid-item card h-100"><a href="../data_catalog/us/census-acs5.html" class="quarto-grid-link">
 </a><div class="card-body post-contents"><a href="../data_catalog/us/census-acs5.html" class="quarto-grid-link">
@@ -347,7 +354,7 @@ US Census Bureau
 </div>
 </div>
 </div>
-<div class="g-col-1" data-index="2" data-categories="RmFjaWxpdGllcw==" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="2" data-categories="RmFjaWxpdGllcw==" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/cms-facilities.html" class="quarto-grid-link">
 </a><div class="quarto-grid-item card h-100"><a href="../data_catalog/us/cms-facilities.html" class="quarto-grid-link">
 </a><div class="card-body post-contents"><a href="../data_catalog/us/cms-facilities.html" class="quarto-grid-link">
@@ -412,7 +419,7 @@ N/A
 </div>
 </div>
 </div>
-<div class="g-col-1" data-index="3" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="3" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/cdc-uscs.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -477,7 +484,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="4" data-categories="RW52aXJvbm1lbnQ=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="4" data-categories="RW52aXJvbm1lbnQ=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/ceq-cejst.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -552,7 +559,7 @@ Council on Environmental Quality (CEQ)
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="5" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="5" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/uw-chr.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -616,7 +623,7 @@ Robert Wood Johnson Foundation and the University of Wisconsin Population Health
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="6" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="6" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/usda-ers-ctc.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -697,7 +704,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="7" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="7" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/cdc-hdsm.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -769,7 +776,7 @@ Centers for Disease Control and Prevention (CDC) Division for Heart Disease and 
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="8" data-categories="RW52aXJvbm1lbnQ=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="8" data-categories="RW52aXJvbm1lbnQ=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/cdc-eji.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -833,7 +840,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="9" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="9" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/hrsa-forhp.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -904,7 +911,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="10" data-categories="RmFjaWxpdGllcw==" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="10" data-categories="RmFjaWxpdGllcw==" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/hrsa-fqhc.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -968,7 +975,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="11" data-categories="RmFjaWxpdGllcw==" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="11" data-categories="RmFjaWxpdGllcw==" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/rafi_gga.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1033,7 +1040,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="12" data-categories="RmFjaWxpdGllcyUyQ1RyaWJhbA==" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="12" data-categories="RmFjaWxpdGllcyUyQ1RyaWJhbA==" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/ihs-facilities.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1099,7 +1106,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="13" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="13" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/cms-mmd.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1168,7 +1175,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="14" data-categories="Q2Vuc3VzJTJDUmlzayUyMEZhY3RvcnM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="14" data-categories="Q2Vuc3VzJTJDUmlzayUyMEZhY3RvcnM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/census-mdi.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1243,7 +1250,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="15" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="15" data-categories="SGVhbHRoJTIwT3V0Y29tZXM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/cdc-places.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1316,7 +1323,7 @@ Centers for Disease Control and Prevention (CDC)
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="16" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="16" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/aers-ruca.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1380,7 +1387,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="17" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="17" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/usda-rucc.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1444,7 +1451,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="18" data-categories="RmFjaWxpdGllcw==" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="18" data-categories="RmFjaWxpdGllcw==" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/hrsa-sa.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1508,7 +1515,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="19" data-categories="Q2Vuc3VzJTJDUmlzayUyMEZhY3RvcnM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="19" data-categories="Q2Vuc3VzJTJDUmlzayUyMEZhY3RvcnM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/census-sahie.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1574,7 +1581,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="20" data-categories="Q2Vuc3VzJTJDUmlzayUyMEZhY3RvcnM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="20" data-categories="Q2Vuc3VzJTJDUmlzayUyMEZhY3RvcnM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/census-saipe.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1647,7 +1654,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="21" data-categories="UmlzayUyMEZhY3RvcnM=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="21" data-categories="UmlzayUyMEZhY3RvcnM=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/cdc-svi.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1718,7 +1725,7 @@ Centers for Disease Control and Prevention (CDC)
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="22" data-categories="Q2Vuc3VzJTJDVHJpYmFs" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="22" data-categories="Q2Vuc3VzJTJDVHJpYmFs" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/census-tribtract.html" class="quarto-grid-link">
 </a><div class="quarto-grid-item card h-100"><a href="../data_catalog/us/census-tribtract.html" class="quarto-grid-link">
 </a><div class="card-body post-contents"><a href="../data_catalog/us/census-tribtract.html" class="quarto-grid-link">
@@ -1785,7 +1792,7 @@ N/A
 </div>
 </div>
 </div>
-<div class="g-col-1" data-index="23" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="23" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/usda-uic.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
@@ -1850,7 +1857,7 @@ N/A
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="24" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1781190792086" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<div class="g-col-1" data-index="24" data-categories="UnVyYWxpdHk=" data-listing-file-modified-sort="1785251111348" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
 <a href="../data_catalog/us/nchs-urcs.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
