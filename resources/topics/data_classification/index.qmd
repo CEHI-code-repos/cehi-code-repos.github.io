@@ -7,6 +7,7 @@ execute:
   echo: false
 ---
 
+<!-- 
 ```r
 library(healthatlas)
 
@@ -22,6 +23,8 @@ mortality_data <- ha_data(
 
 sf::st_write(mortality_data, "data/allmortality_20202024_ca.geojson")
 ```
+--!>
+
 ```{ojs}
 colorConfig = ({ 
   type: "sequential", scheme: "blues", domain: [minVal, maxVal], legend: false
