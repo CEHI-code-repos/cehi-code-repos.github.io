@@ -2,6 +2,9 @@
 title: "Tools"
 subtitle: "GIS shouldn't be difficult. Our tools make public health GIS analyses easier."
 title-block-banner: true
+format:
+  html:
+    page-layout: article
 listing:
   - id: rsts
     contents: rsts.yml

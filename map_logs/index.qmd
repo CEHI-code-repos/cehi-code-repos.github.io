@@ -1,0 +1,11 @@
+---
+title: "MapLogs"
+subtitle: "Showcasing the use of real-world maps for chronic disease prevention and control"
+title-block-banner: true
+listing:
+  type: grid
+  fields: [image, title, description, date]
+  image-height: "200px"
+  sort: "date desc"
+  grid-columns: 3
+---

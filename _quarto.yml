@@ -2,19 +2,21 @@ project:
   type: website
 
 website:
-  title: "GIS Training"
+  title: "GIS Capacity Building"
   favicon: assets/logo.png
   search: false
   navbar:
     right:
       - text: Resources
         href: resources/
+      - text: MapLogs
+        href: map_logs/
       - text: Tools
         href: tools/
       - text: Data
         href: data_catalog/
       - text: About
-        href: about.qmd
+        href: about/
   page-footer:
     left: "[Copyright &copy; 2026 Children's Environmental Health Initiative](/LICENCE)"
     center:
@@ -30,5 +32,6 @@ format:
     theme:
       - cosmo
       - styles.scss
+    page-layout: full
     toc: false
 

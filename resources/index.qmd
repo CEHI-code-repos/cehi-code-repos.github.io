@@ -3,13 +3,21 @@ title: "Training Resources"
 subtitle: "A collection of basic GIS guides designed for public health professionals to improve their spatial literacy."
 title-block-banner: true
 listing:
-  contents:
-    - "topics/**/*.qmd"
-    - "!topics/index.qmd"
-  fields: [title, subtitle]
-  type: grid
-  grid-columns: 3
-  id: sections
+  - id: topics
+    contents:
+      - "topics/**/*.qmd"
+      - "!topics/index.qmd"
+    fields: [title, subtitle]
+    type: grid
+    grid-columns: 3
+
+  - id: intro_to_arcpro
+    contents:
+      - "intro_to_arcgis_pro/**/*.qmd"
+      - "!intro_to_arcgis_pro/index.qmd"
+    fields: [title, subtitle]
+    type: grid
+    grid-columns: 3
 ---
 
 <style>
@@ -20,4 +28,12 @@ listing:
 }
 </style>
 
-## [Topics in GIS](intro/index.qmd) {.header-link}
+## [Topics in GIS](topics/index.qmd) {.header-link}
+
+::: {#topics}
+:::
+
+## [Intro to ArcGIS Pro](intro_to_arcgis_pro/index.qmd) {.header-link}
+
+::: {#intro_to_arcpro}
+:::

@@ -68,12 +68,12 @@ $footer-hl: $uic-red;
   }
 }
 
-// Special version for the "UIC Red" if you want a secondary button style
 .btn-secondary {
   border-color: $uic-red !important;
   color: $uic-red !important;
   
   &:hover {
+    color: $uic-red !important;
     box-shadow: -4px 4px 0 0 $uic-red !important;
   }
 }

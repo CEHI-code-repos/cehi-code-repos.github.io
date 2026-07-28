@@ -6,7 +6,7 @@
 
 ```{=html}
 <div class="g-col-1" <%= metadataAttrs(item) %>>
-<a href="<%- item.path %>" class="quarto-grid-link">
+<a href="<%= item.path %>" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100">
 <div class="card-body post-contents">
 ```

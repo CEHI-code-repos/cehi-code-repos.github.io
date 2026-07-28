@@ -1,0 +1,234 @@
+---
+title: "Data Classification"
+subtitle: "How and why we classify"
+toc: true
+order: 3
+execute:
+  echo: false
+---
+
+```{r}
+#| eval: false
+
+library(healthatlas)
+
+ha_set("https://chicagohealthatlas.org/")
+# All-cause mortality rate
+mortality_data <- ha_data(
+  topic_key = "VRDTHR", 
+  population_key = "", 
+  period_key = "2020-2024", 
+  layer_key = "neighborhood",
+  geometry = TRUE
+)
+
+sf::st_write(mortality_data, "data/allmortality_20202024_ca.geojson")
+```
+```{ojs}
+colorConfig = ({ 
+  type: "sequential", scheme: "blues", domain: [minVal, maxVal], legend: false
+});
+```
+
+```{ojs}
+data = FileAttachment("data/allmortality_20202024_ca.geojson").json()
+
+columnData = data.features
+  .map(f => f.properties.value)
+  .filter(v => v != null && !isNaN(v))
+
+numClasses = 5;
+minVal = d3.min(columnData);
+maxVal = d3.max(columnData);
+meanVal = d3.mean(columnData);
+stdDev = d3.deviation(columnData);
+
+getClassIndex = (breaks) => {
+  return (x) => {
+    for (let i = 0; i < breaks.length - 1; i++) {
+      if (x >= breaks[i] && x <= breaks[i+1]) return `Class ${i + 1}`;
+    }
+    return x < breaks[0] ? `Class 1` : `Class ${breaks.length - 1}`;
+  };
+}
+
+quantileBreaks = Array.from({length: numClasses + 1}, (_, i) => d3.quantile(columnData, i / numClasses))
+equalBreaks = Array.from({length: numClasses + 1}, (_, i) => minVal + (i * (maxVal - minVal) / numClasses));
+jenksBreaks = {
+  const ss = await require("simple-statistics@7.8.3");
+  return ss.ckmeans(columnData, numClasses).map(cluster => d3.min(cluster)).concat(maxVal);
+}
+sdBreaks = [
+  minVal, 
+  meanVal - 1.5 * stdDev, 
+  meanVal - 0.5 * stdDev, 
+  meanVal + 0.5 * stdDev, 
+  meanVal + 1.5 * stdDev, 
+  maxVal
+].sort((a, b) => a - b);
+
+colorDomain = ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5"];
+colorRange = ["#eff3ff", "#bdd7e7", "#6baed6", "#3182bd", "#08519c"];
+
+renderStackedRow = (breaks) => html`
+  <div style="width: 100%;">
+    <div style="display: flex; gap: 24px; align-items: center; width: 100%; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 200px; display: flex; justify-content: center;">
+        ${Plot.plot({
+          height: 180,
+          width: 200,
+          projection: {
+            type: "mercator",
+            domain: data
+          }, 
+          color: { domain: colorDomain, range: colorRange, legend: false },
+          marks: [
+            Plot.geo(data, {
+              fill: f => getClassIndex(breaks)(f.properties.value),
+              stroke: "#ffffff",
+              strokeWidth: 0.3
+            })
+          ]
+        })}
+      </div>
+
+      <div style="flex: 2; min-width: 300px;">
+        ${Plot.plot({
+          height: 180,
+          width: 500,
+          y: { grid: true, label: null },
+          color: { domain: colorDomain, range: colorRange, legend: false },
+          marks: [
+            Plot.rectY(columnData, Plot.binX(
+              { y: "count" }, 
+              { 
+                x: d => d, 
+                fill: d => getClassIndex(breaks)(d),
+                inset: 0.5,
+                thresholds: 70 
+              }
+            )),
+            Plot.ruleY([0])
+          ]
+        })}
+      </div>
+    </div>
+  </div>
+`
+```
+
+**Data classification** is the process of grouping large amounts of data into smaller, manageable categories to create clear and readable maps. Applying data classification allows a mapmaker to organize these raw numbers into distinct groups. Each group is then assigned a specific color, shape, size, etc. on the map. This transformation turns a messy jumble of individual data points into a meaningful visual story, allowing anyone to instantly spot broad geographic trends and patterns. 
+
+### Why not unclassed maps?
+
+While data classification groups data into distinct bins, **unclassed maps** preserve every individual value using a smooth, unbroken color gradient. Choosing classified maps over continuous distributions is often necessary due to data structure and human perception.
+
+Unclassed maps fail when data contains extreme outliers. A single massive value stretches the color scale, forcing all other data points to look identical and hiding internal variation. Classification groups outliers into an open-ended category, revealing patterns among the remaining data.
+
+Additionally, classified maps excel at emphasizing critical thresholds like flood zones or pollution limits by creating sharp visual boundaries. Continuous maps blend these boundaries, obscuring significant thresholds.
+
+Classified maps accommodate human visual limits and simplify data querying. The human eye can only distinguish five to seven shades of one color, meaning continuous gradients often overwhelm viewers. Classified legends allow users to match a color block to a precise data range, whereas decoding exact values from a continuous gradient is nearly impossible.
+
+Despite these limitations, unclassed maps remain highly valuable when used under the right conditions. Recognizing these trade-offs should guide your decision on whether a classed or unclassed approach best suits your needs.
+
+## Methods
+
+Mapmakers can tell entirely different stories using the exact same underlying data simply by changing how they group it. To avoid misleading patterns, cartographers often look at a histogram first to see the data's true distribution and hidden outliers. Selecting the right classification method is vital to presenting data truthfully and delivering a clear, effective message.
+
+As an example, take the distribution of the 2020-2024 all-cause mortality within Chicago community areas. Shown continuously it looks like this:
+
+```{ojs}
+renderContinuousRow = () => html`
+  <div style="width: 100%;">
+    <div style="display: flex; gap: 24px; align-items: center; width: 100%; flex-wrap: wrap;">
+      
+      <!-- Continuous Map -->
+      <div style="flex: 1; min-width: 200px; display: flex; justify-content: center;">
+        ${Plot.plot({
+          height: 180,
+          width: 200,
+          projection: {
+            type: "mercator",
+            domain: data
+          }, 
+          color: colorConfig,
+          marks: [
+            Plot.geo(data, {
+              fill: f => f.properties.value,
+              stroke: "#ffffff",
+              strokeWidth: 0.3
+            })
+          ]
+        })}
+      </div>
+
+      <!-- Continuous Histogram -->
+      <div style="flex: 2; min-width: 300px;">
+        ${Plot.plot({
+          height: 180,
+          width: 500,
+          y: { grid: true, label: null },
+          color: colorConfig,
+          marks: [
+            Plot.rectY(columnData, Plot.binX(
+              { y: "count" }, 
+              { 
+                x: d => d, 
+                fill: d => d,
+                inset: 0.5,
+                thresholds: 70 
+              }
+            )),
+            Plot.ruleY([0])
+          ]
+        })}
+      </div>
+
+    </div>
+  </div>
+`
+
+html`${renderContinuousRow()}`
+```
+
+In our discussion of different classification methods, try to identify the changes in this map introduced by the classification method.
+
+### Quantiles
+
+```{ojs}
+html`${renderStackedRow(quantileBreaks)}`
+```
+
+The **quantile classification** method distributes data so that every category contains an equal number of geographic features. This forced equality maximizes visual contrast and ensures every color in the legend is used evenly, making it well suited for highlighting relative rankings, identifying top or bottom performers, or comparing rankings across multiple maps. However, this method completely ignores the actual numerical distances between data points, meaning it can group widely different values together or split nearly identical values into separate classes. 
+
+### Natural Breaks (Jenks)
+
+```{ojs}
+html`${renderStackedRow(jenksBreaks)}`
+```
+
+The **natural breaks** method identifies inherent clusters and gaps within a dataset by establishing groups with minimal variance within them and maximal variance between them. Unlike quantiles, it adapts to the distribution of the data, ensuring boundaries are placed where sudden jumps in values occur. This makes it ideal for showing true data structures and preserving natural patterns without artificially compressing or expanding the categories. However, because the class boundaries are custom-fit to one specific dataset, comparing these maps across different time periods or regions is highly ineffective. The categories are uneven and mathematically irregular, which can make the legend more complex for general audiences to interpret.
+
+### Equal Interval
+
+```{ojs}
+html`${renderStackedRow(equalBreaks)}`
+```
+
+The **equal interval** method divides the entire range of data values into categories of equal size, such as groups spanning exactly 10 units each. It is best suited for familiar, continuous ranges like percentages or temperatures, as the consistent step-size makes the legend highly intuitive and easy for general audiences to interpret. This consistency also makes it an excellent choice for comparing multiple maps over time, as the class boundaries remain fixed regardless of how the data shifts. However, because it focuses strictly on value ranges rather than data density, it performs poorly when data is heavily skewed or contains extreme outliers.
+
+### Standard Deviation
+
+```{ojs}
+html`${renderStackedRow(sdBreaks)}`
+```
+
+The **standard deviation** method forms categories based on how far data points deviate from the statistical mean of the dataset. The legend typically uses a two-toned color scale to highlight areas that are above average in one hue and areas below average in another. This method is highly effective for identifying spatial anomalies and seeing exactly which neighborhoods deviate significantly from the citywide norm. Despite its statistical basis, this method is difficult for non-technical audiences to understand, as the legend displays mathematical variances rather than actual data values. It also requires the underlying data to follow a normal distribution to be truly meaningful.
+
+___
+
+For more information, check out these resources:
+
+- [The Basics of Data Classification - Axis Maps](https://www.axismaps.com/guide/data-classification)
+- [Data classification methods - ArcGIS Pro Docs](https://doc.esri.com/en/arcgis-pro/latest/help/mapping/layer-properties/data-classification-methods.html)
+

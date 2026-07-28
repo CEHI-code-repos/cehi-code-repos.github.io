@@ -8,8 +8,6 @@ typography:
   base: Atkinson Hyperlegible
   headings:
     family: Atkinson Hyperlegible
-    color: dark-grey
 
   link:
-    color: info
     decoration: underline
