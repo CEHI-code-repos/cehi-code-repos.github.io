@@ -23,7 +23,7 @@ mortality_data <- ha_data(
 
 sf::st_write(mortality_data, "data/allmortality_20202024_ca.geojson")
 ```
---!>
+-->
 
 ```{ojs}
 colorConfig = ({ 
