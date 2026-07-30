@@ -3,6 +3,151 @@ title: "Coordinate Systems"
 subtitle: "Displaying a 3D world in 2D"
 toc: true
 order: 4
+ojs-code: |
+  (() => {
+    const viewW = 400;
+    const viewH = 220;
+
+    const svg = d3.create('svg')
+      .attr('viewBox', `0 0 ${viewW} ${viewH}`)
+      .attr('style', 'width:100%; height:100%; display:block; font-family:sans-serif;');
+
+    svg.append('defs')
+      .append('marker')
+      .attr('id', 'trans-arrow')
+      .attr('viewBox', '0 0 10 10')
+      .attr('refX', '6').attr('refY', '5')
+      .attr('markerWidth', '5')
+      .attr('markerHeight', '5')
+      .attr('orient', 'auto-start-reverse')
+      .append('path')
+      .attr('d', 'M 0 2 L 10 5 L 0 8 z')
+      .attr('fill', '#94a3b8');
+
+    const cy = viewH / 2;
+    const radius = 35;
+
+    const s1X = 75;
+    const stage1 = svg.append('g').attr('transform', `translate(${s1X}, ${cy})`);
+
+    stage1.append('circle')
+      .attr('cx', 0).attr('cy', 0).attr('r', radius)
+      .attr('fill', 'rgba(14, 165, 233, 0.12)')
+      .attr('stroke', '#0ea5e9')
+      .attr('stroke-width', 1.5);
+
+    for (let i = -2; i <= 2; i++) {
+      if (i === 0) continue;
+      const latY = i * (radius / 3);
+      const latW = Math.sqrt(radius * radius - latY * latY);
+      stage1.append('ellipse')
+        .attr('cx', 0).attr('cy', latY).attr('rx', latW).attr('ry', latW * 0.25)
+        .attr('fill', 'none').attr('stroke', 'rgba(14, 165, 233, 0.4)').attr('stroke-width', 0.75);
+
+      const longW = i * (radius / 3);
+      stage1.append('path')
+        .attr('d', `M 0 ${-radius} Q ${longW * 1.5} 0 0 ${radius}`)
+        .attr('fill', 'none').attr('stroke', 'rgba(14, 165, 233, 0.4)').attr('stroke-width', 0.75);
+    }
+    stage1.append('line').attr('x1', -radius).attr('y1', 0).attr('x2', radius).attr('y2', 0).attr('stroke', '#0ea5e9').attr('stroke-width', 1.2);
+    stage1.append('line').attr('x1', 0).attr('y1', -radius).attr('x2', 0).attr('y2', radius).attr('stroke', '#0ea5e9').attr('stroke-width', 1.2);
+
+
+    const s2X = 200;
+    const stage2 = svg.append('g').attr('transform', `translate(${s2X}, ${cy})`);
+
+    const goreW = 12;
+    const numGores = 5;
+    const goreH = 38;
+    const totalGoresW = numGores * goreW;
+    const startGoreX = -(totalGoresW / 2) + (goreW / 2);
+
+    for (let i = 0; i < numGores; i++) {
+      const gx = startGoreX + (i * goreW);
+      
+      stage2.append('path')
+        .attr('d', `M ${gx - goreW/2} 0 Q ${gx - goreW*0.52} ${-goreH*0.4}, ${gx} ${-goreH} Q ${gx + goreW*0.52} ${-goreH*0.4}, ${gx + goreW/2} 0 Z`)
+        .attr('fill', 'rgba(16, 185, 129, 0.12)')
+        .attr('stroke', '#10b981')
+        .attr('stroke-width', 1.2);
+
+      stage2.append('path')
+        .attr('d', `M ${gx - goreW/2} 0 Q ${gx - goreW*0.52} ${goreH*0.4}, ${gx} ${goreH} Q ${gx + goreW*0.52} ${goreH*0.4}, ${gx + goreW/2} 0 Z`)
+        .attr('fill', 'rgba(16, 185, 129, 0.12)')
+        .attr('stroke', '#10b981')
+        .attr('stroke-width', 1.2);
+
+      const lineYOffsets = [-goreH * 0.4, -goreH * 0.7, goreH * 0.4, goreH * 0.7];
+      lineYOffsets.forEach(yOffset => {
+        const angle = (Math.abs(yOffset) / goreH) * (Math.PI / 2);
+        const curW = (goreW / 2) * Math.cos(angle);
+        
+        stage2.append('line')
+          .attr('x1', gx - curW).attr('y1', yOffset)
+          .attr('x2', gx + curW).attr('y2', yOffset)
+          .attr('stroke', 'rgba(16, 185, 129, 0.4)')
+          .attr('stroke-width', 0.5);
+      });
+    }
+
+    stage2.append('line')
+      .attr('x1', startGoreX - goreW/2).attr('y1', 0)
+      .attr('x2', -startGoreX + goreW/2).attr('y2', 0)
+      .attr('stroke', '#10b981')
+      .attr('stroke-width', 1.5);
+
+
+    const s3X = 325;
+    const stage3 = svg.append('g').attr('transform', `translate(${s3X}, ${cy})`);
+    const flatSize = 70;
+
+    stage3.append('rect')
+      .attr('x', -flatSize / 2).attr('y', -flatSize / 2)
+      .attr('width', flatSize).attr('height', flatSize)
+      .attr('fill', 'rgba(245, 158, 11, 0.12)')
+      .attr('stroke', '#f59e0b')
+      .attr('stroke-width', 1.5)
+      .attr('rx', 2);
+
+    const steps = 6;
+    const stepDist = flatSize / steps;
+    for (let i = 1; i < steps; i++) {
+      const gridPos = -flatSize / 2 + i * stepDist;
+      stage3.append('line')
+        .attr('x1', -flatSize / 2).attr('y1', gridPos).attr('x2', flatSize / 2).attr('y2', gridPos)
+        .attr('stroke', 'rgba(245, 158, 11, 0.35)').attr('stroke-width', 0.75);
+      stage3.append('line')
+        .attr('x1', gridPos).attr('y1', -flatSize / 2).attr('x2', gridPos).attr('y2', flatSize / 2)
+        .attr('stroke', 'rgba(245, 158, 11, 0.35)').attr('stroke-width', 0.75);
+    }
+    stage3.append('line').attr('x1', -flatSize / 2).attr('y1', 0).attr('x2', flatSize / 2).attr('y2', 0).attr('stroke', '#f59e0b').attr('stroke-width', 1.2);
+    stage3.append('line').attr('x1', 0).attr('y1', -flatSize / 2).attr('x2', 0).attr('y2', flatSize / 2).attr('stroke', '#f59e0b').attr('stroke-width', 1.2);
+
+
+    const arrowPadding = 8; 
+
+    const arrow1Start = s1X + radius + arrowPadding;
+    const arrow1End = s2X - (totalGoresW / 2) - arrowPadding;
+    svg.append('line')
+      .attr('x1', arrow1Start).attr('y1', cy)
+      .attr('x2', arrow1End).attr('y2', cy)
+      .attr('stroke', '#94a3b8')
+      .attr('stroke-width', 1.5)
+      .attr('stroke-dasharray', '3,3')
+      .attr('marker-end', 'url(#trans-arrow)');
+
+    const arrow2Start = s2X + (totalGoresW / 2) + arrowPadding;
+    const arrow2End = s3X - (flatSize / 2) - arrowPadding;
+    svg.append('line')
+      .attr('x1', arrow2Start).attr('y1', cy)
+      .attr('x2', arrow2End).attr('y2', cy)
+      .attr('stroke', '#94a3b8')
+      .attr('stroke-width', 1.5)
+      .attr('stroke-dasharray', '3,3')
+      .attr('marker-end', 'url(#trans-arrow)');
+
+    return svg.node();
+  })()
 ---
 
 You're probably familiar with longitude and latitude coordinates. You probably think of them
@@ -258,7 +403,6 @@ geoData = {
 
 chicagoLatLong = [-87.6316, 41.8839]
 
-// 3. Define the Projection factories
 calculators = [
   { 
     name: "WGS 1984", 

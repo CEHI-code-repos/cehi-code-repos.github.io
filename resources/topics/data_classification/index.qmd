@@ -5,6 +5,95 @@ toc: true
 order: 3
 execute:
   echo: false
+ojs-code: |
+  (() => {
+    const viewW = 400;
+    const viewH = 220;
+
+    const svg = d3.create('svg')
+      .attr('viewBox', `0 0 ${viewW} ${viewH}`)
+      .attr('style', 'width:100%; height:100%; display:block; font-family:sans-serif;');
+
+    const chartW = 340;
+    const chartH = 34;
+    const chartGap = 14;
+    const startX = (viewW - chartW) / 2;
+    
+    const startY = (viewH - ((4 * chartH) + (3 * chartGap))) / 2;
+
+    const methodologies = [
+      { id: 'equal', color: '#0ea5e9', breaks: [0, 25, 50, 75, 100] },
+      { id: 'quantile', color: '#10b981', breaks: [0, 10, 22, 45, 100] },
+      { id: 'jenks', color: '#f59e0b', breaks: [0, 18, 40, 68, 100] },
+      { id: 'stddev', color: '#ef4444', breaks: [0, 15, 35, 65, 100] }
+    ];
+
+    const distributions = [
+      { min: 0,    max: 12.5, count: 12 },
+      { min: 12.5, max: 25,   count: 9  },
+      { min: 25,   max: 37.5, count: 7  },
+      { min: 37.5, max: 50,   count: 5  },
+      { min: 50,   max: 62.5, count: 4  },
+      { min: 62.5, max: 75,   count: 3  },
+      { min: 75,   max: 87.5, count: 2  },
+      { min: 87.5, max: 100,  count: 1  }
+    ];
+
+    const scaleX = d3.scaleLinear().domain([0, 100]).range([0, chartW]);
+    const scaleY = d3.scaleLinear().domain([0, 12]).range([chartH, 2]);
+
+    methodologies.forEach((scheme, idx) => {
+      const currentY = startY + idx * (chartH + chartGap);
+      const canvasG = svg.append('g').attr('transform', `translate(${startX}, ${currentY})`);
+
+      distributions.forEach(bin => {
+        const barW = scaleX(bin.max) - scaleX(bin.min);
+        const barH = chartH - scaleY(bin.count);
+
+        canvasG.append('rect')
+          .attr('x', scaleX(bin.min))
+          .attr('y', scaleY(bin.count))
+          .attr('width', Math.max(0.5, barW - 0.75))
+          .attr('height', Math.max(0, barH))
+          .attr('fill', scheme.color)
+          .attr('opacity', 0.15)
+          .attr('stroke', scheme.color)
+          .attr('stroke-width', 0.5);
+      });
+
+      canvasG.append('line')
+        .attr('x1', 0).attr('y1', chartH)
+        .attr('x2', chartW).attr('y2', chartH)
+        .attr('stroke', '#64748b')
+        .attr('stroke-width', 1);
+
+      for (let i = 0; i < scheme.breaks.length - 1; i++) {
+        const left = scheme.breaks[i];
+        const right = scheme.breaks[i + 1];
+
+        canvasG.append('rect')
+          .attr('x', scaleX(left))
+          .attr('y', 0)
+          .attr('width', scaleX(right) - scaleX(left))
+          .attr('height', 2)
+          .attr('fill', scheme.color)
+          .attr('opacity', 0.35 + i * 0.18);
+      }
+
+      scheme.breaks.forEach((cutPoint, bIdx) => {
+        const isBoundaryEdge = (bIdx === 0 || bIdx === scheme.breaks.length - 1);
+
+        canvasG.append('line')
+          .attr('x1', scaleX(cutPoint)).attr('y1', 0)
+          .attr('x2', scaleX(cutPoint)).attr('y2', chartH)
+          .attr('stroke', isBoundaryEdge ? '#475569' : scheme.color)
+          .attr('stroke-width', isBoundaryEdge ? 1 : 1.75)
+          .attr('stroke-dasharray', isBoundaryEdge ? 'none' : '2,1.5');
+      });
+    });
+
+    return svg.node();
+  })()
 ---
 
 <!-- 

@@ -3,6 +3,153 @@ title: "Data in ArcGIS Pro"
 subtitle: "Understanding Reference-Based Projects"
 toc: true
 order: 2
+ojs-code: |
+  (() => {
+      const viewW = 400;
+      const viewH = 220;
+      const svg = d3.create('svg')
+        .attr('viewBox', `0 0 ${viewW} ${viewH}`)
+        .attr('style', 'width:100%; height:100%; display:block; font-family:sans-serif;');
+
+      svg.append('defs').append('marker')
+        .attr('id', 'arrow')
+        .attr('viewBox', '0 0 10 10')
+        .attr('refX', '7')
+        .attr('refY', '5')
+        .attr('markerWidth', 5)
+        .attr('markerHeight', 5)
+        .attr('orient', 'auto-start-reverse')
+        .append('path')
+        .attr('d', 'M 0 2 L 10 5 L 0 8 z')
+        .attr('fill', '#94a3b8');
+
+      const dbX = 200;
+      const dbY = 110;
+
+      const links = [
+        { x1: dbX - 34, y1: dbY - 14, x2: 105, y2: 58 },
+        { x1: dbX + 34, y1: dbY - 14, x2: 295, y2: 58 },
+        { x1: dbX - 34, y1: dbY + 14, x2: 105, y2: 162 },
+        { x1: dbX + 34, y1: dbY + 14, x2: 295, y2: 162 }
+      ];
+
+      svg.selectAll('line.link')
+        .data(links)
+        .join('line')
+        .attr('class', 'link')
+        .attr('x1', d => d.x1)
+        .attr('y1', d => d.y1)
+        .attr('x2', d => d.x2)
+        .attr('y2', d => d.y2)
+        .attr('stroke', '#94a3b8')
+        .attr('stroke-width', 1.5)
+        .attr('stroke-dasharray', '3 3')
+        .attr('marker-end', 'url(#arrow)');
+
+      const cylY = dbY - 20;     
+      const dbW = 48;     
+      const dbH = 40;     
+      const rx = dbW / 2;
+      const ry = 12;      
+
+      const gdb = svg.append('g');
+
+      gdb.append('path')
+        .attr('d', `M ${dbX - rx} ${cylY} 
+                    A ${rx} ${ry} 0 0 0 ${dbX + rx} ${cylY} 
+                    L ${dbX + rx} ${cylY + dbH} 
+                    A ${rx} ${ry} 0 0 1 ${dbX - rx} ${cylY + dbH} Z`)
+        .attr('fill', 'rgba(14, 165, 233, 0.12)')
+        .attr('stroke', '#0ea5e9')
+        .attr('stroke-width', 1.5)
+        .attr('stroke-linejoin', 'round');
+
+      gdb.append('ellipse')
+        .attr('cx', dbX)
+        .attr('cy', cylY)
+        .attr('rx', rx)
+        .attr('ry', ry)
+        .attr('fill', 'rgba(14, 165, 233, 0.08)')
+        .attr('stroke', '#0ea5e9')
+        .attr('stroke-width', 1.5);
+
+      gdb.append('path')
+        .attr('d', `M ${dbX - rx} ${cylY + 14} A ${rx} ${ry} 0 0 0 ${dbX + rx} ${cylY + 14}`)
+        .attr('fill', 'none')
+        .attr('stroke', 'rgba(14, 165, 233, 0.4)')
+        .attr('stroke-width', 1);
+
+      gdb.append('path')
+        .attr('d', `M ${dbX - rx} ${cylY + 28} A ${rx} ${ry} 0 0 0 ${dbX + rx} ${cylY + 28}`)
+        .attr('fill', 'none')
+        .attr('stroke', 'rgba(14, 165, 233, 0.4)')
+        .attr('stroke-width', 1);
+
+
+      const vecG = svg.append('g').attr('transform', 'translate(55, 35)');
+      
+      vecG.append('rect').attr('width', 40).attr('height', 40).attr('rx', 3)
+        .attr('fill', 'rgba(14, 165, 233, 0.05)').attr('stroke', '#94a3b8').attr('stroke-width', 1);
+      
+      vecG.append('path').attr('d', 'M 8 32 L 20 12 L 32 20')
+        .attr('fill', 'none').attr('stroke', '#0ea5e9').attr('stroke-width', 1.5).attr('stroke-linejoin', 'round');
+      
+      vecG.selectAll('circle')
+        .data([{x:8, y:32}, {x:20, y:12}, {x:32, y:20}])
+        .join('circle')
+        .attr('cx', d => d.x).attr('cy', d => d.y).attr('r', 3)
+        .attr('fill', '#ffffff').attr('stroke', '#0ea5e9').attr('stroke-width', 1.2);
+
+
+      const rasG = svg.append('g').attr('transform', 'translate(305, 35)');
+      
+      rasG.append('rect').attr('width', 40).attr('height', 40).attr('rx', 3)
+        .attr('fill', 'rgba(16, 185, 129, 0.05)').attr('stroke', '#94a3b8').attr('stroke-width', 1);
+      
+      const pixels = [
+        {x: 4, y: 4, f: 'rgba(16, 185, 129, 0.4)'},  {x: 16, y: 4, f: 'rgba(16, 185, 129, 0.4)'},  {x: 28, y: 4, f: 'rgba(16, 185, 129, 0.6)'},
+        {x: 4, y: 16, f: 'rgba(16, 185, 129, 0.4)'}, {x: 16, y: 16, f: 'rgba(16, 185, 129, 0.7)'}, {x: 28, y: 16, f: 'rgba(16, 185, 129, 0.2)'},
+        {x: 4, y: 28, f: 'rgba(16, 185, 129, 0.7)'}, {x: 16, y: 28, f: 'rgba(16, 185, 129, 0.2)'}, {x: 28, y: 28, f: 'rgba(16, 185, 129, 0.3)'}
+      ];
+      
+      rasG.selectAll('rect.pixel')
+        .data(pixels).join('rect').attr('class', 'pixel')
+        .attr('x', d => d.x).attr('y', d => d.y).attr('width', 9).attr('height', 9)
+        .attr('fill', d => d.f).attr('stroke', '#ffffff').attr('stroke-width', 0.75);
+
+
+      const tblG = svg.append('g').attr('transform', 'translate(55, 145)');
+      
+      tblG.append('rect').attr('width', 40).attr('height', 40).attr('rx', 3)
+        .attr('fill', '#ffffff').attr('stroke', '#94a3b8').attr('stroke-width', 1);
+      
+      tblG.append('path')
+        .attr('d', 'M 0 3 A 3 3 0 0 1 3 0 L 37 0 A 3 3 0 0 1 40 3 L 40 10 L 0 10 Z')
+        .attr('fill', 'rgba(148, 163, 184, 0.25)');
+
+      const horizontalRows = [10, 20, 30];
+      tblG.selectAll('line.row')
+        .data(horizontalRows).join('line').attr('class', 'row')
+        .attr('x1', 0).attr('x2', 40).attr('y1', d => d).attr('y2', d => d)
+        .attr('stroke', 'rgba(148, 163, 184, 0.3)').attr('stroke-width', 0.75);
+
+      tblG.append('line').attr('x1', 14).attr('y1', 0).attr('x2', 14).attr('y2', 40).attr('stroke', 'rgba(148, 163, 184, 0.3)').attr('stroke-width', 0.75);
+      tblG.append('line').attr('x1', 28).attr('y1', 0).attr('x2', 28).attr('y2', 40).attr('stroke', 'rgba(148, 163, 184, 0.3)').attr('stroke-width', 0.75);
+
+
+      const polyG = svg.append('g').attr('transform', 'translate(305, 145)');
+      
+      polyG.append('rect').attr('width', 40).attr('height', 40).attr('rx', 3)
+        .attr('fill', 'rgba(245, 158, 11, 0.05)').attr('stroke', '#94a3b8').attr('stroke-width', 1);
+      
+      polyG.append('polygon')
+        .attr('points', '8,20 20,6 34,14 28,34 12,30')
+        .attr('fill', 'rgba(245, 158, 11, 0.15)')
+        .attr('stroke', '#f59e0b')
+        .attr('stroke-width', 1.5);
+
+      return svg.node();
+    })()
 ---
 
 ArcGIS Pro is a referential software. This means that rather than storing data within a project itself, ArcGIS Pro stores a reference to where data is stored. This means data CAN be in a project, but it also can be stored else where on your computer, on a remote server, or even on the internet. This also means that renaming, moving, or deleting data from where it is stored, can result in loss of data in your project. Additionally, any changes made to the data itself outside the project will affect the project as well.

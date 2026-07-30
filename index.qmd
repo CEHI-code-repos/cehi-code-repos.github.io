@@ -48,7 +48,6 @@ function createCardCanvas(width, height, drawFunction) {
 ```{ojs}
 //| echo: false
 createCardCanvas(400, 220, (ctx, w, h) => {
-  // Sidebar navbar representation
   ctx.fillStyle = "#e9ecef";
   ctx.fillRect(0, 0, 80, h);
   ctx.fillStyle = "#ced4da";
@@ -56,13 +55,11 @@ createCardCanvas(400, 220, (ctx, w, h) => {
   ctx.fillRect(10, 40, 60, 10);
   ctx.fillRect(10, 60, 60, 10);
   
-  // Main video/content block
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(95, 20, 290, 130);
   ctx.strokeStyle = "#adb5bd";
   ctx.strokeRect(95, 20, 290, 130);
   
-  // Play button indicator
   ctx.fillStyle = "#0d6efd";
   ctx.beginPath();
   ctx.moveTo(230, 75);
@@ -70,7 +67,6 @@ createCardCanvas(400, 220, (ctx, w, h) => {
   ctx.lineTo(250, 85);
   ctx.fill();
   
-  // Text line simulations
   ctx.fillStyle = "#6c757d";
   ctx.fillRect(95, 165, 200, 8);
   ctx.fillRect(95, 180, 250, 8);
@@ -100,7 +96,6 @@ createCardCanvas(400, 220, (ctx, w, h) => {
     ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
   }
 
-  // Draw background survey vectors/lines
   ctx.strokeStyle = "#dee2e6";
   ctx.lineWidth = 1.5;
   ctx.setLineDash([4, 4]);
@@ -108,9 +103,8 @@ createCardCanvas(400, 220, (ctx, w, h) => {
   ctx.moveTo(centerX - 120, centerY - 60); ctx.lineTo(centerX + 120, centerY + 60);
   ctx.moveTo(centerX - 120, centerY + 60); ctx.lineTo(centerX + 120, centerY - 60);
   ctx.stroke();
-  ctx.setLineDash([]); // Reset dash line
+  ctx.setLineDash([]);
 
-  // Draw proximity buffer zone
   ctx.fillStyle = "rgba(13, 110, 253, 0.08)";
   ctx.strokeStyle = "#0d6efd";
   ctx.lineWidth = 2;
@@ -119,7 +113,6 @@ createCardCanvas(400, 220, (ctx, w, h) => {
   ctx.fill();
   ctx.stroke();
 
-  // Draw outer intersection points (representing intersected data records)
   const points = [
     {x: centerX - 40, y: centerY - 30},
     {x: centerX + 50, y: centerY - 15},
@@ -134,7 +127,6 @@ createCardCanvas(400, 220, (ctx, w, h) => {
     ctx.fill();
   });
 
-  // Draw focal point (representing the facility or exposure source)
   ctx.fillStyle = "#212529";
   ctx.beginPath();
   ctx.arc(centerX, centerY, 6, 0, 2 * Math.PI);
@@ -150,7 +142,6 @@ Packages and toolboxes to assist with spatial epidemiology workflows.
 ## Data Catalog
 ```{ojs}
 //| echo: false
-// Figure 3: Data Catalog Visual (Attribute Table & Geographic Boundary Schema)
 createCardCanvas(400, 220, (ctx, w, h) => {
   // Define boundary line styling
   ctx.strokeStyle = "#adb5bd";
@@ -160,12 +151,14 @@ createCardCanvas(400, 220, (ctx, w, h) => {
   [[20, 60], [80, 45], [110, 80], [60, 110]],
   [[80, 45], [150, 50], [140, 95], [110, 80]],
   [[20, 60], [60, 110], [70, 170], [15, 130]],
-  [[60, 110], [110, 80], [140, 95], [160, 150], [110, 180], [70, 170]]
+  [[60, 110], [160, 150], [110, 180], [70, 170]],
+  [[60, 110], [110, 80], [125, 87.5], [110, 130]],
+  [[110, 130], [125, 87.5], [140, 95], [160, 150]]
 ];
 
 
   tracts.forEach((tract, i) => {
-    if (i === 3) {
+    if (i === 5) {
       ctx.fillStyle = "rgba(13, 110, 253, 0.15)";
       ctx.strokeStyle = "#0d6efd";
       ctx.lineWidth = 2;
@@ -243,7 +236,7 @@ createCardCanvas(400, 220, (ctx, w, h) => {
   ctx.beginPath();
   ctx.moveTo(140, 95); 
   ctx.lineTo(tableX, tableY + (4 * rowHeight));
-  ctx.moveTo(110, 180);
+  ctx.moveTo(160, 150);
   ctx.lineTo(tableX, tableY + (5 * rowHeight));
   ctx.stroke();
   ctx.setLineDash([]);

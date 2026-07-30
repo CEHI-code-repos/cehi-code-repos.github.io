@@ -3,6 +3,117 @@ title: "Map Design"
 subtitle: "The process of creating effective maps"
 order: 1
 toc: true
+ojs-code: |
+  (() => {
+    const viewW = 400;
+    const viewH = 220;
+
+    const svg = d3.create('svg')
+      .attr('viewBox', `0 0 ${viewW} ${viewH}`)
+      .attr('style', 'width:100%; height:100%; display:block; font-family:sans-serif;');
+
+    const cy = viewH / 2;
+    const mapW = 140;
+    const mapH = 170;
+
+    const leftX = 25;
+    const leftG = svg.append('g').attr('transform', `translate(${leftX}, ${cy - mapH/2})`);
+
+    leftG.append('rect')
+      .attr('width', mapW).attr('height', mapH)
+      .attr('fill', '#f8fafc')
+      .attr('stroke', '#475569')
+      .attr('stroke-width', 2);
+
+    leftG.append('rect')
+      .attr('x', 5).attr('y', 5).attr('width', mapW - 10).attr('height', mapH - 10)
+      .attr('fill', '#f1f5f9')
+      .attr('stroke', '#0284c7')
+      .attr('stroke-width', 2.5);
+
+    leftG.append('path')
+      .attr('d', 'M 10 30 Q 50 10 80 50 T 130 90 L 130 140 L 10 140 Z')
+      .attr('fill', '#cbd5e1')
+      .attr('stroke', '#475569')
+      .attr('stroke-width', 2);
+
+    leftG.append('path')
+      .attr('d', 'M 15 15 Q 60 70 80 120 T 120 160')
+      .attr('fill', 'none')
+      .attr('stroke', '#ef4444')
+      .attr('stroke-width', 2.5);
+
+    const featurePtsLeft = [[35, 45], [70, 30], [105, 75], [55, 100]];
+    featurePtsLeft.forEach(([x, y]) => {
+      leftG.append('circle').attr('cx', x).attr('cy', y).attr('r', 6).attr('fill', '#10b981').attr('stroke', '#1e293b').attr('stroke-width', 1.5);
+    });
+
+    leftG.append('rect').attr('x', 15).attr('y', 15).attr('width', 50).attr('height', 15).attr('fill', '#334155');
+    leftG.append('rect').attr('x', 80).attr('y', 130).attr('width', 45).attr('height', 25).attr('fill', '#ffffff').attr('stroke', '#000').attr('stroke-width', 1.5);
+    leftG.append('line').attr('x1', 85).attr('y1', 137).attr('x2', 100).attr('y2', 137).attr('stroke', '#ef4444').attr('stroke-width', 2);
+    leftG.append('circle').attr('cx', 92).attr('cy', 147).attr('r', 4).attr('fill', '#10b981');
+
+
+    svg.append('line')
+      .attr('x1', viewW / 2).attr('y1', 20)
+      .attr('x2', viewW / 2).attr('y2', viewH - 20)
+      .attr('stroke', '#cbd5e1')
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', '4,4');
+
+
+    const rightX = 235;
+    const rightG = svg.append('g').attr('transform', `translate(${rightX}, ${cy - mapH/2})`);
+
+    rightG.append('rect')
+      .attr('width', mapW).attr('height', mapH)
+      .attr('fill', '#ffffff')
+      .attr('stroke', '#94a3b8')
+      .attr('stroke-width', 1);
+
+    rightG.append('rect')
+      .attr('x', 12).attr('y', 12).attr('width', mapW - 24).attr('height', mapH - 24)
+      .attr('fill', '#fdfdfd')
+      .attr('stroke', '#cbd5e1')
+      .attr('stroke-width', 0.75);
+
+    rightG.append('path')
+      .attr('d', 'M 15 35 Q 50 15 80 55 T 125 95 L 125 145 L 15 145 Z')
+      .attr('fill', '#f1f5f9')
+      .attr('stroke', '#cbd5e1')
+      .attr('stroke-width', 0.75);
+
+    rightG.append('path')
+      .attr('d', 'M 20 20 Q 60 72 80 122 T 120 155')
+      .attr('fill', 'none')
+      .attr('stroke', '#ef4444')
+      .attr('stroke-width', 1.25);
+
+    const featurePtsRight = [[40, 50], [72, 35], [103, 80], [58, 105]];
+    featurePtsRight.forEach(([x, y]) => {
+      rightG.append('circle').attr('cx', x).attr('cy', y + 0.5).attr('r', 3).attr('fill', 'rgba(0,0,0,0.15)');
+      rightG.append('circle').attr('cx', x).attr('cy', y).attr('r', 2.5).attr('fill', '#10b981').attr('stroke', '#ffffff').attr('stroke-width', 0.5);
+    });
+
+    rightG.append('rect').attr('x', 20).attr('y', 20).attr('width', 40).attr('height', 6).attr('fill', '#64748b').attr('rx', 1);
+    rightG.append('rect').attr('x', 20).attr('y', 29).attr('width', 22).attr('height', 3).attr('fill', '#94a3b8').attr('rx', 0.5);
+
+    rightG.append('rect')
+      .attr('x', 80).attr('y', 115)
+      .attr('width', 38).attr('height', 28)
+      .attr('fill', '#ffffff')
+      .attr('stroke', '#e2e8f0')
+      .attr('stroke-width', 0.75)
+      .attr('rx', 2);
+      
+    rightG.append('line').attr('x1', 84).attr('y1', 121).attr('x2', 94).attr('y2', 121).attr('stroke', '#ef4444').attr('stroke-width', 1);
+    rightG.append('rect').attr('x', 98).attr('y', 1195).attr('width', 14).attr('height', 3).attr('fill', '#e2e8f0').attr('rx', 0.5);
+    
+    rightG.append('circle').attr('cx', 89).attr('cy', 131).attr('r', 1.75).attr('fill', '#10b981');
+    rightG.append('rect').attr('x', 98).attr('y', 129.5).attr('width', 10).attr('height', 3).attr('fill', '#e2e8f0').attr('rx', 0.5);
+
+    return svg.node();
+  })()
 ---
 
 Designing a map is rarely a linear process. We often like to imagine it as a tidy recipe
