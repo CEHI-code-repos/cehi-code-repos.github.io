@@ -1,6 +1,6 @@
-::: {.list .grid .quarto-listing-cols-4}
+::: {.list .grid .quarto-listing-cols-4 style="padding-bottom: 17px;"}
 
-<% for (const item of items) { %>
+<% for (const item of items.slice(0, 4)) { %>
 
 ::: {.g-col-1 <%= metadataAttrs(item) %> }
 
@@ -46,3 +46,15 @@
 <% } %>
 
 :::
+
+<% if (items.length > 4) { 
+     let samplePath = items[0].path || "";
+     if (samplePath.endsWith('/index.qmd')) {
+       samplePath = samplePath.substring(0, samplePath.lastIndexOf('/'));
+     }
+     const basePath = samplePath.substring(0, samplePath.lastIndexOf('/') + 1); 
+%>
+:::{.text-end .mb-5 style = "margin-bottom: 0 !important"}
+[View All](<%= basePath %>){class="btn btn-outline-primary btn-sm"}
+:::
+<% } %>

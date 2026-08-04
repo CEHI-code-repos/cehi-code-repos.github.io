@@ -250,8 +250,15 @@ projection = {
 
 viewof context = {
   const context = DOM.context2d(width, height);
+  
+  // Style the canvas to scale responsively
   context.canvas.style.display = "block";
-  context.canvas.style.maxWidth = "100%";
+  context.canvas.style.width = "100%";
+  context.canvas.style.height = "auto";
+  
+  // Centers the canvas horizontally inside the screen column
+  context.canvas.style.margin = "0 auto"; 
+  
   context.canvas.value = context;
   return context.canvas;
 }
@@ -342,7 +349,6 @@ function fit(raw) {
 //| echo: false
 
 ease = d3.easeCubicInOut
-width = 954
 height = 400
 outline = ({type: "Sphere"})
 graticule = d3.geoGraticule10()
