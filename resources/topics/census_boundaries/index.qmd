@@ -3,6 +3,8 @@ title: "US Census Geographies"
 subtitle: "The hierarchy of US Census boundaries"
 toc: true
 order: 5
+resources:
+  - "data/national_boundary.geojson"
 ojs-code: |
   function() {
     var container = d3.create('div').style('width', '100%').style('height', '100%').node();
