@@ -10,6 +10,7 @@
       "/resources/topics/spatial_data.html",
       "/resources/topics/data_classification/index.html",
       "/resources/topics/projections/index.html",
+      "/resources/topics/census_boundaries/index.html",
       "/resources/intro_to_arcgis_pro/understanding_arcpro_interface/index.html",
       "/resources/intro_to_arcgis_pro/data_arcpro/index.html"
     ]
@@ -34,7 +35,8 @@
       "/resources/topics/map-design/index.html",
       "/resources/topics/spatial_data.html",
       "/resources/topics/data_classification/index.html",
-      "/resources/topics/projections/index.html"
+      "/resources/topics/projections/index.html",
+      "/resources/topics/census_boundaries/index.html"
     ]
   },
   {

@@ -27,6 +27,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -68,20 +103,20 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-sections .list');
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-title','listing-subtitle',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-project','listing-website','listing-format','listing-engines','listing-language','listing-title','listing-subtitle','listing-toc','listing-order','listing-ojs-code','listing-path','listing-outputHref','listing-author','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
+      searchColumns: ["listing-project","listing-website","listing-format","listing-engines","listing-language","listing-title","listing-subtitle","listing-toc","listing-order","listing-ojs-code","listing-path","listing-outputHref","listing-author","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-sections'] = new List('listing-sections', options);
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -94,6 +129,8 @@ ul.task-list li input[type="checkbox"] {
     }
   })
   </script>
+<script type="module" src="../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -209,12 +246,176 @@ window.Quarto = {
 
 <section id="sections" class="level3">
 <h3 class="anchored" data-anchor-id="sections">Sections</h3>
-<div id="listing-sections" class="quarto-listing quarto-listing-container-grid">
-<div class="list grid quarto-listing-cols-1">
-<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1785444057694" data-listing-reading-time-sort="3" data-listing-word-count-sort="550">
-<a href="../../resources/intro_to_arcgis_pro/understanding_arcpro_interface/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
+<div class="cell hidden">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="15" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 14;"><span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>width<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="17" data-source-offset="-10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 16;"><span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> targets <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">'.listing-ojs-target'</span>)<span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  targets<span class="op">.</span><span class="fu">forEach</span>(target <span class="kw">=&gt;</span> {</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> codeString <span class="op">=</span> target<span class="op">.</span><span class="fu">getAttribute</span>(<span class="st">'data-ojs-code'</span>)<span class="op">;</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (codeString) {</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>      <span class="cf">try</span> {</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        target<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">''</span><span class="op">;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> graph <span class="op">=</span> <span class="kw">new</span> <span class="bu">Function</span>(<span class="st">'Plot'</span><span class="op">,</span> <span class="st">'d3'</span><span class="op">,</span> <span class="vs">`return </span><span class="sc">${</span>codeString<span class="sc">}</span><span class="vs">`</span>)(Plot<span class="op">,</span> d3)<span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (graph) {</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>          target<span class="op">.</span><span class="fu">appendChild</span>(graph)<span class="op">;</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">catch</span> (e) {</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">"Failed to render OJS code for card:"</span><span class="op">,</span> e)<span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display hidden">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div class="quarto-listing quarto-listing-container-custom" id="listing-listing">
+<div class="list grid quarto-listing-cols-4">
+<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1785868341278" data-listing-reading-time-sort="3" data-listing-word-count-sort="550">
+<a href="../../resources/intro_to_arcgis_pro/understanding_arcpro_interface/index.html" class="quarto-grid-link text-decoration-none text-dark d-flex flex-column h-100">
+<div class="quarto-grid-item card h-100 card-left d-flex flex-column" style="overflow: hidden;">
+<!-- ojs figure integration -->
+<div class="card-img-top listing-ojs-target flex-shrink-0" data-ojs-code="(() => {
+    const viewW = 400;
+    const viewH = 220;
+
+    const svg = d3.create('svg')
+      .attr('viewBox', `0 0 ${viewW} ${viewH}`)
+      .attr('style', 'width:100%; height:100%; display:block; font-family:sans-serif;');
+
+    svg.append('rect')
+      .attr('x', 10)
+      .attr('y', 10)
+      .attr('width', viewW - 20)
+      .attr('height', viewH - 20)
+      .attr('rx', 4)
+      .attr('fill', '#ffffff')
+      .attr('stroke', '#94a3b8')
+      .attr('stroke-width', 1.5);
+
+    svg.append('rect')
+      .attr('x', 10)
+      .attr('y', 10)
+      .attr('width', viewW - 20)
+      .attr('height', 35)
+      .attr('rx', 4)
+      .attr('fill', 'rgba(148, 163, 184, 0.05)');
+
+    svg.append('line')
+      .attr('x1', 10).attr('y1', 45).attr('x2', viewW - 10).attr('y2', 45)
+      .attr('stroke', 'rgba(148, 163, 184, 0.3)').attr('stroke-width', 1);
+
+    for (let i = 0; i < 4; i++) {
+      svg.append('rect')
+        .attr('x', 25 + (i * 45))
+        .attr('y', 17)
+        .attr('width', 35)
+        .attr('height', 8)
+        .attr('rx', 2)
+        .attr('fill', i === 1 ? 'rgba(148, 163, 184, 0.25)' : 'rgba(148, 163, 184, 0.1)');
+    }
+
+    svg.append('rect')
+      .attr('x', 20)
+      .attr('y', 55)
+      .attr('width', 75)
+      .attr('height', 145)
+      .attr('rx', 3)
+      .attr('fill', '#ffffff')
+      .attr('stroke', 'rgba(148, 163, 184, 0.4)')
+      .attr('stroke-width', 1);
+
+    for (let i = 0; i < 4; i++) {
+      svg.append('rect')
+        .attr('x', 30)
+        .attr('y', 70 + (i * 25))
+        .attr('width', 55)
+        .attr('height', 6)
+        .attr('rx', 1.5)
+        .attr('fill', 'rgba(148, 163, 184, 0.25)');
+    }
+
+    svg.append('rect')
+      .attr('x', 105)
+      .attr('y', 55)
+      .attr('width', 190)
+      .attr('height', 145)
+      .attr('rx', 3)
+      .attr('fill', 'rgba(14, 165, 233, 0.05)')
+      .attr('stroke', '#0ea5e9')
+      .attr('stroke-width', 1);
+
+    svg.append('path')
+      .attr('d', 'M 130,120 L 190,80 L 250,140 L 170,160 Z')
+      .attr('fill', 'rgba(16, 185, 129, 0.12)')
+      .attr('stroke', '#10b981')
+      .attr('stroke-width', 1.5)
+      .attr('stroke-linejoin', 'round');
+
+    const points = [{cx: 190, cy: 100}, {cx: 170, cy: 130}];
+    svg.selectAll('circle.map-pt')
+      .data(points).join('circle').attr('class', 'map-pt')
+      .attr('cx', d => d.cx)
+      .attr('cy', d => d.cy)
+      .attr('r', 3.5)
+      .attr('fill', '#ffffff')
+      .attr('stroke', '#0ea5e9')
+      .attr('stroke-width', 1.5);
+
+    svg.append('rect')
+      .attr('x', 305)
+      .attr('y', 55)
+      .attr('width', 75)
+      .attr('height', 145)
+      .attr('rx', 3)
+      .attr('fill', '#ffffff')
+      .attr('stroke', 'rgba(148, 163, 184, 0.4)')
+      .attr('stroke-width', 1);
+
+    for (let i = 0; i < 3; i++) {
+      svg.append('rect')
+        .attr('x', 315)
+        .attr('y', 75 + (i * 35))
+        .attr('width', 15)
+        .attr('height', 12)
+        .attr('rx', 2)
+        .attr('fill', 'rgba(245, 158, 11, 0.12)')
+        .attr('stroke', '#f59e0b')
+        .attr('stroke-width', 1);
+
+      svg.append('rect')
+        .attr('x', 336)
+        .attr('y', 79 + (i * 35))
+        .attr('width', 34)
+        .attr('height', 4)
+        .attr('rx', 1)
+        .attr('fill', 'rgba(148, 163, 184, 0.25)');
+    }
+
+    return svg.node();
+  })()
+" style="height: 200px; background: #f8f9fa; border-bottom: 1px solid #dee2e6; display: block; width: 100%;">
+</div>
+<!-- title, subtitle -->
+<div class="card-body post-contents flex-grow-1">
 <h5 class="no-anchor card-title listing-title">
 Understanding the ArcGIS Pro Interface
 </h5>
@@ -224,10 +425,156 @@ Navigating projects, tools, and settings
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1785444057681" data-listing-reading-time-sort="4" data-listing-word-count-sort="621">
-<a href="../../resources/intro_to_arcgis_pro/data_arcpro/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="card-body post-contents">
+<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1785868341265" data-listing-reading-time-sort="4" data-listing-word-count-sort="621">
+<a href="../../resources/intro_to_arcgis_pro/data_arcpro/index.html" class="quarto-grid-link text-decoration-none text-dark d-flex flex-column h-100">
+<div class="quarto-grid-item card h-100 card-left d-flex flex-column" style="overflow: hidden;">
+<!-- ojs figure integration -->
+<div class="card-img-top listing-ojs-target flex-shrink-0" data-ojs-code="(() => {
+    const viewW = 400;
+    const viewH = 220;
+    const svg = d3.create('svg')
+      .attr('viewBox', `0 0 ${viewW} ${viewH}`)
+      .attr('style', 'width:100%; height:100%; display:block; font-family:sans-serif;');
+
+    svg.append('defs').append('marker')
+      .attr('id', 'arrow')
+      .attr('viewBox', '0 0 10 10')
+      .attr('refX', '7')
+      .attr('refY', '5')
+      .attr('markerWidth', 5)
+      .attr('markerHeight', 5)
+      .attr('orient', 'auto-start-reverse')
+      .append('path')
+      .attr('d', 'M 0 2 L 10 5 L 0 8 z')
+      .attr('fill', '#94a3b8');
+
+    const dbX = 200;
+    const dbY = 110;
+
+    const links = [
+      { x1: dbX - 34, y1: dbY - 14, x2: 105, y2: 58 },
+      { x1: dbX + 34, y1: dbY - 14, x2: 295, y2: 58 },
+      { x1: dbX - 34, y1: dbY + 14, x2: 105, y2: 162 },
+      { x1: dbX + 34, y1: dbY + 14, x2: 295, y2: 162 }
+    ];
+
+    svg.selectAll('line.link')
+      .data(links)
+      .join('line')
+      .attr('class', 'link')
+      .attr('x1', d => d.x1)
+      .attr('y1', d => d.y1)
+      .attr('x2', d => d.x2)
+      .attr('y2', d => d.y2)
+      .attr('stroke', '#94a3b8')
+      .attr('stroke-width', 1.5)
+      .attr('stroke-dasharray', '3 3')
+      .attr('marker-end', 'url(#arrow)');
+
+    const cylY = dbY - 20;
+    const dbW = 48;
+    const dbH = 40;
+    const rx = dbW / 2;
+    const ry = 12;
+
+    const gdb = svg.append('g');
+
+    gdb.append('path')
+      .attr('d', `M ${dbX - rx} ${cylY}
+                  A ${rx} ${ry} 0 0 0 ${dbX + rx} ${cylY}
+                  L ${dbX + rx} ${cylY + dbH}
+                  A ${rx} ${ry} 0 0 1 ${dbX - rx} ${cylY + dbH} Z`)
+      .attr('fill', 'rgba(14, 165, 233, 0.12)')
+      .attr('stroke', '#0ea5e9')
+      .attr('stroke-width', 1.5)
+      .attr('stroke-linejoin', 'round');
+
+    gdb.append('ellipse')
+      .attr('cx', dbX)
+      .attr('cy', cylY)
+      .attr('rx', rx)
+      .attr('ry', ry)
+      .attr('fill', 'rgba(14, 165, 233, 0.08)')
+      .attr('stroke', '#0ea5e9')
+      .attr('stroke-width', 1.5);
+
+    gdb.append('path')
+      .attr('d', `M ${dbX - rx} ${cylY + 14} A ${rx} ${ry} 0 0 0 ${dbX + rx} ${cylY + 14}`)
+      .attr('fill', 'none')
+      .attr('stroke', 'rgba(14, 165, 233, 0.4)')
+      .attr('stroke-width', 1);
+
+    gdb.append('path')
+      .attr('d', `M ${dbX - rx} ${cylY + 28} A ${rx} ${ry} 0 0 0 ${dbX + rx} ${cylY + 28}`)
+      .attr('fill', 'none')
+      .attr('stroke', 'rgba(14, 165, 233, 0.4)')
+      .attr('stroke-width', 1);
+
+    const vecG = svg.append('g').attr('transform', 'translate(55, 35)');
+
+    vecG.append('rect').attr('width', 40).attr('height', 40).attr('rx', 3)
+      .attr('fill', 'rgba(14, 165, 233, 0.05)').attr('stroke', '#94a3b8').attr('stroke-width', 1);
+
+    vecG.append('path').attr('d', 'M 8 32 L 20 12 L 32 20')
+      .attr('fill', 'none').attr('stroke', '#0ea5e9').attr('stroke-width', 1.5).attr('stroke-linejoin', 'round');
+
+    vecG.selectAll('circle')
+      .data([{x:8, y:32}, {x:20, y:12}, {x:32, y:20}])
+      .join('circle')
+      .attr('cx', d => d.x).attr('cy', d => d.y).attr('r', 3)
+      .attr('fill', '#ffffff').attr('stroke', '#0ea5e9').attr('stroke-width', 1.2);
+
+    const rasG = svg.append('g').attr('transform', 'translate(305, 35)');
+
+    rasG.append('rect').attr('width', 40).attr('height', 40).attr('rx', 3)
+      .attr('fill', 'rgba(16, 185, 129, 0.05)').attr('stroke', '#94a3b8').attr('stroke-width', 1);
+
+    const pixels = [
+      {x: 4, y: 4, f: 'rgba(16, 185, 129, 0.4)'},  {x: 16, y: 4, f: 'rgba(16, 185, 129, 0.4)'},  {x: 28, y: 4, f: 'rgba(16, 185, 129, 0.6)'},
+      {x: 4, y: 16, f: 'rgba(16, 185, 129, 0.4)'}, {x: 16, y: 16, f: 'rgba(16, 185, 129, 0.7)'}, {x: 28, y: 16, f: 'rgba(16, 185, 129, 0.2)'},
+      {x: 4, y: 28, f: 'rgba(16, 185, 129, 0.7)'}, {x: 16, y: 28, f: 'rgba(16, 185, 129, 0.2)'}, {x: 28, y: 28, f: 'rgba(16, 185, 129, 0.3)'}
+    ];
+
+    rasG.selectAll('rect.pixel')
+      .data(pixels).join('rect').attr('class', 'pixel')
+      .attr('x', d => d.x).attr('y', d => d.y).attr('width', 9).attr('height', 9)
+      .attr('fill', d => d.f).attr('stroke', '#ffffff').attr('stroke-width', 0.75);
+
+    const tblG = svg.append('g').attr('transform', 'translate(55, 145)');
+
+    tblG.append('rect').attr('width', 40).attr('height', 40).attr('rx', 3)
+      .attr('fill', '#ffffff').attr('stroke', '#94a3b8').attr('stroke-width', 1);
+
+    tblG.append('path')
+      .attr('d', 'M 0 3 A 3 3 0 0 1 3 0 L 37 0 A 3 3 0 0 1 40 3 L 40 10 L 0 10 Z')
+      .attr('fill', 'rgba(148, 163, 184, 0.25)');
+
+    const horizontalRows = [10, 20, 30];
+    tblG.selectAll('line.row')
+      .data(horizontalRows).join('line').attr('class', 'row')
+      .attr('x1', 0).attr('x2', 40).attr('y1', d => d).attr('y2', d => d)
+      .attr('stroke', 'rgba(148, 163, 184, 0.3)').attr('stroke-width', 0.75);
+
+    tblG.append('line').attr('x1', 14).attr('y1', 0).attr('x2', 14).attr('y2', 40).attr('stroke', 'rgba(148, 163, 184, 0.3)').attr('stroke-width', 0.75);
+    tblG.append('line').attr('x1', 28).attr('y1', 0).attr('x2', 28).attr('y2', 40).attr('stroke', 'rgba(148, 163, 184, 0.3)').attr('stroke-width', 0.75);
+
+    const polyG = svg.append('g').attr('transform', 'translate(305, 145)');
+
+    polyG.append('rect').attr('width', 40).attr('height', 40).attr('rx', 3)
+      .attr('fill', 'rgba(245, 158, 11, 0.05)').attr('stroke', '#94a3b8').attr('stroke-width', 1);
+
+    polyG.append('polygon')
+      .attr('points', '8,20 20,6 34,14 28,34 12,30')
+      .attr('fill', 'rgba(245, 158, 11, 0.15)')
+      .attr('stroke', '#f59e0b')
+      .attr('stroke-width', 1.5);
+
+    return svg.node();
+  })()
+" style="height: 200px; background: #f8f9fa; border-bottom: 1px solid #dee2e6; display: block; width: 100%;">
+</div>
+<!-- title, subtitle -->
+<div class="card-body post-contents flex-grow-1">
 <h5 class="no-anchor card-title listing-title">
 Data in ArcGIS Pro
 </h5>
@@ -239,13 +586,18 @@ Understanding Reference-Based Projects
 </div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
-</div>
-
-
-
-</section>
-
-</main> <!-- /main -->
+</div></main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6Ilxud2lkdGg7IFxuXG57XG4gIGNvbnN0IHRhcmdldHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCcubGlzdGluZy1vanMtdGFyZ2V0Jyk7XG5cbiAgdGFyZ2V0cy5mb3JFYWNoKHRhcmdldCA9PiB7XG4gICAgY29uc3QgY29kZVN0cmluZyA9IHRhcmdldC5nZXRBdHRyaWJ1dGUoJ2RhdGEtb2pzLWNvZGUnKTtcbiAgICBpZiAoY29kZVN0cmluZykge1xuICAgICAgdHJ5IHtcbiAgICAgICAgdGFyZ2V0LmlubmVySFRNTCA9ICcnO1xuICAgICAgICBjb25zdCBncmFwaCA9IG5ldyBGdW5jdGlvbignUGxvdCcsICdkMycsIGByZXR1cm4gJHtjb2RlU3RyaW5nfWApKFBsb3QsIGQzKTtcbiAgICAgICAgXG4gICAgICAgIGlmIChncmFwaCkge1xuICAgICAgICAgIHRhcmdldC5hcHBlbmRDaGlsZChncmFwaCk7XG4gICAgICAgIH1cbiAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgY29uc29sZS5lcnJvcihcIkZhaWxlZCB0byByZW5kZXIgT0pTIGNvZGUgZm9yIGNhcmQ6XCIsIGUpO1xuICAgICAgfVxuICAgIH1cbiAgfSk7XG59XG4ifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../resources/intro_to_arcgis_pro";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>US Census Geographies – GIS Capacity Building</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../../../assets/logo.png" rel="icon" type="image/png">
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-1d5aafdae36c788e1be24bb2b02843a5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script type="module" src="../../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../assets/logo.png" alt="" class="navbar-logo light-content">
+    <img src="../../../assets/logo.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">GIS Capacity Building</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../resources/"> 
+<span class="menu-text">Resources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../map_logs/"> 
+<span class="menu-text">MapLogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../tools/"> 
+<span class="menu-text">Tools</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../data_catalog/"> 
+<span class="menu-text">Data</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about/"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#standard-geographic-areas" id="toc-standard-geographic-areas" class="nav-link active" data-scroll-target="#standard-geographic-areas">Standard Geographic Areas</a></li>
+  <li><a href="#boundary-types" id="toc-boundary-types" class="nav-link" data-scroll-target="#boundary-types">Boundary types</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">US Census Geographies</h1>
+<p class="subtitle lead">The hierarchy of US Census boundaries</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The US Census Bureau administers the <strong>decennial census</strong> every decade to capture essential demographic data for the entire population. To supplement this headcount, the Bureau also conducts the <strong>American Community Survey (ACS)</strong>, which collects data monthly from a small percentage of residents and releases the aggregated findings every year. This comprehensive socio-economic data covers topics such as income, education, employment, and housing quality to offer communities current in-depth data between the 10-year counts.</p>
+<section id="standard-geographic-areas" class="level3">
+<h3 class="anchored" data-anchor-id="standard-geographic-areas">Standard Geographic Areas</h3>
+<p>To organize and report this data, both the decennial census and the ACS rely on a nested framework of geographic areas. This hierarchy begins with <strong>states</strong>, which are divided into <strong>counties</strong>, which are then split into <strong>census tracts</strong> designed to contain roughly 4,000 residents. Tracts are further broken down into <strong>block groups</strong>, and the smallest units of all are <strong>census blocks</strong>. The official boundaries for these areas are established each decade, but they are not completely frozen. Minor updates are applied each year to reflect local annexations and legal boundary changes.</p>
+<p>Every one of these geographic units is uniquely identified using a standardized system of numeric <strong>Federal Information Processing Series (FIPS)</strong> codes. These individual codes combine from largest to smallest into a single, comprehensive string called a <strong>Geographic Identifier (GEOID)</strong>. A full 15-digit GEOID consists of a two-digit state code, a three-digit county code, a six-digit tract code, a one-digit block group code, and a three-digit block code. This means a state can be uniquely identified by a two-digit code, a county by a five-digit code, a tract by an 11-digit code, and so on.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="67" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 66;"><span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>nestedData <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"data/census_nested.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>mapRelationships <span class="op">=</span> {</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>nestedData <span class="op">||</span> <span class="op">!</span>nestedData<span class="op">.</span><span class="at">features</span>) <span class="cf">return</span> []<span class="op">;</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> features <span class="op">=</span> nestedData<span class="op">.</span><span class="at">features</span><span class="op">;</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> nation <span class="op">=</span> features<span class="op">.</span><span class="fu">find</span>(f <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">GEOID</span> <span class="op">===</span> <span class="st">"US"</span>)<span class="op">;</span></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> state <span class="op">=</span> features<span class="op">.</span><span class="fu">find</span>(f <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">GEOID</span> <span class="op">===</span> <span class="st">"17"</span>)<span class="op">;</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> county <span class="op">=</span> features<span class="op">.</span><span class="fu">find</span>(f <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">GEOID</span> <span class="op">===</span> <span class="st">"17031"</span>)<span class="op">;</span></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> tract <span class="op">=</span> features<span class="op">.</span><span class="fu">find</span>(f <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">GEOID</span> <span class="op">===</span> <span class="st">"17031839100"</span>)<span class="op">;</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> blockGroup <span class="op">=</span> features<span class="op">.</span><span class="fu">find</span>(f <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">GEOID</span> <span class="op">===</span> <span class="st">"170318391002"</span>)<span class="op">;</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> block <span class="op">=</span> features<span class="op">.</span><span class="fu">find</span>(f <span class="kw">=&gt;</span> f<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">GEOID</span> <span class="op">===</span> <span class="st">"170318391002008"</span>)<span class="op">;</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">title</span><span class="op">:</span> <span class="st">"State FIPS: 17"</span><span class="op">,</span>                 <span class="dt">base</span><span class="op">:</span> nation<span class="op">,</span>     <span class="dt">highlight</span><span class="op">:</span> state }<span class="op">,</span></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">title</span><span class="op">:</span> <span class="st">"County FIPS: 17 + 031"</span><span class="op">,</span>         <span class="dt">base</span><span class="op">:</span> state<span class="op">,</span>      <span class="dt">highlight</span><span class="op">:</span> county }<span class="op">,</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">title</span><span class="op">:</span> <span class="st">"Tract FIPS: 17031 + 839100"</span><span class="op">,</span>    <span class="dt">base</span><span class="op">:</span> county<span class="op">,</span>     <span class="dt">highlight</span><span class="op">:</span> tract }<span class="op">,</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">title</span><span class="op">:</span> <span class="st">"Block Group FIPS: 17031839100 + 2"</span><span class="op">,</span> <span class="dt">base</span><span class="op">:</span> tract<span class="op">,</span>   <span class="dt">highlight</span><span class="op">:</span> blockGroup }<span class="op">,</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">title</span><span class="op">:</span> <span class="st">"Block FIPS: 170318391002 + 008"</span><span class="op">,</span> <span class="dt">base</span><span class="op">:</span> blockGroup<span class="op">,</span> <span class="dt">highlight</span><span class="op">:</span> block }</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">base</span> <span class="op">&amp;&amp;</span> d<span class="op">.</span><span class="at">highlight</span>)<span class="op">;</span></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>themeSyncedSvgMap <span class="op">=</span> {</span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mapWidth <span class="op">=</span> <span class="dv">160</span><span class="op">;</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> mapHeight <span class="op">=</span> <span class="dv">160</span><span class="op">;</span></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> gap <span class="op">=</span> <span class="dv">12</span><span class="op">;</span> </span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> padding <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> labelHeight <span class="op">=</span> <span class="dv">25</span><span class="op">;</span> </span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> totalWidth <span class="op">=</span> (mapWidth <span class="op">*</span> <span class="dv">5</span>) <span class="op">+</span> (gap <span class="op">*</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> totalHeight <span class="op">=</span> mapHeight <span class="op">+</span> labelHeight<span class="op">;</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> pageTextColor <span class="op">=</span> <span class="st">"var(--quarto-body-color, #212529)"</span><span class="op">;</span></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">create</span>(<span class="st">"svg"</span>)</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> <span class="vs">`0 0 </span><span class="sc">${</span>totalWidth<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>totalHeight<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"width"</span><span class="op">,</span> <span class="st">"100%"</span>)</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">attr</span>(<span class="st">"height"</span><span class="op">,</span> <span class="st">"auto"</span>)</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"background"</span><span class="op">,</span> <span class="st">"transparent"</span>)</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">style</span>(<span class="st">"font-family"</span><span class="op">,</span> <span class="st">"sans-serif"</span>)<span class="op">;</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Fixed recursion logic to properly extract longitude and latitude coordinates</span></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">getExtremaPoints</span>(feature<span class="op">,</span> projection) {</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> allPoints <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">extract</span>(coords) {</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="bu">Array</span><span class="op">.</span><span class="fu">isArray</span>(coords) <span class="op">&amp;&amp;</span> <span class="kw">typeof</span> coords[<span class="dv">0</span>] <span class="op">===</span> <span class="st">'number'</span> <span class="op">&amp;&amp;</span> <span class="kw">typeof</span> coords[<span class="dv">1</span>] <span class="op">===</span> <span class="st">'number'</span>) {</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>        allPoints<span class="op">.</span><span class="fu">push</span>(coords)<span class="op">;</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">else</span> <span class="cf">if</span> (<span class="bu">Array</span><span class="op">.</span><span class="fu">isArray</span>(coords)) {</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>        coords<span class="op">.</span><span class="fu">forEach</span>(extract)<span class="op">;</span></span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>    <span class="fu">extract</span>(feature<span class="op">.</span><span class="at">geometry</span><span class="op">.</span><span class="at">coordinates</span>)<span class="op">;</span></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> highest <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> lowest <span class="op">=</span> <span class="kw">null</span><span class="op">;</span></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a>    allPoints<span class="op">.</span><span class="fu">forEach</span>(coord <span class="kw">=&gt;</span> {</span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> pt <span class="op">=</span> <span class="fu">projection</span>(coord)<span class="op">;</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span>pt <span class="op">||</span> <span class="pp">isNaN</span>(pt[<span class="dv">0</span>]) <span class="op">||</span> <span class="pp">isNaN</span>(pt[<span class="dv">1</span>])) <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Top-most (lowest Y pixel value), then Left-most (lowest X pixel value)</span></span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span>highest <span class="op">||</span> pt[<span class="dv">1</span>] <span class="op">&lt;</span> highest[<span class="dv">1</span>] <span class="op">||</span> (pt[<span class="dv">1</span>] <span class="op">===</span> highest[<span class="dv">1</span>] <span class="op">&amp;&amp;</span> pt[<span class="dv">0</span>] <span class="op">&lt;</span> highest[<span class="dv">0</span>])) {</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>        highest <span class="op">=</span> pt<span class="op">;</span></span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>      <span class="co">// Bottom-most (highest Y pixel value), then Right-most (highest X pixel value)</span></span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="op">!</span>lowest <span class="op">||</span> pt[<span class="dv">1</span>] <span class="op">&gt;</span> lowest[<span class="dv">1</span>] <span class="op">||</span> (pt[<span class="dv">1</span>] <span class="op">===</span> lowest[<span class="dv">1</span>] <span class="op">&amp;&amp;</span> pt[<span class="dv">0</span>] <span class="op">&gt;</span> lowest[<span class="dv">0</span>])) {</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>        lowest <span class="op">=</span> pt<span class="op">;</span></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> { highest<span class="op">,</span> lowest }<span class="op">;</span></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> boundsCache <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>  mapRelationships<span class="op">.</span><span class="fu">forEach</span>((map<span class="op">,</span> index) <span class="kw">=&gt;</span> {</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> xOffset <span class="op">=</span> index <span class="op">*</span> (mapWidth <span class="op">+</span> gap)<span class="op">;</span></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> cellG <span class="op">=</span> svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"g"</span>)</span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"transform"</span><span class="op">,</span> <span class="vs">`translate(</span><span class="sc">${</span>xOffset<span class="sc">}</span><span class="vs">, 0)`</span>)<span class="op">;</span></span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>    cellG<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> mapWidth <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> <span class="dv">14</span>)</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"middle"</span>)</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">style</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="st">"9.5px"</span>)</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">style</span>(<span class="st">"font-weight"</span><span class="op">,</span> <span class="st">"bold"</span>)</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">style</span>(<span class="st">"fill"</span><span class="op">,</span> pageTextColor)</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">text</span>(map<span class="op">.</span><span class="at">title</span>)<span class="op">;</span></span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> projection<span class="op">;</span></span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> innerExtent <span class="op">=</span> [[padding<span class="op">,</span> padding <span class="op">+</span> labelHeight]<span class="op">,</span> [mapWidth <span class="op">-</span> padding<span class="op">,</span> mapHeight <span class="op">-</span> padding]]<span class="op">;</span></span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (index <span class="op">===</span> <span class="dv">0</span>) {</span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a>      projection <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoAlbersUsa</span>()<span class="op">.</span><span class="fu">fitExtent</span>(innerExtent<span class="op">,</span> map<span class="op">.</span><span class="at">base</span>)<span class="op">;</span></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a>      projection <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoMercator</span>()<span class="op">.</span><span class="fu">fitExtent</span>(innerExtent<span class="op">,</span> map<span class="op">.</span><span class="at">base</span>)<span class="op">;</span></span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> pathGenerator <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoPath</span>()<span class="op">.</span><span class="fu">projection</span>(projection)<span class="op">;</span></span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> highExtrema <span class="op">=</span> <span class="fu">getExtremaPoints</span>(map<span class="op">.</span><span class="at">highlight</span><span class="op">,</span> projection)<span class="op">;</span></span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> baseExtrema <span class="op">=</span> <span class="fu">getExtremaPoints</span>(map<span class="op">.</span><span class="at">base</span><span class="op">,</span> projection)<span class="op">;</span></span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Fixed absolute pixel positioning using xOffset additions</span></span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>    boundsCache<span class="op">.</span><span class="fu">push</span>({</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a>      <span class="dt">highlight</span><span class="op">:</span> {</span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>        <span class="dt">top</span><span class="op">:</span> highExtrema<span class="op">.</span><span class="at">highest</span> <span class="op">?</span> [highExtrema<span class="op">.</span><span class="at">highest</span>[<span class="dv">0</span>] <span class="op">+</span> xOffset<span class="op">,</span> highExtrema<span class="op">.</span><span class="at">highest</span>[<span class="dv">1</span>]] <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a>        <span class="dt">bottom</span><span class="op">:</span> highExtrema<span class="op">.</span><span class="at">lowest</span> <span class="op">?</span> [highExtrema<span class="op">.</span><span class="at">lowest</span>[<span class="dv">0</span>] <span class="op">+</span> xOffset<span class="op">,</span> highExtrema<span class="op">.</span><span class="at">lowest</span>[<span class="dv">1</span>]] <span class="op">:</span> <span class="kw">null</span></span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a>      }<span class="op">,</span></span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a>      <span class="dt">base</span><span class="op">:</span> {</span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a>        <span class="dt">top</span><span class="op">:</span> baseExtrema<span class="op">.</span><span class="at">highest</span> <span class="op">?</span> [baseExtrema<span class="op">.</span><span class="at">highest</span>[<span class="dv">0</span>] <span class="op">+</span> xOffset<span class="op">,</span> baseExtrema<span class="op">.</span><span class="at">highest</span>[<span class="dv">1</span>]] <span class="op">:</span> <span class="kw">null</span><span class="op">,</span></span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a>        <span class="dt">bottom</span><span class="op">:</span> baseExtrema<span class="op">.</span><span class="at">lowest</span> <span class="op">?</span> [baseExtrema<span class="op">.</span><span class="at">lowest</span>[<span class="dv">0</span>] <span class="op">+</span> xOffset<span class="op">,</span> baseExtrema<span class="op">.</span><span class="at">lowest</span>[<span class="dv">1</span>]] <span class="op">:</span> <span class="kw">null</span></span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a>    cellG<span class="op">.</span><span class="fu">append</span>(<span class="st">"path"</span>)</span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">datum</span>(map<span class="op">.</span><span class="at">base</span>)</span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"d"</span><span class="op">,</span> pathGenerator)</span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"var(--quarto-border-color, #eceff1)"</span>)</span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> <span class="st">"var(--quarto-text-muted, #b0bec5)"</span>)</span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="fl">0.75</span>)</span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill-opacity"</span><span class="op">,</span> <span class="fl">0.4</span>)<span class="op">;</span></span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a>    cellG<span class="op">.</span><span class="fu">append</span>(<span class="st">"path"</span>)</span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">datum</span>(map<span class="op">.</span><span class="at">highlight</span>)</span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"d"</span><span class="op">,</span> pathGenerator)</span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> pageTextColor)</span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> pageTextColor)</span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="dv">1</span>)</span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill-opacity"</span><span class="op">,</span> <span class="fl">0.65</span>)<span class="op">;</span></span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Fixed link attributes pointing explicitly to array indices [0] and [1]</span></span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> boundsCache<span class="op">.</span><span class="at">length</span> <span class="op">-</span> <span class="dv">1</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> currentMap <span class="op">=</span> boundsCache[i]<span class="op">;</span></span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> nextMap <span class="op">=</span> boundsCache[i <span class="op">+</span> <span class="dv">1</span>]<span class="op">;</span></span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (currentMap<span class="op">.</span><span class="at">highlight</span><span class="op">.</span><span class="at">top</span> <span class="op">&amp;&amp;</span> nextMap<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">top</span>) {</span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a>      svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"line"</span>)</span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x1"</span><span class="op">,</span> currentMap<span class="op">.</span><span class="at">highlight</span><span class="op">.</span><span class="at">top</span>[<span class="dv">0</span>])</span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"y1"</span><span class="op">,</span> currentMap<span class="op">.</span><span class="at">highlight</span><span class="op">.</span><span class="at">top</span>[<span class="dv">1</span>])</span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x2"</span><span class="op">,</span> nextMap<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">top</span>[<span class="dv">0</span>])</span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"y2"</span><span class="op">,</span> nextMap<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">top</span>[<span class="dv">1</span>])</span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> pageTextColor)</span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="fl">0.75</span>)</span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-dasharray"</span><span class="op">,</span> <span class="st">"2,2"</span>)</span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"opacity"</span><span class="op">,</span> <span class="fl">0.5</span>)<span class="op">;</span></span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (currentMap<span class="op">.</span><span class="at">highlight</span><span class="op">.</span><span class="at">bottom</span> <span class="op">&amp;&amp;</span> nextMap<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">bottom</span>) {</span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a>      svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"line"</span>)</span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x1"</span><span class="op">,</span> currentMap<span class="op">.</span><span class="at">highlight</span><span class="op">.</span><span class="at">bottom</span>[<span class="dv">0</span>])</span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"y1"</span><span class="op">,</span> currentMap<span class="op">.</span><span class="at">highlight</span><span class="op">.</span><span class="at">bottom</span>[<span class="dv">1</span>])</span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x2"</span><span class="op">,</span> nextMap<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">bottom</span>[<span class="dv">0</span>])</span>
+<span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"y2"</span><span class="op">,</span> nextMap<span class="op">.</span><span class="at">base</span><span class="op">.</span><span class="at">bottom</span>[<span class="dv">1</span>])</span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> pageTextColor)</span>
+<span id="cb2-226"><a href="#cb2-226" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="fl">0.75</span>)</span>
+<span id="cb2-227"><a href="#cb2-227" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-dasharray"</span><span class="op">,</span> <span class="st">"2,2"</span>)</span>
+<span id="cb2-228"><a href="#cb2-228" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"opacity"</span><span class="op">,</span> <span class="fl">0.5</span>)<span class="op">;</span></span>
+<span id="cb2-229"><a href="#cb2-229" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-230"><a href="#cb2-230" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-231"><a href="#cb2-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-232"><a href="#cb2-232" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> svg<span class="op">.</span><span class="fu">node</span>()<span class="op">;</span></span>
+<span id="cb2-233"><a href="#cb2-233" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<p>Beyond this standard nested hierarchy, the Census Bureau also tabulates data for alternative, non-nested geographic units to meet specific statistical and administrative needs. A prominent example is the <strong>ZIP Code Tabulation Area (ZCTA)</strong>, which are generalized areal representations of United States Postal Service ZIP Code service routes. Because traditional ZIP codes are linear delivery routes that often cross state and county lines rather than distinct geometric shapes, the Bureau creates ZCTAs by aggregating census blocks to closely approximate those postal boundaries for statistical reporting. Other specialized geographies include <strong>Public Use Microdata Areas (PUMAs)</strong>, <strong>Census Designated Places (CDPs)</strong>, <strong>school districts</strong>, <strong>voting districts</strong>, and <strong>metropolitan statistical areas</strong>.</p>
+<style>
+.figure {
+  margin: auto;
+  text-align: center;
+}
+</style>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="std_hierarchy_census.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Standard Hierarchy of Census Geographic Entities</figcaption>
+</figure>
+</div>
+</section>
+<section id="boundary-types" class="level3">
+<h3 class="anchored" data-anchor-id="boundary-types">Boundary types</h3>
+<p>The Census Bureau provides two primary types of boundary files: TIGER/Line and Cartographic. While both boundaries represent the exact same areas, they serve different purposes. <strong>TIGER/Line boundaries</strong> represent the official legal boundaries, which can and often do extend into open water. As such, they often make coastal states look blocky as boundaries extend miles into the ocean.</p>
+<p><strong>Cartographic boundaries</strong> are modified specifically for thematic mapping by clipping out large water bodies to mirror the actual landmass. These boundaries cut off exactly at the shoreline, creating the recognizable, clean coastline silhouette people expect on a map. Cartographic files also undergo generalization to remove redundant vertices, resulting in smaller files that render much faster. The Census Bureau offers these simplified boundaries at scales of 1:500,000 for regional detail, 1:5,000,000 for multi-state views, and 1:20,000,000 for national visualizations, which reduces the computational burden caused by complex TIGER/Line datasets.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb3" data-startfrom="258" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 257;"><span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a>geojson <span class="op">=</span> <span class="fu">FileAttachment</span>(<span class="st">"data/tiger_v_carto.geojson"</span>)<span class="op">.</span><span class="fu">json</span>()</span>
+<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a>themeColor <span class="op">=</span> {</span>
+<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> p <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">"p"</span>) <span class="op">||</span> <span class="bu">document</span><span class="op">.</span><span class="at">body</span><span class="op">;</span></span>
+<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">getComputedStyle</span>(p)<span class="op">.</span><span class="at">color</span><span class="op">;</span></span>
+<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a>boundaryConfig <span class="op">=</span> [</span>
+<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">id</span><span class="op">:</span> <span class="st">"tiger"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"TIGER/Line"</span> }<span class="op">,</span></span>
+<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">id</span><span class="op">:</span> <span class="st">"cb_500k"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Cartographic 500k"</span> }<span class="op">,</span></span>
+<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">id</span><span class="op">:</span> <span class="st">"cb_5m"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Cartographic 5m"</span> }<span class="op">,</span></span>
+<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">id</span><span class="op">:</span> <span class="st">"cb_20m"</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Cartographic 20m"</span> }</span>
+<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="display: flex; flex-direction: row; width: 100%; gap: 15px; justify-content: space-between;"&gt;</span></span>
+<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a><span class="vs">  </span><span class="sc">${</span>boundaryConfig<span class="op">.</span><span class="fu">map</span>(config <span class="kw">=&gt;</span> {</span>
+<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> features <span class="op">=</span> geojson<span class="op">.</span><span class="at">features</span><span class="op">.</span><span class="fu">filter</span>(d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">properties</span><span class="op">.</span><span class="at">boundary</span> <span class="op">===</span> config<span class="op">.</span><span class="at">id</span>)<span class="op">;</span></span>
+<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> geojsonSubset <span class="op">=</span> { <span class="dt">type</span><span class="op">:</span> <span class="st">"FeatureCollection"</span><span class="op">,</span> <span class="dt">features</span><span class="op">:</span> features }<span class="op">;</span></span>
+<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> width <span class="op">=</span> <span class="dv">250</span><span class="op">;</span></span>
+<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> height <span class="op">=</span> <span class="dv">180</span><span class="op">;</span> </span>
+<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> projection <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoMercator</span>()<span class="op">.</span><span class="fu">fitExtent</span>([[<span class="dv">15</span><span class="op">,</span> <span class="dv">35</span>]<span class="op">,</span> [width <span class="op">-</span> <span class="dv">15</span><span class="op">,</span> height <span class="op">-</span> <span class="dv">15</span>]]<span class="op">,</span> geojsonSubset)<span class="op">;</span></span>
+<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> pathGenerator <span class="op">=</span> d3<span class="op">.</span><span class="fu">geoPath</span>()<span class="op">.</span><span class="fu">projection</span>(projection)<span class="op">;</span></span>
+<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> svg <span class="op">=</span> d3<span class="op">.</span><span class="fu">create</span>(<span class="st">"svg"</span>)</span>
+<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"viewBox"</span><span class="op">,</span> <span class="vs">`0 0 </span><span class="sc">${</span>width<span class="sc">}</span><span class="vs"> </span><span class="sc">${</span>height<span class="sc">}</span><span class="vs">`</span>)</span>
+<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"width"</span><span class="op">,</span> <span class="st">"24%"</span>) </span>
+<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"height"</span><span class="op">,</span> <span class="st">"auto"</span>)</span>
+<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"background"</span><span class="op">,</span> <span class="st">"none"</span>)<span class="op">;</span></span>
+<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"text"</span>)</span>
+<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"x"</span><span class="op">,</span> width <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"y"</span><span class="op">,</span> <span class="dv">20</span>)</span>
+<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"text-anchor"</span><span class="op">,</span> <span class="st">"middle"</span>)</span>
+<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"font-family"</span><span class="op">,</span> <span class="st">"sans-serif"</span>)</span>
+<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"font-size"</span><span class="op">,</span> <span class="st">"17px"</span>)</span>
+<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"font-weight"</span><span class="op">,</span> <span class="st">"bold"</span>)</span>
+<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">style</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"currentColor"</span>) </span>
+<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">text</span>(config<span class="op">.</span><span class="at">label</span>)<span class="op">;</span></span>
+<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a>    svg<span class="op">.</span><span class="fu">append</span>(<span class="st">"g"</span>)</span>
+<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">selectAll</span>(<span class="st">"path"</span>)</span>
+<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">data</span>(features)</span>
+<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a>      <span class="op">.</span><span class="fu">join</span>(<span class="st">"path"</span>)</span>
+<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"d"</span><span class="op">,</span> pathGenerator)</span>
+<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill"</span><span class="op">,</span> <span class="st">"var(--quarto-border-color, #eceff1)"</span>)</span>
+<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke"</span><span class="op">,</span> <span class="st">"var(--quarto-body-color, #212529)"</span>)</span>
+<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"stroke-width"</span><span class="op">,</span> <span class="fl">0.75</span>)</span>
+<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span><span class="fu">attr</span>(<span class="st">"fill-opacity"</span><span class="op">,</span> <span class="fl">0.4</span>)<span class="op">;</span></span>
+<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> svg<span class="op">.</span><span class="fu">node</span>()<span class="op">;</span></span>
+<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a>  })<span class="sc">}</span></span>
+<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-3" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-2-4" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+<p>All boundary files can be downloaded from the Census <a href="https://www.census.gov/geographies/mapping-files.html">here</a>.</p>
+<hr>
+<p>For more information, check out these resources:</p>
+<ul>
+<li><a href="https://www.census.gov/programs-surveys/geography/guidance/tiger-data-products-guide.html">TIGER Data Products Guide</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxubmVzdGVkRGF0YSA9IEZpbGVBdHRhY2htZW50KFwiZGF0YS9jZW5zdXNfbmVzdGVkLmdlb2pzb25cIikuanNvbigpXG5cbm1hcFJlbGF0aW9uc2hpcHMgPSB7XG4gIGlmICghbmVzdGVkRGF0YSB8fCAhbmVzdGVkRGF0YS5mZWF0dXJlcykgcmV0dXJuIFtdO1xuXG4gIGNvbnN0IGZlYXR1cmVzID0gbmVzdGVkRGF0YS5mZWF0dXJlcztcblxuICBjb25zdCBuYXRpb24gPSBmZWF0dXJlcy5maW5kKGYgPT4gZi5wcm9wZXJ0aWVzLkdFT0lEID09PSBcIlVTXCIpO1xuICBjb25zdCBzdGF0ZSA9IGZlYXR1cmVzLmZpbmQoZiA9PiBmLnByb3BlcnRpZXMuR0VPSUQgPT09IFwiMTdcIik7XG4gIGNvbnN0IGNvdW50eSA9IGZlYXR1cmVzLmZpbmQoZiA9PiBmLnByb3BlcnRpZXMuR0VPSUQgPT09IFwiMTcwMzFcIik7XG4gIGNvbnN0IHRyYWN0ID0gZmVhdHVyZXMuZmluZChmID0+IGYucHJvcGVydGllcy5HRU9JRCA9PT0gXCIxNzAzMTgzOTEwMFwiKTtcbiAgY29uc3QgYmxvY2tHcm91cCA9IGZlYXR1cmVzLmZpbmQoZiA9PiBmLnByb3BlcnRpZXMuR0VPSUQgPT09IFwiMTcwMzE4MzkxMDAyXCIpO1xuICBjb25zdCBibG9jayA9IGZlYXR1cmVzLmZpbmQoZiA9PiBmLnByb3BlcnRpZXMuR0VPSUQgPT09IFwiMTcwMzE4MzkxMDAyMDA4XCIpO1xuXG4gIHJldHVybiBbXG4gICAgeyB0aXRsZTogXCJTdGF0ZSBGSVBTOiAxN1wiLCAgICAgICAgICAgICAgICAgYmFzZTogbmF0aW9uLCAgICAgaGlnaGxpZ2h0OiBzdGF0ZSB9LFxuICAgIHsgdGl0bGU6IFwiQ291bnR5IEZJUFM6IDE3ICsgMDMxXCIsICAgICAgICAgYmFzZTogc3RhdGUsICAgICAgaGlnaGxpZ2h0OiBjb3VudHkgfSxcbiAgICB7IHRpdGxlOiBcIlRyYWN0IEZJUFM6IDE3MDMxICsgODM5MTAwXCIsICAgIGJhc2U6IGNvdW50eSwgICAgIGhpZ2hsaWdodDogdHJhY3QgfSxcbiAgICB7IHRpdGxlOiBcIkJsb2NrIEdyb3VwIEZJUFM6IDE3MDMxODM5MTAwICsgMlwiLCBiYXNlOiB0cmFjdCwgICBoaWdobGlnaHQ6IGJsb2NrR3JvdXAgfSxcbiAgICB7IHRpdGxlOiBcIkJsb2NrIEZJUFM6IDE3MDMxODM5MTAwMiArIDAwOFwiLCBiYXNlOiBibG9ja0dyb3VwLCBoaWdobGlnaHQ6IGJsb2NrIH1cbiAgXS5maWx0ZXIoZCA9PiBkLmJhc2UgJiYgZC5oaWdobGlnaHQpO1xufVxuXG50aGVtZVN5bmNlZFN2Z01hcCA9IHtcbiAgY29uc3QgbWFwV2lkdGggPSAxNjA7XG4gIGNvbnN0IG1hcEhlaWdodCA9IDE2MDtcbiAgY29uc3QgZ2FwID0gMTI7IFxuICBjb25zdCBwYWRkaW5nID0gMTA7XG4gIGNvbnN0IGxhYmVsSGVpZ2h0ID0gMjU7IFxuXG4gIGNvbnN0IHRvdGFsV2lkdGggPSAobWFwV2lkdGggKiA1KSArIChnYXAgKiA0KTtcbiAgY29uc3QgdG90YWxIZWlnaHQgPSBtYXBIZWlnaHQgKyBsYWJlbEhlaWdodDtcblxuICBjb25zdCBwYWdlVGV4dENvbG9yID0gXCJ2YXIoLS1xdWFydG8tYm9keS1jb2xvciwgIzIxMjUyOSlcIjtcblxuICBjb25zdCBzdmcgPSBkMy5jcmVhdGUoXCJzdmdcIilcbiAgICAuYXR0cihcInZpZXdCb3hcIiwgYDAgMCAke3RvdGFsV2lkdGh9ICR7dG90YWxIZWlnaHR9YClcbiAgICAuYXR0cihcIndpZHRoXCIsIFwiMTAwJVwiKVxuICAgIC5hdHRyKFwiaGVpZ2h0XCIsIFwiYXV0b1wiKVxuICAgIC5zdHlsZShcImJhY2tncm91bmRcIiwgXCJ0cmFuc3BhcmVudFwiKVxuICAgIC5zdHlsZShcImZvbnQtZmFtaWx5XCIsIFwic2Fucy1zZXJpZlwiKTtcblxuICAvLyBGaXhlZCByZWN1cnNpb24gbG9naWMgdG8gcHJvcGVybHkgZXh0cmFjdCBsb25naXR1ZGUgYW5kIGxhdGl0dWRlIGNvb3JkaW5hdGVzXG4gIGZ1bmN0aW9uIGdldEV4dHJlbWFQb2ludHMoZmVhdHVyZSwgcHJvamVjdGlvbikge1xuICAgIGxldCBhbGxQb2ludHMgPSBbXTtcbiAgICBcbiAgICBmdW5jdGlvbiBleHRyYWN0KGNvb3Jkcykge1xuICAgICAgaWYgKEFycmF5LmlzQXJyYXkoY29vcmRzKSAmJiB0eXBlb2YgY29vcmRzWzBdID09PSAnbnVtYmVyJyAmJiB0eXBlb2YgY29vcmRzWzFdID09PSAnbnVtYmVyJykge1xuICAgICAgICBhbGxQb2ludHMucHVzaChjb29yZHMpO1xuICAgICAgfSBlbHNlIGlmIChBcnJheS5pc0FycmF5KGNvb3JkcykpIHtcbiAgICAgICAgY29vcmRzLmZvckVhY2goZXh0cmFjdCk7XG4gICAgICB9XG4gICAgfVxuICAgIGV4dHJhY3QoZmVhdHVyZS5nZW9tZXRyeS5jb29yZGluYXRlcyk7XG5cbiAgICBsZXQgaGlnaGVzdCA9IG51bGw7XG4gICAgbGV0IGxvd2VzdCA9IG51bGw7XG5cbiAgICBhbGxQb2ludHMuZm9yRWFjaChjb29yZCA9PiB7XG4gICAgICBjb25zdCBwdCA9IHByb2plY3Rpb24oY29vcmQpO1xuICAgICAgaWYgKCFwdCB8fCBpc05hTihwdFswXSkgfHwgaXNOYU4ocHRbMV0pKSByZXR1cm47XG5cbiAgICAgIC8vIFRvcC1tb3N0IChsb3dlc3QgWSBwaXhlbCB2YWx1ZSksIHRoZW4gTGVmdC1tb3N0IChsb3dlc3QgWCBwaXhlbCB2YWx1ZSlcbiAgICAgIGlmICghaGlnaGVzdCB8fCBwdFsxXSA8IGhpZ2hlc3RbMV0gfHwgKHB0WzFdID09PSBoaWdoZXN0WzFdICYmIHB0WzBdIDwgaGlnaGVzdFswXSkpIHtcbiAgICAgICAgaGlnaGVzdCA9IHB0O1xuICAgICAgfVxuICAgICAgLy8gQm90dG9tLW1vc3QgKGhpZ2hlc3QgWSBwaXhlbCB2YWx1ZSksIHRoZW4gUmlnaHQtbW9zdCAoaGlnaGVzdCBYIHBpeGVsIHZhbHVlKVxuICAgICAgaWYgKCFsb3dlc3QgfHwgcHRbMV0gPiBsb3dlc3RbMV0gfHwgKHB0WzFdID09PSBsb3dlc3RbMV0gJiYgcHRbMF0gPiBsb3dlc3RbMF0pKSB7XG4gICAgICAgIGxvd2VzdCA9IHB0O1xuICAgICAgfVxuICAgIH0pO1xuXG4gICAgcmV0dXJuIHsgaGlnaGVzdCwgbG93ZXN0IH07XG4gIH1cblxuICBjb25zdCBib3VuZHNDYWNoZSA9IFtdO1xuXG4gIG1hcFJlbGF0aW9uc2hpcHMuZm9yRWFjaCgobWFwLCBpbmRleCkgPT4ge1xuICAgIGNvbnN0IHhPZmZzZXQgPSBpbmRleCAqIChtYXBXaWR0aCArIGdhcCk7XG5cbiAgICBjb25zdCBjZWxsRyA9IHN2Zy5hcHBlbmQoXCJnXCIpXG4gICAgICAuYXR0cihcInRyYW5zZm9ybVwiLCBgdHJhbnNsYXRlKCR7eE9mZnNldH0sIDApYCk7XG5cbiAgICBjZWxsRy5hcHBlbmQoXCJ0ZXh0XCIpXG4gICAgICAuYXR0cihcInhcIiwgbWFwV2lkdGggLyAyKVxuICAgICAgLmF0dHIoXCJ5XCIsIDE0KVxuICAgICAgLmF0dHIoXCJ0ZXh0LWFuY2hvclwiLCBcIm1pZGRsZVwiKVxuICAgICAgLnN0eWxlKFwiZm9udC1zaXplXCIsIFwiOS41cHhcIilcbiAgICAgIC5zdHlsZShcImZvbnQtd2VpZ2h0XCIsIFwiYm9sZFwiKVxuICAgICAgLnN0eWxlKFwiZmlsbFwiLCBwYWdlVGV4dENvbG9yKVxuICAgICAgLnRleHQobWFwLnRpdGxlKTtcblxuICAgIGxldCBwcm9qZWN0aW9uO1xuICAgIGNvbnN0IGlubmVyRXh0ZW50ID0gW1twYWRkaW5nLCBwYWRkaW5nICsgbGFiZWxIZWlnaHRdLCBbbWFwV2lkdGggLSBwYWRkaW5nLCBtYXBIZWlnaHQgLSBwYWRkaW5nXV07XG4gICAgXG4gICAgaWYgKGluZGV4ID09PSAwKSB7XG4gICAgICBwcm9qZWN0aW9uID0gZDMuZ2VvQWxiZXJzVXNhKCkuZml0RXh0ZW50KGlubmVyRXh0ZW50LCBtYXAuYmFzZSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHByb2plY3Rpb24gPSBkMy5nZW9NZXJjYXRvcigpLmZpdEV4dGVudChpbm5lckV4dGVudCwgbWFwLmJhc2UpO1xuICAgIH1cblxuICAgIGNvbnN0IHBhdGhHZW5lcmF0b3IgPSBkMy5nZW9QYXRoKCkucHJvamVjdGlvbihwcm9qZWN0aW9uKTtcblxuICAgIGNvbnN0IGhpZ2hFeHRyZW1hID0gZ2V0RXh0cmVtYVBvaW50cyhtYXAuaGlnaGxpZ2h0LCBwcm9qZWN0aW9uKTtcbiAgICBjb25zdCBiYXNlRXh0cmVtYSA9IGdldEV4dHJlbWFQb2ludHMobWFwLmJhc2UsIHByb2plY3Rpb24pO1xuXG4gICAgLy8gRml4ZWQgYWJzb2x1dGUgcGl4ZWwgcG9zaXRpb25pbmcgdXNpbmcgeE9mZnNldCBhZGRpdGlvbnNcbiAgICBib3VuZHNDYWNoZS5wdXNoKHtcbiAgICAgIGhpZ2hsaWdodDoge1xuICAgICAgICB0b3A6IGhpZ2hFeHRyZW1hLmhpZ2hlc3QgPyBbaGlnaEV4dHJlbWEuaGlnaGVzdFswXSArIHhPZmZzZXQsIGhpZ2hFeHRyZW1hLmhpZ2hlc3RbMV1dIDogbnVsbCxcbiAgICAgICAgYm90dG9tOiBoaWdoRXh0cmVtYS5sb3dlc3QgPyBbaGlnaEV4dHJlbWEubG93ZXN0WzBdICsgeE9mZnNldCwgaGlnaEV4dHJlbWEubG93ZXN0WzFdXSA6IG51bGxcbiAgICAgIH0sXG4gICAgICBiYXNlOiB7XG4gICAgICAgIHRvcDogYmFzZUV4dHJlbWEuaGlnaGVzdCA/IFtiYXNlRXh0cmVtYS5oaWdoZXN0WzBdICsgeE9mZnNldCwgYmFzZUV4dHJlbWEuaGlnaGVzdFsxXV0gOiBudWxsLFxuICAgICAgICBib3R0b206IGJhc2VFeHRyZW1hLmxvd2VzdCA/IFtiYXNlRXh0cmVtYS5sb3dlc3RbMF0gKyB4T2Zmc2V0LCBiYXNlRXh0cmVtYS5sb3dlc3RbMV1dIDogbnVsbFxuICAgICAgfVxuICAgIH0pO1xuXG4gICAgY2VsbEcuYXBwZW5kKFwicGF0aFwiKVxuICAgICAgLmRhdHVtKG1hcC5iYXNlKVxuICAgICAgLmF0dHIoXCJkXCIsIHBhdGhHZW5lcmF0b3IpXG4gICAgICAuYXR0cihcImZpbGxcIiwgXCJ2YXIoLS1xdWFydG8tYm9yZGVyLWNvbG9yLCAjZWNlZmYxKVwiKVxuICAgICAgLmF0dHIoXCJzdHJva2VcIiwgXCJ2YXIoLS1xdWFydG8tdGV4dC1tdXRlZCwgI2IwYmVjNSlcIilcbiAgICAgIC5hdHRyKFwic3Ryb2tlLXdpZHRoXCIsIDAuNzUpXG4gICAgICAuYXR0cihcImZpbGwtb3BhY2l0eVwiLCAwLjQpO1xuXG4gICAgY2VsbEcuYXBwZW5kKFwicGF0aFwiKVxuICAgICAgLmRhdHVtKG1hcC5oaWdobGlnaHQpXG4gICAgICAuYXR0cihcImRcIiwgcGF0aEdlbmVyYXRvcilcbiAgICAgIC5hdHRyKFwiZmlsbFwiLCBwYWdlVGV4dENvbG9yKVxuICAgICAgLmF0dHIoXCJzdHJva2VcIiwgcGFnZVRleHRDb2xvcilcbiAgICAgIC5hdHRyKFwic3Ryb2tlLXdpZHRoXCIsIDEpXG4gICAgICAuYXR0cihcImZpbGwtb3BhY2l0eVwiLCAwLjY1KTtcbiAgfSk7XG5cbiAgLy8gRml4ZWQgbGluayBhdHRyaWJ1dGVzIHBvaW50aW5nIGV4cGxpY2l0bHkgdG8gYXJyYXkgaW5kaWNlcyBbMF0gYW5kIFsxXVxuICBmb3IgKGxldCBpID0gMDsgaSA8IGJvdW5kc0NhY2hlLmxlbmd0aCAtIDE7IGkrKykge1xuICAgIGNvbnN0IGN1cnJlbnRNYXAgPSBib3VuZHNDYWNoZVtpXTtcbiAgICBjb25zdCBuZXh0TWFwID0gYm91bmRzQ2FjaGVbaSArIDFdO1xuXG4gICAgaWYgKGN1cnJlbnRNYXAuaGlnaGxpZ2h0LnRvcCAmJiBuZXh0TWFwLmJhc2UudG9wKSB7XG4gICAgICBzdmcuYXBwZW5kKFwibGluZVwiKVxuICAgICAgICAuYXR0cihcIngxXCIsIGN1cnJlbnRNYXAuaGlnaGxpZ2h0LnRvcFswXSlcbiAgICAgICAgLmF0dHIoXCJ5MVwiLCBjdXJyZW50TWFwLmhpZ2hsaWdodC50b3BbMV0pXG4gICAgICAgIC5hdHRyKFwieDJcIiwgbmV4dE1hcC5iYXNlLnRvcFswXSlcbiAgICAgICAgLmF0dHIoXCJ5MlwiLCBuZXh0TWFwLmJhc2UudG9wWzFdKVxuICAgICAgICAuYXR0cihcInN0cm9rZVwiLCBwYWdlVGV4dENvbG9yKVxuICAgICAgICAuYXR0cihcInN0cm9rZS13aWR0aFwiLCAwLjc1KVxuICAgICAgICAuYXR0cihcInN0cm9rZS1kYXNoYXJyYXlcIiwgXCIyLDJcIilcbiAgICAgICAgLmF0dHIoXCJvcGFjaXR5XCIsIDAuNSk7XG4gICAgfVxuXG4gICAgaWYgKGN1cnJlbnRNYXAuaGlnaGxpZ2h0LmJvdHRvbSAmJiBuZXh0TWFwLmJhc2UuYm90dG9tKSB7XG4gICAgICBzdmcuYXBwZW5kKFwibGluZVwiKVxuICAgICAgICAuYXR0cihcIngxXCIsIGN1cnJlbnRNYXAuaGlnaGxpZ2h0LmJvdHRvbVswXSlcbiAgICAgICAgLmF0dHIoXCJ5MVwiLCBjdXJyZW50TWFwLmhpZ2hsaWdodC5ib3R0b21bMV0pXG4gICAgICAgIC5hdHRyKFwieDJcIiwgbmV4dE1hcC5iYXNlLmJvdHRvbVswXSlcbiAgICAgICAgLmF0dHIoXCJ5MlwiLCBuZXh0TWFwLmJhc2UuYm90dG9tWzFdKVxuICAgICAgICAuYXR0cihcInN0cm9rZVwiLCBwYWdlVGV4dENvbG9yKVxuICAgICAgICAuYXR0cihcInN0cm9rZS13aWR0aFwiLCAwLjc1KVxuICAgICAgICAuYXR0cihcInN0cm9rZS1kYXNoYXJyYXlcIiwgXCIyLDJcIilcbiAgICAgICAgLmF0dHIoXCJvcGFjaXR5XCIsIDAuNSk7XG4gICAgfVxuICB9XG5cbiAgcmV0dXJuIHN2Zy5ub2RlKCk7XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJcbmdlb2pzb24gPSBGaWxlQXR0YWNobWVudChcImRhdGEvdGlnZXJfdl9jYXJ0by5nZW9qc29uXCIpLmpzb24oKVxuXG50aGVtZUNvbG9yID0ge1xuICBjb25zdCBwID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcInBcIikgfHwgZG9jdW1lbnQuYm9keTtcbiAgcmV0dXJuIGdldENvbXB1dGVkU3R5bGUocCkuY29sb3I7XG59XG5cbmJvdW5kYXJ5Q29uZmlnID0gW1xuICB7IGlkOiBcInRpZ2VyXCIsIGxhYmVsOiBcIlRJR0VSL0xpbmVcIiB9LFxuICB7IGlkOiBcImNiXzUwMGtcIiwgbGFiZWw6IFwiQ2FydG9ncmFwaGljIDUwMGtcIiB9LFxuICB7IGlkOiBcImNiXzVtXCIsIGxhYmVsOiBcIkNhcnRvZ3JhcGhpYyA1bVwiIH0sXG4gIHsgaWQ6IFwiY2JfMjBtXCIsIGxhYmVsOiBcIkNhcnRvZ3JhcGhpYyAyMG1cIiB9XG5dXG5cbmh0bWxgPGRpdiBzdHlsZT1cImRpc3BsYXk6IGZsZXg7IGZsZXgtZGlyZWN0aW9uOiByb3c7IHdpZHRoOiAxMDAlOyBnYXA6IDE1cHg7IGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcIj5cbiAgJHtib3VuZGFyeUNvbmZpZy5tYXAoY29uZmlnID0+IHtcbiAgICBjb25zdCBmZWF0dXJlcyA9IGdlb2pzb24uZmVhdHVyZXMuZmlsdGVyKGQgPT4gZC5wcm9wZXJ0aWVzLmJvdW5kYXJ5ID09PSBjb25maWcuaWQpO1xuICAgIGNvbnN0IGdlb2pzb25TdWJzZXQgPSB7IHR5cGU6IFwiRmVhdHVyZUNvbGxlY3Rpb25cIiwgZmVhdHVyZXM6IGZlYXR1cmVzIH07XG5cbiAgICBjb25zdCB3aWR0aCA9IDI1MDtcbiAgICBjb25zdCBoZWlnaHQgPSAxODA7IFxuXG4gICAgY29uc3QgcHJvamVjdGlvbiA9IGQzLmdlb01lcmNhdG9yKCkuZml0RXh0ZW50KFtbMTUsIDM1XSwgW3dpZHRoIC0gMTUsIGhlaWdodCAtIDE1XV0sIGdlb2pzb25TdWJzZXQpO1xuICAgIGNvbnN0IHBhdGhHZW5lcmF0b3IgPSBkMy5nZW9QYXRoKCkucHJvamVjdGlvbihwcm9qZWN0aW9uKTtcblxuICAgIGNvbnN0IHN2ZyA9IGQzLmNyZWF0ZShcInN2Z1wiKVxuICAgICAgICAuYXR0cihcInZpZXdCb3hcIiwgYDAgMCAke3dpZHRofSAke2hlaWdodH1gKVxuICAgICAgICAuc3R5bGUoXCJ3aWR0aFwiLCBcIjI0JVwiKSBcbiAgICAgICAgLnN0eWxlKFwiaGVpZ2h0XCIsIFwiYXV0b1wiKVxuICAgICAgICAuc3R5bGUoXCJiYWNrZ3JvdW5kXCIsIFwibm9uZVwiKTtcblxuICAgIHN2Zy5hcHBlbmQoXCJ0ZXh0XCIpXG4gICAgICAgIC5hdHRyKFwieFwiLCB3aWR0aCAvIDIpXG4gICAgICAgIC5hdHRyKFwieVwiLCAyMClcbiAgICAgICAgLmF0dHIoXCJ0ZXh0LWFuY2hvclwiLCBcIm1pZGRsZVwiKVxuICAgICAgICAuc3R5bGUoXCJmb250LWZhbWlseVwiLCBcInNhbnMtc2VyaWZcIilcbiAgICAgICAgLnN0eWxlKFwiZm9udC1zaXplXCIsIFwiMTdweFwiKVxuICAgICAgICAuc3R5bGUoXCJmb250LXdlaWdodFwiLCBcImJvbGRcIilcbiAgICAgICAgLnN0eWxlKFwiZmlsbFwiLCBcImN1cnJlbnRDb2xvclwiKSBcbiAgICAgICAgLnRleHQoY29uZmlnLmxhYmVsKTtcblxuICAgIHN2Zy5hcHBlbmQoXCJnXCIpXG4gICAgICAuc2VsZWN0QWxsKFwicGF0aFwiKVxuICAgICAgLmRhdGEoZmVhdHVyZXMpXG4gICAgICAuam9pbihcInBhdGhcIilcbiAgICAgICAgLmF0dHIoXCJkXCIsIHBhdGhHZW5lcmF0b3IpXG4gICAgICAgIC5hdHRyKFwiZmlsbFwiLCBcInZhcigtLXF1YXJ0by1ib3JkZXItY29sb3IsICNlY2VmZjEpXCIpXG4gICAgICAgIC5hdHRyKFwic3Ryb2tlXCIsIFwidmFyKC0tcXVhcnRvLWJvZHktY29sb3IsICMyMTI1MjkpXCIpXG4gICAgICAgIC5hdHRyKFwic3Ryb2tlLXdpZHRoXCIsIDAuNzUpXG4gICAgICAgIC5hdHRyKFwiZmlsbC1vcGFjaXR5XCIsIDAuNCk7XG5cbiAgICByZXR1cm4gc3ZnLm5vZGUoKTtcbiAgfSl9XG48L2Rpdj5gXG4ifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../resources/topics/census_boundaries";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/CEHI-code-repos\.github\.io\/cehi-code-repos\.github\.io\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../LICENCE">Copyright © 2026 Children’s Environmental Health Initiative</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/CEHI-code-repos/GISDataCatalog">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/company/children-s-environmental-health-initiative">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

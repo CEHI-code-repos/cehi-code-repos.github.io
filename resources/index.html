@@ -109,9 +109,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
 
     const options = {
-      valueNames: ['listing-project','listing-website','listing-format','listing-engines','listing-language','listing-title','listing-subtitle','listing-toc','listing-order','listing-execute','listing-ojs-code','listing-path','listing-outputHref','listing-author','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
+      valueNames: ['listing-project','listing-website','listing-format','listing-engines','listing-language','listing-title','listing-subtitle','listing-toc','listing-order','listing-ojs-code','listing-path','listing-outputHref','listing-author','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-execute',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
       
-      searchColumns: ["listing-project","listing-website","listing-format","listing-engines","listing-language","listing-title","listing-subtitle","listing-toc","listing-order","listing-execute","listing-ojs-code","listing-path","listing-outputHref","listing-author","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count"],
+      searchColumns: ["listing-project","listing-website","listing-format","listing-engines","listing-language","listing-title","listing-subtitle","listing-toc","listing-order","listing-ojs-code","listing-path","listing-outputHref","listing-author","listing-description","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-execute"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -268,7 +268,7 @@ window.Quarto = {
 
 
 <div class="cell hidden">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="23" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 22;"><span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>width<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb1" data-startfrom="24" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 23;"><span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>width<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display hidden">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="expression">
@@ -276,25 +276,25 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="25" data-source-offset="-10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 24;"><span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> targets <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">'.listing-ojs-target'</span>)<span class="op">;</span></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  targets<span class="op">.</span><span class="fu">forEach</span>(target <span class="kw">=&gt;</span> {</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> codeString <span class="op">=</span> target<span class="op">.</span><span class="fu">getAttribute</span>(<span class="st">'data-ojs-code'</span>)<span class="op">;</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (codeString) {</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>      <span class="cf">try</span> {</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        target<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">''</span><span class="op">;</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> graph <span class="op">=</span> <span class="kw">new</span> <span class="bu">Function</span>(<span class="st">'Plot'</span><span class="op">,</span> <span class="st">'d3'</span><span class="op">,</span> <span class="vs">`return </span><span class="sc">${</span>codeString<span class="sc">}</span><span class="vs">`</span>)(Plot<span class="op">,</span> d3)<span class="op">;</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (graph) {</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>          target<span class="op">.</span><span class="fu">appendChild</span>(graph)<span class="op">;</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">catch</span> (e) {</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">"Failed to render OJS code for card:"</span><span class="op">,</span> e)<span class="op">;</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code hidden" id="cb2" data-startfrom="26" data-source-offset="-10"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 25;"><span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> targets <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelectorAll</span>(<span class="st">'.listing-ojs-target'</span>)<span class="op">;</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  targets<span class="op">.</span><span class="fu">forEach</span>(target <span class="kw">=&gt;</span> {</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> codeString <span class="op">=</span> target<span class="op">.</span><span class="fu">getAttribute</span>(<span class="st">'data-ojs-code'</span>)<span class="op">;</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (codeString) {</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>      <span class="cf">try</span> {</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        target<span class="op">.</span><span class="at">innerHTML</span> <span class="op">=</span> <span class="st">''</span><span class="op">;</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> graph <span class="op">=</span> <span class="kw">new</span> <span class="bu">Function</span>(<span class="st">'Plot'</span><span class="op">,</span> <span class="st">'d3'</span><span class="op">,</span> <span class="vs">`return </span><span class="sc">${</span>codeString<span class="sc">}</span><span class="vs">`</span>)(Plot<span class="op">,</span> d3)<span class="op">;</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (graph) {</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>          target<span class="op">.</span><span class="fu">appendChild</span>(graph)<span class="op">;</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>      } <span class="cf">catch</span> (e) {</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        <span class="bu">console</span><span class="op">.</span><span class="fu">error</span>(<span class="st">"Failed to render OJS code for card:"</span><span class="op">,</span> e)<span class="op">;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>      }</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display hidden">
 <div>
 <div id="ojs-cell-1-2" data-nodetype="expression">
@@ -303,18 +303,11 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<style>
-.header-link a {
-  font-weight: inherit;
-  color: inherit;
-  text-decoration: none;
-}
-</style>
-<section id="topics-in-gis" class="level2 header-link">
-<h2 class="header-link anchored" data-anchor-id="topics-in-gis"><a href="../resources/topics/index.html">Topics in GIS</a></h2>
+<section id="topics-in-gis" class="level2">
+<h2 class="anchored" data-anchor-id="topics-in-gis">Topics in GIS</h2>
 <div id="listing-topics" class="quarto-listing quarto-listing-container-custom">
-<div class="list grid quarto-listing-cols-4">
-<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1785444057695" data-listing-reading-time-sort="25" data-listing-word-count-sort="4855">
+<div class="list grid quarto-listing-cols-4" style="padding-bottom: 17px;">
+<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1785868341330" data-listing-reading-time-sort="25" data-listing-word-count-sort="4855">
 <a href="../resources/topics/map-design/index.html" class="quarto-grid-link text-decoration-none text-dark d-flex flex-column h-100">
 <div class="quarto-grid-item card h-100 card-left d-flex flex-column" style="overflow: hidden;">
 <!-- ojs figure integration -->
@@ -439,7 +432,7 @@ The process of creating effective maps
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1785444057699" data-listing-reading-time-sort="15" data-listing-word-count-sort="2885">
+<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1785868341334" data-listing-reading-time-sort="15" data-listing-word-count-sort="2885">
 <a href="../resources/topics/spatial_data.html" class="quarto-grid-link text-decoration-none text-dark d-flex flex-column h-100">
 <div class="quarto-grid-item card h-100 card-left d-flex flex-column" style="overflow: hidden;">
 <!-- ojs figure integration -->
@@ -571,7 +564,7 @@ How data is organized in a GIS
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="2" data-listing-file-modified-sort="1785444057695" data-listing-reading-time-sort="11" data-listing-word-count-sort="2039">
+<div class="g-col-1" data-index="2" data-listing-file-modified-sort="1785868341330" data-listing-reading-time-sort="11" data-listing-word-count-sort="2039">
 <a href="../resources/topics/data_classification/index.html" class="quarto-grid-link text-decoration-none text-dark d-flex flex-column h-100">
 <div class="quarto-grid-item card h-100 card-left d-flex flex-column" style="overflow: hidden;">
 <!-- ojs figure integration -->
@@ -676,7 +669,7 @@ How and why we classify
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="3" data-listing-file-modified-sort="1785444057698" data-listing-reading-time-sort="9" data-listing-word-count-sort="1643">
+<div class="g-col-1" data-index="3" data-listing-file-modified-sort="1785868341334" data-listing-reading-time-sort="9" data-listing-word-count-sort="1675">
 <a href="../resources/topics/projections/index.html" class="quarto-grid-link text-decoration-none text-dark d-flex flex-column h-100">
 <div class="quarto-grid-item card h-100 card-left d-flex flex-column" style="overflow: hidden;">
 <!-- ojs figure integration -->
@@ -835,14 +828,17 @@ Displaying a 3D world in 2D
 </div></a>
 </div>
 </div>
+<div class="text-end mb-5" style="margin-bottom: 0 !important">
+<p><a href="../resources/topics/" class="btn btn-outline-primary btn-sm">View All</a></p>
+</div>
 <div class="listing-no-matching d-none">No matching items</div>
 </div>
 </section>
-<section id="intro-to-arcgis-pro" class="level2 header-link">
-<h2 class="header-link anchored" data-anchor-id="intro-to-arcgis-pro"><a href="../resources/intro_to_arcgis_pro/index.html">Intro to ArcGIS Pro</a></h2>
+<section id="intro-to-arcgis-pro" class="level2">
+<h2 class="anchored" data-anchor-id="intro-to-arcgis-pro">Intro to ArcGIS Pro</h2>
 <div id="listing-intro_to_arcpro" class="quarto-listing quarto-listing-container-custom">
-<div class="list grid quarto-listing-cols-4">
-<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1785444057694" data-listing-reading-time-sort="3" data-listing-word-count-sort="550">
+<div class="list grid quarto-listing-cols-4" style="padding-bottom: 17px;">
+<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1785868341278" data-listing-reading-time-sort="3" data-listing-word-count-sort="550">
 <a href="../resources/intro_to_arcgis_pro/understanding_arcpro_interface/index.html" class="quarto-grid-link text-decoration-none text-dark d-flex flex-column h-100">
 <div class="quarto-grid-item card h-100 card-left d-flex flex-column" style="overflow: hidden;">
 <!-- ojs figure integration -->
@@ -978,7 +974,7 @@ Navigating projects, tools, and settings
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1785444057681" data-listing-reading-time-sort="4" data-listing-word-count-sort="621">
+<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1785868341265" data-listing-reading-time-sort="4" data-listing-word-count-sort="621">
 <a href="../resources/intro_to_arcgis_pro/data_arcpro/index.html" class="quarto-grid-link text-decoration-none text-dark d-flex flex-column h-100">
 <div class="quarto-grid-item card h-100 card-left d-flex flex-column" style="overflow: hidden;">
 <!-- ojs figure integration -->
