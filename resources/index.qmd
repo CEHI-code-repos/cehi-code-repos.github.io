@@ -16,6 +16,13 @@ listing:
     template: listing-grid-view-more.ejs.md
 ---
 
+```{=html}
+<style>
+h2 {
+  margin-top: 0 !important;
+}
+</style>
+```
 
 ```{ojs}
 //| echo: false
