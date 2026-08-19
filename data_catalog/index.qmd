@@ -10,10 +10,10 @@ listing:
   filter-ui: true
   id: sample-listings
   sort: "title asc"
-  template: "../assets/data_catalog/data_listing.ejs.md"
+  template: "../assets/_templates/data_catalog/data_listing.ejs.md"
 format:
   html:
-    css: "../assets/data_catalog/data_listing.css"
+    css: "../assets/_templates/data_catalog/data_listing.css"
 ---
 
 Want to know more about recent changes? Check out the [recent updates](updates/).

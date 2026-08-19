@@ -3,7 +3,7 @@ title: "Into to ArcGIS Pro"
 subtitle: "Get familiar with the ArcGIS Pro interface"
 description: "This series guides beginners through the software interface, project navigation, and core data management principles of ArcGIS Pro. Participants learn to display geographic data effectively, perform precise tabular and spatial selections, and execute spatial data summarization to uncover meaningful geographic patterns. The course builds the foundational skills needed to organize, analyze, and map spatial datasets confidently."
 listing:
-  template: ../listing-grid.ejs.md
+  template: ../../assets/_templates/resource_grid/grid.ejs.md
 ---
 
 ### Sections

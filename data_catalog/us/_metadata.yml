@@ -1,4 +1,4 @@
 format:
   html:
-    template: ../../assets/data_catalog/data_template.html
+    template: ../../assets/_templates/data_catalog/data_template.html
 
