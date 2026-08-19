@@ -1,7 +1,27 @@
 [
   {
-    "listing": "/tools/index.html",
-    "items": []
+    "listing": "/index.html",
+    "items": [
+      "/map_logs/tanaka_ono_for_hi/index.html",
+      "/map_logs/graff_livable_id/index.html",
+      "/map_logs/joshi_storymap_vi/index.html",
+      "/map_logs/cdgisn_stroke_dt/index.html",
+      "/map_logs/cdgisn_cr_availability/index.html",
+      "/map_logs/xiong_spoke_to_hub_wi/index.html",
+      "/map_logs/styles_interactive_cr_mn/index.html",
+      "/map_logs/orr_tobacco_disparities_ri/index.html",
+      "/map_logs/patrick_medication_adherance_la/index.html"
+    ]
+  },
+  {
+    "listing": "/resources/topics/index.html",
+    "items": [
+      "/resources/topics/map-design/index.html",
+      "/resources/topics/spatial_data.html",
+      "/resources/topics/data_classification/index.html",
+      "/resources/topics/projections/index.html",
+      "/resources/topics/census_boundaries/index.html"
+    ]
   },
   {
     "listing": "/resources/index.html",
@@ -27,49 +47,6 @@
       "/map_logs/styles_interactive_cr_mn/index.html",
       "/map_logs/orr_tobacco_disparities_ri/index.html",
       "/map_logs/patrick_medication_adherance_la/index.html"
-    ]
-  },
-  {
-    "listing": "/resources/topics/index.html",
-    "items": [
-      "/resources/topics/map-design/index.html",
-      "/resources/topics/spatial_data.html",
-      "/resources/topics/data_classification/index.html",
-      "/resources/topics/projections/index.html",
-      "/resources/topics/census_boundaries/index.html"
-    ]
-  },
-  {
-    "listing": "/resources/intro_to_arcgis_pro/index.html",
-    "items": [
-      "/resources/intro_to_arcgis_pro/understanding_arcpro_interface/index.html",
-      "/resources/intro_to_arcgis_pro/data_arcpro/index.html"
-    ]
-  },
-  {
-    "listing": "/index.html",
-    "items": [
-      "/map_logs/tanaka_ono_for_hi/index.html",
-      "/map_logs/graff_livable_id/index.html",
-      "/map_logs/joshi_storymap_vi/index.html",
-      "/map_logs/cdgisn_stroke_dt/index.html",
-      "/map_logs/cdgisn_cr_availability/index.html",
-      "/map_logs/xiong_spoke_to_hub_wi/index.html",
-      "/map_logs/styles_interactive_cr_mn/index.html",
-      "/map_logs/orr_tobacco_disparities_ri/index.html",
-      "/map_logs/patrick_medication_adherance_la/index.html"
-    ]
-  },
-  {
-    "listing": "/data_catalog/updates/index.html",
-    "items": [
-      "/data_catalog/updates/2603_update/index.html",
-      "/data_catalog/updates/2602_update/index.html",
-      "/data_catalog/updates/2505_update/index.html",
-      "/data_catalog/updates/2503_update/index.html",
-      "/data_catalog/updates/2502_update/index.html",
-      "/data_catalog/updates/2407_update/index.html",
-      "/data_catalog/updates/welcome/index.html"
     ]
   },
   {
@@ -101,5 +78,28 @@
       "/data_catalog/us/usda-uic.html",
       "/data_catalog/us/nchs-urcs.html"
     ]
+  },
+  {
+    "listing": "/data_catalog/updates/index.html",
+    "items": [
+      "/data_catalog/updates/2603_update/index.html",
+      "/data_catalog/updates/2602_update/index.html",
+      "/data_catalog/updates/2505_update/index.html",
+      "/data_catalog/updates/2503_update/index.html",
+      "/data_catalog/updates/2502_update/index.html",
+      "/data_catalog/updates/2407_update/index.html",
+      "/data_catalog/updates/welcome/index.html"
+    ]
+  },
+  {
+    "listing": "/resources/intro_to_arcgis_pro/index.html",
+    "items": [
+      "/resources/intro_to_arcgis_pro/understanding_arcpro_interface/index.html",
+      "/resources/intro_to_arcgis_pro/data_arcpro/index.html"
+    ]
+  },
+  {
+    "listing": "/tools/index.html",
+    "items": []
   }
 ]
