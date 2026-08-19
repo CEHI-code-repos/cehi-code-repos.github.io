@@ -5,6 +5,7 @@ website:
   title: "GIS Capacity Building"
   favicon: assets/logo.png
   search: false
+  open-graph: true
   google-analytics: G-58N6NN1C47
   navbar:
     right:
