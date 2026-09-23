@@ -17,22 +17,21 @@
     ]
   },
   {
-    "listing": "/index.html",
+    "listing": "/resources/index.html",
     "items": [
-      "/map_logs/tanaka_ono_for_hi/index.html",
-      "/map_logs/graff_livable_id/index.html",
-      "/map_logs/joshi_storymap_vi/index.html",
-      "/map_logs/cdgisn_stroke_dt/index.html",
-      "/map_logs/cdgisn_cr_availability/index.html",
-      "/map_logs/xiong_spoke_to_hub_wi/index.html",
-      "/map_logs/styles_interactive_cr_mn/index.html",
-      "/map_logs/orr_tobacco_disparities_ri/index.html",
-      "/map_logs/patrick_medication_adherance_la/index.html"
+      "/resources/topics/map-design/index.html",
+      "/resources/topics/spatial_data.html",
+      "/resources/topics/data_classification/index.html",
+      "/resources/topics/projections/index.html",
+      "/resources/topics/census_boundaries/index.html",
+      "/resources/intro_to_arcgis_pro/understanding_arcpro_interface/index.html",
+      "/resources/intro_to_arcgis_pro/data_arcpro/index.html"
     ]
   },
   {
     "listing": "/map_logs/index.html",
     "items": [
+      "/map_logs/goldner_mapping_proximity/index.html",
       "/map_logs/tanaka_ono_for_hi/index.html",
       "/map_logs/graff_livable_id/index.html",
       "/map_logs/joshi_storymap_vi/index.html",
@@ -91,15 +90,18 @@
     ]
   },
   {
-    "listing": "/resources/index.html",
+    "listing": "/index.html",
     "items": [
-      "/resources/topics/map-design/index.html",
-      "/resources/topics/spatial_data.html",
-      "/resources/topics/data_classification/index.html",
-      "/resources/topics/projections/index.html",
-      "/resources/topics/census_boundaries/index.html",
-      "/resources/intro_to_arcgis_pro/understanding_arcpro_interface/index.html",
-      "/resources/intro_to_arcgis_pro/data_arcpro/index.html"
+      "/map_logs/goldner_mapping_proximity/index.html",
+      "/map_logs/tanaka_ono_for_hi/index.html",
+      "/map_logs/graff_livable_id/index.html",
+      "/map_logs/joshi_storymap_vi/index.html",
+      "/map_logs/cdgisn_stroke_dt/index.html",
+      "/map_logs/cdgisn_cr_availability/index.html",
+      "/map_logs/xiong_spoke_to_hub_wi/index.html",
+      "/map_logs/styles_interactive_cr_mn/index.html",
+      "/map_logs/orr_tobacco_disparities_ri/index.html",
+      "/map_logs/patrick_medication_adherance_la/index.html"
     ]
   }
 ]

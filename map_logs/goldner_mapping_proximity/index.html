@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2026-09-23">
 
-<title>Rural-Urban Continuum Codes (RUCC) – GIS Capacity Building</title>
+<title>Mapping Pharmacy Proximity in Minnesota: A Tailored Approach – GIS Capacity Building</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -73,9 +74,12 @@ gtag('config', 'G-58N6NN1C47', { 'anonymize_ip': true});
 </script>
 
 
-<meta property="og:title" content="Rural-Urban Continuum Codes (RUCC) – GIS Capacity Building">
+<meta property="og:title" content="Mapping Pharmacy Proximity in Minnesota: A Tailored Approach – GIS Capacity Building">
 <meta property="og:description" content="">
+<meta property="og:image" content="https://cehicapacitybuilding.org/map_logs/goldner_mapping_proximity/photos/mn_map.png">
 <meta property="og:site_name" content="GIS Capacity Building">
+<meta property="og:image:height" content="3921">
+<meta property="og:image:width" content="4485">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -135,18 +139,27 @@ gtag('config', 'G-58N6NN1C47', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Rural-Urban Continuum Codes (RUCC)</h1>
-  <div class="quarto-categories">
-    <div class="quarto-category">Rurality</div>
-  </div>
-  </div>
+<h1 class="title">Mapping Pharmacy Proximity in Minnesota: A Tailored Approach</h1>
+</div>
 
 
 
 <div class="quarto-title-meta column-page">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 23, 2026</p>
+    </div>
+  </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">September 23, 2026</p>
+    </div>
+  </div>
     
   </div>
   
@@ -154,44 +167,47 @@ gtag('config', 'G-58N6NN1C47', { 'anonymize_ip': true});
 
 </header>
 
-<table class="card-other-values">
-  <tbody>
-    <tr>
-      <td style="width: 30%; font-weight: bold; vertical-align: top;">Description:</td>
-      <td style="width: 70%; vertical-align: top;">The rural-urban continuum codes (RUCC) classify US counties by their degree of urbanization and adjacency to a metro area.</td>
-    </tr>
-    <tr>
-      <td style="width: 30%; font-weight: bold; vertical-align: top;">Time Frame:</td>
-      <td style="width: 70%; vertical-align: top;">Year; 1974, 1983, 1993, 2003, 2013, and 2023</td>
-    </tr>
-    <tr>
-      <td style="width: 30%; font-weight: bold; vertical-align: top;">Spatial Scale:</td>
-      <td style="width: 70%; vertical-align: top;">County</td>
-    </tr>
-    <tr>
-      <td style="width: 30%; font-weight: bold; vertical-align: top;">Format:</td>
-      <td style="width: 70%; vertical-align: top;">CSV and Excel</td>
-    </tr>
-    <tr>
-      <td style="width: 30%; font-weight: bold; vertical-align: top;">Source:</td>
-      <td style="width: 70%; vertical-align: top;">US Department of Agriculture (USDA) Economic Research Service</td>
-    </tr>
-    <tr>
-      <td style="width: 30%; font-weight: bold; vertical-align: top;">Original Repository:</td>
-      <td style="width: 70%; vertical-align: top;"><a href="https://www.ers.usda.gov/data-products/rural-urban-continuum-codes">All Years</a></td>
-    </tr>
-    <tr>
-      <td style="width: 30%; font-weight: bold; vertical-align: top;">Living Atlas:</td>
-      <td style="width: 70%; vertical-align: top;">N/A</td>
-    </tr>
-  </tbody>
-</table>
+
+<p>Across public health research studies, definitions of a “pharmacy desert” can vary, making it difficult to fully understand the barriers to pharmacy access in each state. In Minnesota – where 13% of community pharmacies were lost from 2009 to 2024 – the Minnesota Department of Health developed a tailored approach to mapping pharmacy access (proximity) based upon metropolitan status and distance threshold. Using this more precise description, the map contributes to a more accurate and actionable understanding of the barriers to pharmacy access across the state.</p>
+<section id="making-a-customized-map-of-pharmacy-access" class="level3">
+<h3 class="anchored" data-anchor-id="making-a-customized-map-of-pharmacy-access">Making a Customized Map of Pharmacy Access</h3>
+<p>To begin, the Minnesota Department of Health (MDH) used ArcGIS Pro 3.3.0 (Esri) to geocode pharmacies identified by the Minnesota Board of Pharmacy, and Network Analyst to measure driving distance between the population center of each census tract and the closest two pharmacies.</p>
+<p>MDH then customized the definition of pharmacy access in Minnesota based on a combination of metropolitan status and distance. Census tracts were categorized as urban core, metropolitan, or non-metropolitan, and distance thresholds were defined for each category as urban core &nbsp;(1 mile), metropolitan (5 miles), and nonmetropolitan (15 miles).</p>
+<p>Finally, pharmacy access was defined as low access if there were no pharmacies within the designated threshold, limited access if there was only 1 pharmacy within the designated threshold, and high access if there were 2 or more pharmacies within the designated threshold.</p>
+<p>Census tracts were also categorized according to the 2022 Social Vulnerability Index (SVI).&nbsp; SVI scores range from 0 to 1. High vulnerability was defined as a score of 0.75 or higher, moderate vulnerability as 0.5 to less than 0.75, and low vulnerability as 0 to less than 0.5.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="photos/mn_map.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="margin-top: 20px;width:50.0%"></p>
+</figure>
+</div>
+</section>
+<section id="highlighting-areas-of-minnesota-with-low-pharmacy-access-and-vulnerable-populations" class="level3">
+<h3 class="anchored" data-anchor-id="highlighting-areas-of-minnesota-with-low-pharmacy-access-and-vulnerable-populations">Highlighting Areas of Minnesota with Low Pharmacy Access and Vulnerable Populations</h3>
+<p>Using a definition of pharmacy access that incorporates metropolitan status and distance thresholds customized for Minnesota, MDH found that, of the 1,498 populated census tracts in Minnesota, 147 had low pharmacy access and 207 had limited pharmacy access, representing 1,130,177 people in Minnesota, or 19.9% of the total population. From 2009 to 2024, twenty-four tracts with 77,000 residents became low-access tracts because of pharmacy closures. These tracts were more vulnerable than low-access tracts that existed as of 2009.</p>
+<p>The map makes it clear that census tracts with the lowest levels of pharmacy access and highest levels of vulnerability can be found in both rural and urban areas. By including the category of limited access, the map also highlights the large number of census tracts in which – with only one pharmacy – the closure of that pharmacy would dramatically impact the local population.</p>
+</section>
+<section id="monitoring-and-advancing-pharmacy-access" class="level3">
+<h3 class="anchored">Monitoring and Advancing Pharmacy Access</h3>
+<div style="float: right; width: 30%; margin-left: 15px;">
+<p><img src="photos/mn_indys.png" class="img-fluid"></p>
+</div>
+<p>Local pharmacies represent a critical source of evidence-based guidance and clinical services to support medication adherence, help patients manage chronic conditions and avoid hospitalizations. In Minnesota, where low reimbursement rates have helped fuel the increase in pharmacy closures, the map was used <a href="https://www.kare11.com/article/news/local/independent-pharmacists-plead-case-at-minnesota-state-capitol-mass-closures/89-53a3d92f-6856-4d71-8613-5d82dc488dff">to support pharmacy policy initiatives included in an omnibus health law</a> enacted by the state legislature. The law establishes a single state-run pharmacy benefit manager to manage prescription drug benefits for Medicaid patients with the aim of improving pharmacy access and controlling costs. The legislation also increases dispensing fees for pharmacies serving underserved populations to offset administrative costs and support pharmacy operations.</p>
+<p>As community pharmacies continue to serve as critical connection points between patients and basic health services, Minnesotans will benefit from policy changes that address areas of low pharmacy access and help maintain access where it is limited. The map is helping to shed light on the barriers to pharmacy access across the state and will serve as a key resource for monitoring pharmacy access and informing public health decisions.</p>
+<p>For more details, read the <a href="https://www.cdc.gov/pcd/issues/2026/25_0451.htm">article</a> published in Preventing Chronic Disease.</p>
+<p><br></p>
+<div class="grid" style="border: 1px solid #dee2e6; border-radius: 8px; background-color: #f8f9fa; overflow: hidden; --bs-align-items: stretch; align-items: stretch;">
+<div class="g-col-12 g-col-md-4" style="display: flex; min-height: 100%;">
+<style scoped=""> p { margin-bottom: 0 !important; } </style>
+<p><img src="photos/emma_goldner.jpg" style="width: 100%; height: 100%; object-fit: cover; display: block;"></p>
+</div>
+<section id="meet-the-mapmaker" class="level2 g-col-12 g-col-md-8" style="padding: 0 20px 20px 0">
+<h2 class="anchored" data-anchor-id="meet-the-mapmaker">Meet the Mapmaker</h2>
+<p>The pharmacy access map was developed by Emma Goldner, who earned an MPH at the University of Minnesota and developed the map as part of her CSTE Applied Epidemiology Fellowship at the Minnesota Department of Health. Emma had never used GIS mapping technology, but a couple of colleagues who had participated in the GIS training provided by CDC, NACDD and University of Illinois Chicago gave her a hand. She was especially interested in understanding the intersection of social vulnerability and pharmacy access to better address priority health issues in the state. “I’ve always been interested in understanding why certain populations have certain health outcomes,” she says. “I like data because by looking at the data, you can find out.” Emma also liked mapping the data and was able to contribute her map to data briefs the agency developed to inform effective health policies and interventions. “That’s the core of this project,” she says. “Find out who is disproportionately affected by lack of access so you can do something about it.”</p>
+</section>
+</div>
 
 
-
-<p></p><p>The designation of counties as metro or nonmetro is based on the Office of Management and Budget. These metro and nonmetro designations are further subdivided in is further subdivided into three metro and six nonmetro categories.</p><p></p>
-
-
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
