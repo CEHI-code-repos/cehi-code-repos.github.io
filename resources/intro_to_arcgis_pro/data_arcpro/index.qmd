@@ -152,7 +152,7 @@ ojs-code: |
     })()
 ---
 
-ArcGIS Pro is a referential software. This means that rather than storing data within a project itself, ArcGIS Pro stores a reference to where data is stored. This means data CAN be in a project, but it also can be stored else where on your computer, on a remote server, or even on the internet. This also means that renaming, moving, or deleting data from where it is stored, can result in loss of data in your project. Additionally, any changes made to the data itself outside the project will affect the project as well.
+ArcGIS Pro is a referential software. This means that rather than storing data within a project itself, ArcGIS Pro stores a reference to where data is stored. This means data CAN be in a project, but it also can be stored else where on your computer, on a remote server, or even on the internet. This also means that renaming, moving, or deleting data from where it is stored can result in loss of data in your project. Additionally, any changes made to the data itself outside the project will affect the project as well.
 
 ## Methods to Add Data
 
